@@ -1,0 +1,151 @@
+@* Views/Shared/_PerformanceModal.cshtml *@
+<div class="modal fade" id="performanceModal" tabindex="-1" aria-labelledby="performanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="performanceModalLabel">عملکرد ماهانه</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3">نام و نام خانوادگی: <strong><span id="fullNameDisplay"></span></strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>ماه گزارش</th>
+                                <th>کارکرد (روز)</th>
+                                <th>مرخصی استحقاقی</th>
+                                <th>مرخصی استعلاجی</th>
+                                <th>تعداد روز ماموریت</th>
+                                <th>ساعت اضافه کار</th>
+                                <th>شماره شبا حساب بانکی</th>
+                                <th>نام بانک</th>
+                                <th>تاییدیه شماره شبا</th>
+                                <th>کارکرد روز (از زمان شروع قرارداد)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-control-plaintext">فروردین ۱۴۰۳</span>
+                                </td>
+                                <td>
+                                    <select class="form-select">
+                                        @for (var i = 0; i <= 31; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select">
+                                        @for (var i = 0; i <= 31; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select">
+                                        @for (var i = 0; i <= 31; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select">
+                                        @for (var i = 0; i <= 31; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" min="0">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="IR..." maxlength="24">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" placeholder="نام بانک">
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="form-check-input">
+                                </td>
+                                <td>
+                                    <span class="form-control-plaintext">0 روز</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- جدول جدید برای اقدامات اجرایی -->
+                <h5 class="mt-4 mb-3">اقدامات اجرائی در طول ماه جاری</h5>
+                <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                    <table class="table table-bordered table-hover mb-0">
+                        <thead class="table-primary sticky-top" style="top: -1px;">
+                            <tr>
+                                <th>استان</th>
+                                <th>شهرستان</th>
+                                <th>بخش</th>
+                                <th>دهستان</th>
+                                <th>روستا</th>
+                                <th>کد نقطه</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="form-control-plaintext">تهران</span></td>
+                                <td><span class="form-control-plaintext">شهریار</span></td>
+                                <td><span class="form-control-plaintext">مرکزی</span></td>
+                                <td><span class="form-control-plaintext">فارسیان</span></td>
+                                <td><span class="form-control-plaintext">قلعه نو</span></td>
+                                <td><span class="form-control-plaintext">12345</span></td>
+                            </tr>
+                            <!-- می‌توانید ردیف‌های بیشتری اضافه کنید -->
+                            <tr>
+                                <td><span class="form-control-plaintext">البرز</span></td>
+                                <td><span class="form-control-plaintext">کرج</span></td>
+                                <td><span class="form-control-plaintext">مرکزی</span></td>
+                                <td><span class="form-control-plaintext">کمال آباد</span></td>
+                                <td><span class="form-control-plaintext">مهرشهر</span></td>
+                                <td><span class="form-control-plaintext">54321</span></td>
+                            </tr>
+                            <!-- نمونه ردیف‌های دیگر -->
+                            <tr>
+                                <td><span class="form-control-plaintext">اصفهان</span></td>
+                                <td><span class="form-control-plaintext">اصفهان</span></td>
+                                <td><span class="form-control-plaintext">مرکزی</span></td>
+                                <td><span class="form-control-plaintext">جی</span></td>
+                                <td><span class="form-control-plaintext">احمدآباد</span></td>
+                                <td><span class="form-control-plaintext">67890</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="form-control-plaintext">فارس</span></td>
+                                <td><span class="form-control-plaintext">شیراز</span></td>
+                                <td><span class="form-control-plaintext">مرکزی</span></td>
+                                <td><span class="form-control-plaintext">سیاخ</span></td>
+                                <td><span class="form-control-plaintext">قصرقمشه</span></td>
+                                <td><span class="form-control-plaintext">09876</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="form-control-plaintext">خراسان رضوی</span></td>
+                                <td><span class="form-control-plaintext">مشهد</span></td>
+                                <td><span class="form-control-plaintext">مرکزی</span></td>
+                                <td><span class="form-control-plaintext">طوس</span></td>
+                                <td><span class="form-control-plaintext">حکیمیه</span></td>
+                                <td><span class="form-control-plaintext">13579</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary">ذخیره اطلاعات</button>
+            </div>
+        </div>
+    </div>
+</div>

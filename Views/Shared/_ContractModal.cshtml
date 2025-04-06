@@ -1,0 +1,28 @@
+<!-- Modal برای تصویر قرارداد -->
+<div class="modal fade" id="contractModal" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contractModalLabel">تصویر قرارداد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="contractForm" enctype="multipart/form-data">
+                    <input type="hidden" id="contractRecordId" name="id" value="">
+                    <div class="mb-3 text-center">
+                        <img id="contractImagePreview" src="" class="img-fluid rounded" style="max-height: 400px; display: none;">
+                        <div id="noContractImage" class="alert alert-info">تصویری موجود نیست</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contractFile" class="form-label">انتخاب فایل تصویر</label>
+                        <input class="form-control" type="file" id="contractFile" name="contractFile" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-primary" id="uploadContract">ذخیره تصویر</button>
+            </div>
+        </div>
+    </div>
+</div>

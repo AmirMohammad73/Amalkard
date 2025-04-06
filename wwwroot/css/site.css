@@ -1,0 +1,112 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+.modal-lg{
+  --bs-modal-width: 100% !important;
+}
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+.responsive-table {
+  overflow-x: auto; /* ایجاد اسکرول افقی در صورت نیاز */
+  white-space: nowrap; /* جلوگیری از شکستن خطوط درون سلول‌ها */
+}
+
+.responsive-table th,
+.responsive-table td {
+  min-width: 120px; /* حداقل عرض پیش‌فرض برای ستون‌ها */
+  max-width: 200px; /* حداکثر عرض پیش‌فرض برای ستون‌ها (اختیاری) */
+  overflow: hidden; /* جلوگیری از خارج شدن محتوا از سلول */
+  text-overflow: ellipsis; /* نمایش ... اگر محتوا بیش از حد بود */
+}
+
+/* تنظیم عرض‌های خاص برای ستون‌ها */
+.responsive-table td:nth-child(1),
+.responsive-table th:nth-child(1) {
+  min-width: 10px !important;
+}
+.responsive-table td:nth-child(5),
+.responsive-table th:nth-child(4) {
+  min-width: 130px !important;
+}
+
+.responsive-table td:nth-child(7),
+.responsive-table th:nth-child(6),
+.responsive-table td:nth-child(12),
+.responsive-table th:nth-child(11) {
+  min-width: 130px !important;
+  max-width: 130px !important;
+}
+.responsive-table td:nth-child(10),
+.responsive-table th:nth-child(9) {
+  min-width: 200px !important;
+}
+
+.responsive-table td:nth-child(14),
+.responsive-table th:nth-child(13) {
+  min-width: 60px !important;
+}
+.responsive-table td:nth-child(13),
+.responsive-table th:nth-child(12),
+.responsive-table td:nth-child(15),
+.responsive-table th:nth-child(14) {
+  min-width: 50px !important;
+}
+.responsive-table td:nth-child(16),
+.responsive-table th:nth-child(15) {
+  min-width: 50px !important;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  direction: rtl;
+  margin-bottom: 60px;
+  font-family: 'B Nazanin';
+  font-size: small;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+}
+
+input,
+select,
+button {
+  text-align: right;
+}
+
+.form-floating>.form-control-plaintext::placeholder,
+.form-floating>.form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating>.form-control-plaintext:focus::placeholder,
+.form-floating>.form-control:focus::placeholder {
+  text-align: start;
+}
