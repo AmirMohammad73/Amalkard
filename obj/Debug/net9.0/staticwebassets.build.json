@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "azF31DK36/K71YtGb1mM7+9HUbIjxgvVRZcgZRcCMjw=",
+  "Hash": "ktM/BZqjvy+Xd9D26Q4OnnzrHxVK+4BM82m+ZhZfaaQ=",
   "Source": "Amalkard",
   "BasePath": "_content/Amalkard",
   "Mode": "Default",
@@ -1025,12 +1025,12 @@
       "OriginalItemSpec": "E:\\New folder (3)\\Amalkard\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Identity": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-v5y93bflc8.gz",
+      "Identity": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-7eue5j0u64.gz",
       "SourceId": "Amalkard",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Amalkard",
-      "RelativePath": "css/site#[.{fingerprint=v5y93bflc8}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=7eue5j0u64}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -1039,8 +1039,8 @@
       "RelatedAsset": "E:\\New folder (3)\\Amalkard\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "29w14bekbr",
-      "Integrity": "hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw=",
+      "Fingerprint": "7zyp49a5v0",
+      "Integrity": "U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\New folder (3)\\Amalkard\\wwwroot\\css\\site.css"
@@ -1543,8 +1543,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "v5y93bflc8",
-      "Integrity": "MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY=",
+      "Fingerprint": "7eue5j0u64",
+      "Integrity": "X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -3832,8 +3832,8 @@
       ]
     },
     {
-      "Route": "css/site.css",
-      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-v5y93bflc8.gz",
+      "Route": "css/site.7eue5j0u64.css",
+      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-7eue5j0u64.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -3852,15 +3852,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw=\""
+          "Value": "\"U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 07:41:52 GMT"
+          "Value": "Tue, 08 Apr 2025 13:30:35 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -3876,18 +3876,26 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY=\""
+          "Value": "W/\"X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "7eue5j0u64"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY="
+          "Value": "sha256-X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U="
         }
       ]
     },
     {
-      "Route": "css/site.css",
+      "Route": "css/site.7eue5j0u64.css",
       "AssetFile": "E:\\New folder (3)\\Amalkard\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3905,121 +3913,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY=\""
+          "Value": "\"X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 07:41:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css.gz",
-      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-v5y93bflc8.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "917"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 07:41:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.v5y93bflc8.css",
-      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-v5y93bflc8.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.001089324619"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "917"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 07:41:52 GMT"
+          "Value": "Tue, 08 Apr 2025 13:30:35 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "v5y93bflc8"
+          "Value": "7eue5j0u64"
         },
         {
           "Name": "label",
@@ -4027,58 +3935,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY="
+          "Value": "sha256-X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U="
         }
       ]
     },
     {
-      "Route": "css/site.v5y93bflc8.css",
-      "AssetFile": "E:\\New folder (3)\\Amalkard\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2627"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 07:41:52 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "v5y93bflc8"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-MzSiX2w+dM58biMwNRS6oTwjOIsuIJSfk8MHgK14ktY="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.v5y93bflc8.css.gz",
-      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-v5y93bflc8.gz",
+      "Route": "css/site.7eue5j0u64.css.gz",
+      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-7eue5j0u64.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4095,11 +3958,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw=\""
+          "Value": "\"U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 07:41:52 GMT"
+          "Value": "Tue, 08 Apr 2025 13:30:35 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4117,7 +3980,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "v5y93bflc8"
+          "Value": "7eue5j0u64"
         },
         {
           "Name": "label",
@@ -4125,7 +3988,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-hslzjtLlxzgeSlw+XJLwy8fqLB7Xp7DmQuWFfnUuGrw="
+          "Value": "sha256-U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-7eue5j0u64.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001089324619"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "917"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 13:30:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "E:\\New folder (3)\\Amalkard\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2627"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 13:30:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-X2JWZrYkm7cJJ3vJx+d/JHpf7aqPU0fYV/l7gDSHv1U="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css.gz",
+      "AssetFile": "E:\\New folder (3)\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-7eue5j0u64.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "917"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 13:30:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-U6U1esxh/qBa8DZz/PyDLEcZnNFMQL/s8fpSzM1a/II="
         }
       ]
     },

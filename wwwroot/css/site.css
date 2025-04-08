@@ -42,8 +42,8 @@ html {
 
 .responsive-table td:nth-child(7),
 .responsive-table th:nth-child(6),
-.responsive-table td:nth-child(12),
-.responsive-table th:nth-child(11) {
+.responsive-table td:nth-child(13),
+.responsive-table th:nth-child(12) {
   min-width: 130px !important;
   max-width: 130px !important;
 }
@@ -52,18 +52,18 @@ html {
   min-width: 200px !important;
 }
 
-.responsive-table td:nth-child(14),
-.responsive-table th:nth-child(13) {
-  min-width: 60px !important;
-}
-.responsive-table td:nth-child(13),
-.responsive-table th:nth-child(12),
 .responsive-table td:nth-child(15),
 .responsive-table th:nth-child(14) {
-  min-width: 50px !important;
+  min-width: 60px !important;
 }
+.responsive-table td:nth-child(14),
+.responsive-table th:nth-child(13),
 .responsive-table td:nth-child(16),
 .responsive-table th:nth-child(15) {
+  min-width: 50px !important;
+}
+.responsive-table td:nth-child(19),
+.responsive-table th:nth-child(18) {
   min-width: 50px !important;
 }
 

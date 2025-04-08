@@ -33,9 +33,12 @@ namespace MyProject.Models
         [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "فقط حروف قابل قبول است.")]
         public string CertificateIssuePlace { get; set; }
 
+        [Required(ErrorMessage = "مقطع تحصیلی الزامی است.")]
+        public string EducationDegree { get; set; }
+
         [Required(ErrorMessage = "مدرک تحصیلی الزامی است.")]
         [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "فقط حروف قابل قبول است.")]
-        public string EducationDegree { get; set; }
+        public string EducationCert { get; set; }
 
         [Required(ErrorMessage = "شغل الزامی است.")]
         public string Job { get; set; }
@@ -52,7 +55,16 @@ namespace MyProject.Models
         [Required(ErrorMessage = "سرپرست خانوار الزامی است.")]
         public bool IsHeadOfHousehold { get; set; }
 
+        [Required(ErrorMessage = "شماره شبا الزامی است.")]
+        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "فقط حروف قابل قبول است.")]
+        public string Sheba { get; set; }
+
+        [Required(ErrorMessage = "نام بانک الزامی است.")]
+        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "فقط حروف قابل قبول است.")]
+        public string BankName { get; set; }
+
         public bool HasInsurance { get; set; }
+        public int InsuranceNumber { get; set; } // سابقه بیمه
         public int InsuranceHistory { get; set; } // سابقه بیمه
     }
 }

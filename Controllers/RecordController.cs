@@ -25,13 +25,15 @@ namespace MyProject.Controllers
                 BirthDate = "",
                 BirthCity = "تهران",
                 CertificateIssuePlace = "تهران",
-                EducationDegree = "لیسانس",
-                Job = "مهندس",
+                EducationCert = "مهندسی عمران",
                 EmploymentStartDate = "",
                 MaritalStatus = "متاهل",
                 ChildrenCount = 2,
                 IsHeadOfHousehold = true,
+                Sheba = "123456789101213141516171",
+                BankName = "بانک سپه",
                 HasInsurance = true,
+                InsuranceNumber = 1234567890,
                 InsuranceHistory = 5079
             }
         };
@@ -58,7 +60,8 @@ namespace MyProject.Controllers
             var selectedOffice = _context.Offices.FirstOrDefault(o => o.id == selectedOfficeId);
             var isNational = selectedOffice?.is_national ?? false;
 
-            ViewBag.Jobs = new List<string> { "مهندس", "پزشک", "حسابدار", "مدیر", "کارمند" };
+            ViewBag.Jobs = new List<string> { "فهرست بردار", "آمارگر" };
+            ViewBag.Degrees = new List<string> { "کارشناسی", "کارشناسی ارشد", "دکترا" };
             ViewBag.Fullname = fullname;
             ViewBag.Offices = offices;
             ViewBag.IsNational = isNational;
@@ -134,12 +137,16 @@ namespace MyProject.Controllers
                 existingRecord.BirthCity = record.BirthCity;
                 existingRecord.CertificateIssuePlace = record.CertificateIssuePlace;
                 existingRecord.EducationDegree = record.EducationDegree;
+                existingRecord.EducationCert = record.EducationCert;
                 existingRecord.Job = record.Job;
                 existingRecord.EmploymentStartDate = record.EmploymentStartDate;
                 existingRecord.MaritalStatus = record.MaritalStatus;
                 existingRecord.ChildrenCount = record.ChildrenCount;
                 existingRecord.IsHeadOfHousehold = record.IsHeadOfHousehold;
+                existingRecord.Sheba = record.Sheba;
+                existingRecord.BankName = record.BankName;
                 existingRecord.HasInsurance = record.HasInsurance;
+                existingRecord.InsuranceNumber = record.InsuranceNumber;
                 existingRecord.InsuranceHistory = record.InsuranceHistory;
             }
             return RedirectToAction("Index");

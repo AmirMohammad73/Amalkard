@@ -131,13 +131,17 @@
                         <th>تاریخ تولد</th>
                         <th>شهر محل تولد</th>
                         <th>محل صدور شناسنامه</th>
+                        <th>مقطع تحصیلی</th>
                         <th>مدرک تحصیلی</th>
                         <th>شغل</th>
                         <th>تاریخ شروع کار</th>
                         <th>متاهل</th>
                         <th>تعداد فرزند</th>
                         <th>سرپرست خانوار</th>
+                        <th>شماره شبا</th>
+                        <th>نام بانک</th>
                         <th>دارای سابقه بیمه</th>
+                        <th>شماره بیمه</th>
                         <th>تعداد روزهای بیمه شده</th>
                         <th>تصویر قرارداد</th>
                         <th>عملکرد ماهانه</th>
@@ -158,7 +162,15 @@
                             <td><input type="text" name="birthCity" value="@record.BirthCity" class="form-control" /></td>
                             <td><input type="text" name="certificateIssuePlace" value="@record.CertificateIssuePlace"
                                     class="form-control" /></td>
-                            <td><input type="text" name="educationDegree" value="@record.EducationDegree"
+                            <td>
+                                <select name="educationDegree" class="form-select">
+                                    @foreach (var degree in ViewBag.Degrees)
+                                    {
+                                        <option value="@degree" selected="@(degree == record.EducationDegree)">@degree</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input type="text" name="educationCert" value="@record.EducationCert"
                                     class="form-control" /></td>
                             <td>
                                 <select name="job" class="form-select">
@@ -180,9 +192,17 @@
                                 <input type="checkbox" name="isHeadOfHousehold" value="true" @(record.IsHeadOfHousehold ?
                                 "checked" : "") />
                             </td>
+                            <td><input type="text" name="sheba" value="@record.Sheba"
+                                    class="form-control" /></td>
+                            <td><input type="text" name="bankName" value="@record.BankName"
+                                    class="form-control" /></td>
                             <td>
                                 <input type="checkbox" name="hasInsurance" value="true" @(record.HasInsurance ?
                                 "checked" : "") />
+                            </td>
+                            <td>
+                                <input type="text" name="insuranceNumber" value="@record.InsuranceNumber"
+                                    class="form-control" />
                             </td>
                             <td>
                                 <input type="text" name="insuranceHistory" value="@record.InsuranceHistory"
