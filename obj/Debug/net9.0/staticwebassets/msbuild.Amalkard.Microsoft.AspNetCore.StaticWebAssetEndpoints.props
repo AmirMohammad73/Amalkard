@@ -12,6 +12,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nlh94or5nu"},{"Name":"integrity","Value":"sha256-W5Wp4TXEBIJ3eQK1B2Litkeiz5lOGej1QlJJ\u002BN\u002BvLxU="},{"Name":"label","Value":"_content/Amalkard/Amalkard.bundle.scp.css"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1126"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022W5Wp4TXEBIJ3eQK1B2Litkeiz5lOGej1QlJJ\u002BN\u002BvLxU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 05 Apr 2025 01:19:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Amalkard/css/jalalidatepicker.min.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\jalalidatepicker.min.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-awq\u002Br\u002Bse3PMcgF2S9Ct/QJ3Cy70js/KChO\u002Bzu/CsXGE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"7980"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022awq\u002Br\u002Bse3PMcgF2S9Ct/QJ3Cy70js/KChO\u002Bzu/CsXGE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 08 Apr 2025 00:30:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Amalkard/css/jalalidatepicker.min.nla367jla1.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\jalalidatepicker.min.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nla367jla1"},{"Name":"integrity","Value":"sha256-awq\u002Br\u002Bse3PMcgF2S9Ct/QJ3Cy70js/KChO\u002Bzu/CsXGE="},{"Name":"label","Value":"_content/Amalkard/css/jalalidatepicker.min.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"7980"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022awq\u002Br\u002Bse3PMcgF2S9Ct/QJ3Cy70js/KChO\u002Bzu/CsXGE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 08 Apr 2025 00:30:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Amalkard/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -47,6 +59,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5430"},{"Name":"Content-Type","Value":"image/x-icon"},{"Name":"ETag","Value":"\u0022Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\u0022"},{"Name":"Last-Modified","Value":"Fri, 14 Mar 2025 22:52:42 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Amalkard/js/jalalidatepicker.min.hgunnpmtl2.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\jalalidatepicker.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hgunnpmtl2"},{"Name":"integrity","Value":"sha256-D\u002BsBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="},{"Name":"label","Value":"_content/Amalkard/js/jalalidatepicker.min.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"19449"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022D\u002BsBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\u0022"},{"Name":"Last-Modified","Value":"Tue, 08 Apr 2025 00:30:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Amalkard/js/jalalidatepicker.min.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\jalalidatepicker.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-D\u002BsBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"19449"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022D\u002BsBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\u0022"},{"Name":"Last-Modified","Value":"Tue, 08 Apr 2025 00:30:56 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Amalkard/js/recordPerformance.jb7pagqrov.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\recordPerformance.js'))</AssetFile>

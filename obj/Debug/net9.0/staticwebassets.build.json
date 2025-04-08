@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vywHvAjkwZAb5hm3GVEyMuqe1kg2oeAm1bVZpDLN5HE=",
+  "Hash": "mfsNRQGHkPRMsOQWx/b+KVlkGN9uRz8zb1nwOpnYTWo=",
   "Source": "Amalkard",
   "BasePath": "_content/Amalkard",
   "Mode": "Default",
@@ -479,6 +479,27 @@
       "OriginalItemSpec": "E:\\Amalkard\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
+      "Identity": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\b8mwk2pm52-hgunnpmtl2.gz",
+      "SourceId": "Amalkard",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/Amalkard",
+      "RelativePath": "js/jalalidatepicker.min#[.{fingerprint=hgunnpmtl2}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "E:\\Amalkard\\wwwroot\\js\\jalalidatepicker.min.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "c6g0qltppj",
+      "Integrity": "HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\Amalkard\\wwwroot\\js\\jalalidatepicker.min.js"
+    },
+    {
       "Identity": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\bhob4a9b54-c2oey78nd0.gz",
       "SourceId": "Amalkard",
       "SourceType": "Discovered",
@@ -834,6 +855,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\Amalkard\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Identity": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\kwnomag500-nla367jla1.gz",
+      "SourceId": "Amalkard",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/Amalkard",
+      "RelativePath": "css/jalalidatepicker.min#[.{fingerprint=nla367jla1}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "E:\\Amalkard\\wwwroot\\css\\jalalidatepicker.min.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "tk1bclsats",
+      "Integrity": "Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\Amalkard\\wwwroot\\css\\jalalidatepicker.min.css"
     },
     {
       "Identity": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\l2tdem9a6n-mrlpezrjn3.gz",
@@ -1466,6 +1508,27 @@
       "OriginalItemSpec": "E:\\Amalkard\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Amalkard.bundle.scp.css"
     },
     {
+      "Identity": "E:\\Amalkard\\wwwroot\\css\\jalalidatepicker.min.css",
+      "SourceId": "Amalkard",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Amalkard\\wwwroot\\",
+      "BasePath": "_content/Amalkard",
+      "RelativePath": "css/jalalidatepicker.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nla367jla1",
+      "Integrity": "awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\jalalidatepicker.min.css"
+    },
+    {
       "Identity": "E:\\Amalkard\\wwwroot\\css\\site.css",
       "SourceId": "Amalkard",
       "SourceType": "Discovered",
@@ -1527,6 +1590,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "E:\\Amalkard\\wwwroot\\js\\jalalidatepicker.min.js",
+      "SourceId": "Amalkard",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Amalkard\\wwwroot\\",
+      "BasePath": "_content/Amalkard",
+      "RelativePath": "js/jalalidatepicker.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hgunnpmtl2",
+      "Integrity": "D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jalalidatepicker.min.js"
     },
     {
       "Identity": "E:\\Amalkard\\wwwroot\\js\\recordPerformance.js",
@@ -3450,6 +3534,304 @@
       ]
     },
     {
+      "Route": "css/jalalidatepicker.min.css",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\kwnomag500-nla367jla1.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000552486188"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.css",
+      "AssetFile": "E:\\Amalkard\\wwwroot\\css\\jalalidatepicker.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7980"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.css.gz",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\kwnomag500-nla367jla1.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.nla367jla1.css",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\kwnomag500-nla367jla1.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000552486188"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nla367jla1"
+        },
+        {
+          "Name": "label",
+          "Value": "css/jalalidatepicker.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.nla367jla1.css",
+      "AssetFile": "E:\\Amalkard\\wwwroot\\css\\jalalidatepicker.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7980"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nla367jla1"
+        },
+        {
+          "Name": "label",
+          "Value": "css/jalalidatepicker.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.nla367jla1.css.gz",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\kwnomag500-nla367jla1.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nla367jla1"
+        },
+        {
+          "Name": "label",
+          "Value": "css/jalalidatepicker.min.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8="
+        }
+      ]
+    },
+    {
       "Route": "css/site.css",
       "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\o4imlq3g4x-v5y93bflc8.gz",
       "Selectors": [
@@ -4340,6 +4722,304 @@
         {
           "Name": "integrity",
           "Value": "sha256-wfFuuYm+Lh6RbCeeiUqxw334b/hIOkp5j9eokGUM1Y0="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.hgunnpmtl2.js",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\b8mwk2pm52-hgunnpmtl2.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000148831671"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hgunnpmtl2"
+        },
+        {
+          "Name": "label",
+          "Value": "js/jalalidatepicker.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.hgunnpmtl2.js",
+      "AssetFile": "E:\\Amalkard\\wwwroot\\js\\jalalidatepicker.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19449"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hgunnpmtl2"
+        },
+        {
+          "Name": "label",
+          "Value": "js/jalalidatepicker.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.hgunnpmtl2.js.gz",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\b8mwk2pm52-hgunnpmtl2.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hgunnpmtl2"
+        },
+        {
+          "Name": "label",
+          "Value": "js/jalalidatepicker.min.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.js",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\b8mwk2pm52-hgunnpmtl2.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000148831671"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.js",
+      "AssetFile": "E:\\Amalkard\\wwwroot\\js\\jalalidatepicker.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19449"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.js.gz",
+      "AssetFile": "E:\\Amalkard\\obj\\Debug\\net9.0\\compressed\\b8mwk2pm52-hgunnpmtl2.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg="
         }
       ]
     },

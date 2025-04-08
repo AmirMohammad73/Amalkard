@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Amalkard.nlh94or5nu.bundle.scp.css"
     },
     {
+      "Id": "E:\\Amalkard\\wwwroot\\css\\jalalidatepicker.min.css",
+      "PackagePath": "staticwebassets\\css\\jalalidatepicker.min.css"
+    },
+    {
       "Id": "E:\\Amalkard\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -15,6 +19,10 @@
     {
       "Id": "E:\\Amalkard\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "E:\\Amalkard\\wwwroot\\js\\jalalidatepicker.min.js",
+      "PackagePath": "staticwebassets\\js\\jalalidatepicker.min.js"
     },
     {
       "Id": "E:\\Amalkard\\wwwroot\\js\\recordPerformance.js",

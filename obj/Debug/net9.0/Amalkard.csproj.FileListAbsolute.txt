@@ -231,3 +231,8 @@ E:\Amalkard\obj\Debug\net9.0\refint\Amalkard.dll
 E:\Amalkard\obj\Debug\net9.0\Amalkard.pdb
 E:\Amalkard\obj\Debug\net9.0\Amalkard.genruntimeconfig.cache
 E:\Amalkard\obj\Debug\net9.0\ref\Amalkard.dll
+E:\Amalkard\obj\Debug\net9.0\Amalkard.sourcelink.json
+E:\Amalkard\bin\Debug\net9.0\package-lock.json
+E:\Amalkard\bin\Debug\net9.0\package.json
+E:\Amalkard\obj\Debug\net9.0\compressed\kwnomag500-nla367jla1.gz
+E:\Amalkard\obj\Debug\net9.0\compressed\b8mwk2pm52-hgunnpmtl2.gz

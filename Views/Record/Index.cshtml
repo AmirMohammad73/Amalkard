@@ -5,9 +5,22 @@
 }
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href = "E:\Amalkard\wwwroot\css\styles.css" />
-
+    <link rel="stylesheet" href="E:\Amalkard\wwwroot\css\styles.css" />
+    
+    <!-- افزودن لینک‌های Persian Datepicker -->
+    <link rel="stylesheet" href="~/css/jalalidatepicker.min.css" />
+    <script src="~/js/jalalidatepicker.min.js"></script>
+    <!-- استایل اختصاصی برای تقویم -->
+    <style>
+        .pwt-datepicker__container {
+            direction: rtl;
+        }
+        .pwt-datepicker__calendar {
+            font-family: "B Nazanin", Tahoma, sans-serif;
+        }
+    </style>
 </head>
+
 <!-- Navbar با چیدمان صحیح -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2 px-0">
     <div class="container-fluid gx-0 mx-0">
@@ -68,7 +81,7 @@
     </div>
 </div>
 
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <!-- DropDowns -->
     <div class="row mb-2">
     <div class="col-md-4">
@@ -141,7 +154,7 @@
                             <td><input type="text" name="lastName" value="@record.LastName" class="form-control" /></td>
                             <td><input type="text" name="nationalCode" value="@record.NationalCode" class="form-control" /></td>
                             <td><input type="text" name="fatherName" value="@record.FatherName" class="form-control" /></td>
-                            <td><input type="date" name="birthDate" value="@record.BirthDate" class="form-control" /></td>
+                            <td><input name="birthDate" value="@record.BirthDate" class="form-control" data-jdp/></td>
                             <td><input type="text" name="birthCity" value="@record.BirthCity" class="form-control" /></td>
                             <td><input type="text" name="certificateIssuePlace" value="@record.CertificateIssuePlace"
                                     class="form-control" /></td>
@@ -156,8 +169,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="date" name="employmentStartDate" value="@record.EmploymentStartDate"
-                                    class="form-control" /></td>
+                                <input name="employmentStartDate" value="@record.EmploymentStartDate" class="form-control" data-jdp/></td>
                             <td>
                                 <input type="checkbox" name="maritalStatus" value="متاهل" @(record.MaritalStatus == "متاهل"
                                 ? "checked" : "") />
@@ -215,7 +227,9 @@
 </div>
 
 @section Scripts {
+    
     <script>
+        jalaliDatepicker.startWatch();
         console.log("IsNational:", @Json.Serialize(ViewBag.IsNational));
     </script>
     <script>

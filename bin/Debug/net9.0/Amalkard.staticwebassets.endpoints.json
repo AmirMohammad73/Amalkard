@@ -301,6 +301,304 @@
       ]
     },
     {
+      "Route": "css/jalalidatepicker.min.css",
+      "AssetFile": "css/jalalidatepicker.min.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000552486188"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.css",
+      "AssetFile": "css/jalalidatepicker.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7980"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.css.gz",
+      "AssetFile": "css/jalalidatepicker.min.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8="
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.nla367jla1.css",
+      "AssetFile": "css/jalalidatepicker.min.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000552486188"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nla367jla1"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        },
+        {
+          "Name": "label",
+          "Value": "css/jalalidatepicker.min.css"
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.nla367jla1.css",
+      "AssetFile": "css/jalalidatepicker.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7980"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nla367jla1"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-awq+r+se3PMcgF2S9Ct/QJ3Cy70js/KChO+zu/CsXGE="
+        },
+        {
+          "Name": "label",
+          "Value": "css/jalalidatepicker.min.css"
+        }
+      ]
+    },
+    {
+      "Route": "css/jalalidatepicker.min.nla367jla1.css.gz",
+      "AssetFile": "css/jalalidatepicker.min.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nla367jla1"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q+MzZP1ad/iDJhyfJym3JddCff5CSZPTLbNEzbu0oK8="
+        },
+        {
+          "Name": "label",
+          "Value": "css/jalalidatepicker.min.css.gz"
+        }
+      ]
+    },
+    {
       "Route": "css/site.css",
       "AssetFile": "css/site.css.gz",
       "Selectors": [
@@ -1191,6 +1489,304 @@
         {
           "Name": "integrity",
           "Value": "sha256-wfFuuYm+Lh6RbCeeiUqxw334b/hIOkp5j9eokGUM1Y0="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.hgunnpmtl2.js",
+      "AssetFile": "js/jalalidatepicker.min.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000148831671"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hgunnpmtl2"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        },
+        {
+          "Name": "label",
+          "Value": "js/jalalidatepicker.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.hgunnpmtl2.js",
+      "AssetFile": "js/jalalidatepicker.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19449"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hgunnpmtl2"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        },
+        {
+          "Name": "label",
+          "Value": "js/jalalidatepicker.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.hgunnpmtl2.js.gz",
+      "AssetFile": "js/jalalidatepicker.min.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hgunnpmtl2"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg="
+        },
+        {
+          "Name": "label",
+          "Value": "js/jalalidatepicker.min.js.gz"
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.js",
+      "AssetFile": "js/jalalidatepicker.min.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000148831671"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.js",
+      "AssetFile": "js/jalalidatepicker.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19449"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-D+sBqj7NbnbHYbr/NRL487j3D7N9KZRGHWiBv9Ci3Mg="
+        }
+      ]
+    },
+    {
+      "Route": "js/jalalidatepicker.min.js.gz",
+      "AssetFile": "js/jalalidatepicker.min.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6718"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 00:30:56 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HNAnTyMQsOyEcoCX+bU2jxeXlt/wDxt2RXWkZ1AZxyg="
         }
       ]
     },
