@@ -149,7 +149,6 @@ E:\Amalkard\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.d
 E:\Amalkard\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 E:\Amalkard\obj\Debug\net9.0\scopedcss\bundle\Amalkard.styles.css
 E:\Amalkard\obj\Debug\net9.0\scopedcss\projectbundle\Amalkard.bundle.scp.css
-E:\Amalkard\obj\Debug\net9.0\compressed\o4imlq3g4x-v5y93bflc8.gz
 E:\Amalkard\obj\Debug\net9.0\compressed\gv3hu5108e-rjjp76oti6.gz
 E:\Amalkard\obj\Debug\net9.0\compressed\5e47otb930-61n19gt1b8.gz
 E:\Amalkard\obj\Debug\net9.0\compressed\uaj2mq4ggs-jb7pagqrov.gz
@@ -474,3 +473,4 @@ E:\New folder (3)\Amalkard\obj\Debug\net9.0\Amalkard.pdb
 E:\New folder (3)\Amalkard\obj\Debug\net9.0\Amalkard.genruntimeconfig.cache
 E:\New folder (3)\Amalkard\obj\Debug\net9.0\ref\Amalkard.dll
 E:\New folder (3)\Amalkard\obj\Debug\net9.0\compressed\o4imlq3g4x-7eue5j0u64.gz
+E:\Amalkard\obj\Debug\net9.0\compressed\o4imlq3g4x-7eue5j0u64.gz

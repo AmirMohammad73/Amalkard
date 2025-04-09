@@ -1,4 +1,4 @@
-@model List<MyProject.Models.Record>
+@model List<EmployeePerformanceSystem.Models.Record>
 
 @{
     ViewData["Title"] = "Record Management";
@@ -154,63 +154,62 @@
                         <tr>
                             <td>@record.Id</td>
                             <input type="hidden" name="id" value="@record.Id" />
-                            <td><input type="text" name="firstName" value="@record.FirstName" class="form-control" /></td>
-                            <td><input type="text" name="lastName" value="@record.LastName" class="form-control" /></td>
-                            <td><input type="text" name="nationalCode" value="@record.NationalCode" class="form-control" /></td>
-                            <td><input type="text" name="fatherName" value="@record.FatherName" class="form-control" /></td>
-                            <td><input name="birthDate" value="@record.BirthDate" class="form-control" data-jdp/></td>
-                            <td><input type="text" name="birthCity" value="@record.BirthCity" class="form-control" /></td>
-                            <td><input type="text" name="certificateIssuePlace" value="@record.CertificateIssuePlace"
+                            <td><input type="text" name="firstName" value="@record.firstName" class="form-control" /></td>
+                            <td><input type="text" name="lastName" value="@record.lastName" class="form-control" /></td>
+                            <td><input type="text" name="nationalCode" value="@record.national_id" class="form-control" /></td>
+                            <td><input type="text" name="fatherName" value="@record.father_name" class="form-control" /></td>
+                            <td><input name="birthDate" value="@record.birthdate" class="form-control" data-jdp/></td>
+                            <td><input type="text" name="birthCity" value="@record.b_city" class="form-control" /></td>
+                            <td><input type="text" name="certificateIssuePlace" value="@record.p_city"
                                     class="form-control" /></td>
                             <td>
                                 <select name="educationDegree" class="form-select">
-                                    @foreach (var degree in ViewBag.Degrees)
+                                    @foreach (var degre in ViewBag.Degrees)
                                     {
-                                        <option value="@degree" selected="@(degree == record.EducationDegree)">@degree</option>
+                                        <option value="@degre" selected="@(degre == record.degree.ToString())">@degre</option>
                                     }
                                 </select>
                             </td>
-                            <td><input type="text" name="educationCert" value="@record.EducationCert"
+                            <td><input type="text" name="educationCert" value="@record.cert"
                                     class="form-control" /></td>
                             <td>
                                 <select name="job" class="form-select">
                                     @foreach (var job in ViewBag.Jobs)
                                     {
-                                        <option value="@job" selected="@(job == record.Job)">@job</option>
+                                        <option value="@job" selected="@(job == record.Job.ToString())">@job</option>
                                     }
                                 </select>
                             </td>
                             <td>
-                                <input name="employmentStartDate" value="@record.EmploymentStartDate" class="form-control" data-jdp/></td>
+                                <input name="employmentStartDate" value="@record.startdate" class="form-control" data-jdp/></td>
                             <td>
-                                <input type="checkbox" name="maritalStatus" value="متاهل" @(record.MaritalStatus == "متاهل"
-                                ? "checked" : "") />
+                                <input type="checkbox" name="maritalStatus" value="متاهل" @(record.is_married ? "checked" : "") />
                             </td>
-                            <td><input type="number" name="childrenCount" value="@record.ChildrenCount"
+                            <td><input type="number" name="childrenCount" value="@record.children_no"
                                     class="form-control" /></td>
                             <td>
-                                <input type="checkbox" name="isHeadOfHousehold" value="true" @(record.IsHeadOfHousehold ?
+                                <input type="checkbox" name="isHeadOfHousehold" value="true" @(record.is_head ?
                                 "checked" : "") />
                             </td>
                             <td><input type="text" name="sheba" value="@record.Sheba"
                                     class="form-control" /></td>
-                            <td><input type="text" name="bankName" value="@record.BankName"
+                            <td><input type="text" name="bank_name" value="@record.bank_name"
                                     class="form-control" /></td>
                             <td>
-                                <input type="checkbox" name="hasInsurance" value="true" @(record.HasInsurance ?
+                                <input type="checkbox" name="hasInsurance" value="true" @(record.has_insurance ?
                                 "checked" : "") />
                             </td>
                             <td>
-                                <input type="text" name="insuranceNumber" value="@record.InsuranceNumber"
+                                <input type="text" name="insuranceNumber" value="@record.insurance_number"
                                     class="form-control" />
                             </td>
                             <td>
-                                <input type="text" name="insuranceHistory" value="@record.InsuranceHistory"
+                                <input type="text" name="insuranceHistory" value="@record.insurance_days"
                                     class="form-control" />
                             </td>
                             <td>
                                 <button type="button" class="btn btn-info btn-sm show-performance" 
-                                    data-first-name="@record.FirstName"
+                                    data-first-name="@record.firstName"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#contractModal">
                                     نمایش
@@ -218,8 +217,8 @@
                             </td>
                             <td>
                                 <button type="button" class="btn btn-info btn-sm show-performance" 
-                                    data-first-name="@record.FirstName"
-                                    data-last-name="@record.LastName"
+                                    data-first-name="@record.firstName"
+                                    data-last-name="@record.lastName"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#performanceModal">
                                     نمایش عملکرد
