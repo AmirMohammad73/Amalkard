@@ -96,7 +96,7 @@
     <!-- Dropdown استان -->
     <div class="row mb-2">
         <div class="col-md-4">
-            <select class="form-select" id="provinceDropdown" @(ViewBag.IsNational ? "" : "disabled")>
+            <select class="form-select" id="provinceDropdown">
                 <option value="">انتخاب استان</option>
                 @foreach (var province in ViewBag.Provinces)
                 {
@@ -145,7 +145,7 @@
                         <th>تعداد روزهای بیمه شده</th>
                         <th>تصویر قرارداد</th>
                         <th>عملکرد ماهانه</th>
-                        <th>عملیات</th>
+                        <th>حذف</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -164,9 +164,10 @@
                                     class="form-control" /></td>
                             <td>
                                 <select name="educationDegree" class="form-select">
-                                    @foreach (var degre in ViewBag.Degrees)
+                                    @foreach (var degree in ViewBag.Degrees)
                                     {
-                                        <option value="@degre" selected="@(degre == record.degree.ToString())">@degre</option>
+                                        var degreeValue = Array.IndexOf(ViewBag.Degrees.ToArray(), degree) + 1;
+                                        <option value="@degreeValue" selected="@(record.degree == degreeValue)">@degree</option>
                                     }
                                 </select>
                             </td>
@@ -176,7 +177,8 @@
                                 <select name="job" class="form-select">
                                     @foreach (var job in ViewBag.Jobs)
                                     {
-                                        <option value="@job" selected="@(job == record.Job.ToString())">@job</option>
+                                        var jobValue = Array.IndexOf(ViewBag.Jobs.ToArray(), job) + 1;
+                                        <option value="@jobValue" selected="@(record.Job == jobValue)">@job</option>
                                     }
                                 </select>
                             </td>

@@ -44,17 +44,33 @@ html {
 .responsive-table th:nth-child(6),
 .responsive-table td:nth-child(13),
 .responsive-table th:nth-child(12) {
-  min-width: 130px !important;
-  max-width: 130px !important;
+  min-width: 110px !important;
+  max-width: 110px !important;
 }
 .responsive-table td:nth-child(10),
 .responsive-table th:nth-child(9) {
+  min-width: 150px !important;
+}
+.responsive-table td:nth-child(11),
+.responsive-table th:nth-child(10) {
   min-width: 200px !important;
+}
+.responsive-table td:nth-child(12),
+.responsive-table th:nth-child(11) {
+  min-width: 130px !important;
 }
 
 .responsive-table td:nth-child(15),
 .responsive-table th:nth-child(14) {
   min-width: 60px !important;
+}
+.responsive-table td:nth-child(17),
+.responsive-table th:nth-child(16) {
+  min-width: 220px !important;
+}
+.responsive-table td:nth-child(20),
+.responsive-table th:nth-child(19) {
+  min-width: 110px !important;
 }
 .responsive-table td:nth-child(14),
 .responsive-table th:nth-child(13),

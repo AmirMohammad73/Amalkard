@@ -472,5 +472,5 @@ E:\New folder (3)\Amalkard\obj\Debug\net9.0\refint\Amalkard.dll
 E:\New folder (3)\Amalkard\obj\Debug\net9.0\Amalkard.pdb
 E:\New folder (3)\Amalkard\obj\Debug\net9.0\Amalkard.genruntimeconfig.cache
 E:\New folder (3)\Amalkard\obj\Debug\net9.0\ref\Amalkard.dll
-E:\New folder (3)\Amalkard\obj\Debug\net9.0\compressed\o4imlq3g4x-7eue5j0u64.gz
 E:\Amalkard\obj\Debug\net9.0\compressed\o4imlq3g4x-7eue5j0u64.gz
+E:\New folder (3)\Amalkard\obj\Debug\net9.0\compressed\o4imlq3g4x-dyfbt01ixy.gz

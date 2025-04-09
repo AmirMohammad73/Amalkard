@@ -175,35 +175,54 @@ public IActionResult AddRecord()
 }
 
 [HttpPost]
-public IActionResult EditRecord(Record record)
+public IActionResult EditRecord(List<Record> records)
 {
-    var existingRecord = _context.Records.FirstOrDefault(r => r.Id == record.Id);
-    if (existingRecord != null)
+    foreach (var record in records)
     {
-        existingRecord.firstName = record.firstName;
-        existingRecord.lastName = record.lastName;
-        existingRecord.national_id = record.national_id;
-        existingRecord.father_name = record.father_name;
-        existingRecord.birthdate = record.birthdate;
-        existingRecord.b_city = record.b_city;
-        existingRecord.p_city = record.p_city;
-        existingRecord.degree = record.degree;
-        existingRecord.cert = record.cert;
-        existingRecord.Job = record.Job;
-        existingRecord.startdate = record.startdate;
-        existingRecord.is_married = record.is_married;
-        existingRecord.children_no = record.children_no;
-        existingRecord.is_head = record.is_head;
-        existingRecord.Sheba = record.Sheba;
-        existingRecord.bank_name = record.bank_name;
-        existingRecord.has_insurance = record.has_insurance;
-        existingRecord.insurance_number = record.insurance_number;
-        existingRecord.insurance_days = record.insurance_days;
+        if (ModelState.IsValid) // بررسی اعتبارسنجی با استفاده از DataAnnotation
+        {
+            var existingRecord = _context.Records.FirstOrDefault(r => r.Id == record.Id);
 
-        _context.SaveChanges();
+            if (existingRecord != null) // ویرایش رکورد موجود
+            {
+                existingRecord.firstName = record.firstName;
+                existingRecord.lastName = record.lastName;
+                existingRecord.national_id = record.national_id;
+                existingRecord.father_name = record.father_name;
+                existingRecord.birthdate = record.birthdate;
+                existingRecord.b_city = record.b_city;
+                existingRecord.p_city = record.p_city;
+                existingRecord.degree = record.degree;
+                existingRecord.cert = record.cert;
+                existingRecord.Job = record.Job;
+                existingRecord.startdate = record.startdate;
+                existingRecord.is_married = record.is_married;
+                existingRecord.children_no = record.children_no;
+                existingRecord.is_head = record.is_head;
+                existingRecord.Sheba = record.Sheba;
+                existingRecord.bank_name = record.bank_name;
+                existingRecord.has_insurance = record.has_insurance;
+                existingRecord.insurance_number = record.insurance_number;
+                existingRecord.insurance_days = record.insurance_days;
+            }
+            else // اضافه کردن رکورد جدید
+            {
+                _context.Records.Add(record);
+            }
+        }
+        else
+        {
+            // در صورت نامعتبر بودن داده‌ها خطا برگردانده شود
+            TempData["ErrorMessage"] = "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
+            return RedirectToAction("Index");
+        }
     }
+
+    _context.SaveChanges(); // ذخیره‌سازی تغییرات در دیتابیس
+    TempData["SuccessMessage"] = "تغییرات با موفقیت ذخیره شد.";
     return RedirectToAction("Index");
 }
+
 
 [HttpPost]
 public IActionResult DeleteRecord(int id)
