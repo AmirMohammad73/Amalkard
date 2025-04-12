@@ -8,9 +8,11 @@ html {
     font-size: 16px;
   }
 }
-.modal-lg{
+
+.modal-lg {
   --bs-modal-width: 100% !important;
 }
+
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,
@@ -18,17 +20,24 @@ html {
 .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
+
 .responsive-table {
-  overflow-x: auto; /* ایجاد اسکرول افقی در صورت نیاز */
-  white-space: nowrap; /* جلوگیری از شکستن خطوط درون سلول‌ها */
+  overflow-x: auto;
+  /* ایجاد اسکرول افقی در صورت نیاز */
+  white-space: nowrap;
+  /* جلوگیری از شکستن خطوط درون سلول‌ها */
 }
 
 .responsive-table th,
 .responsive-table td {
-  min-width: 120px; /* حداقل عرض پیش‌فرض برای ستون‌ها */
-  max-width: 200px; /* حداکثر عرض پیش‌فرض برای ستون‌ها (اختیاری) */
-  overflow: hidden; /* جلوگیری از خارج شدن محتوا از سلول */
-  text-overflow: ellipsis; /* نمایش ... اگر محتوا بیش از حد بود */
+  min-width: 120px;
+  /* حداقل عرض پیش‌فرض برای ستون‌ها */
+  max-width: 200px;
+  /* حداکثر عرض پیش‌فرض برای ستون‌ها (اختیاری) */
+  overflow: hidden;
+  /* جلوگیری از خارج شدن محتوا از سلول */
+  text-overflow: ellipsis;
+  /* نمایش ... اگر محتوا بیش از حد بود */
 }
 
 /* تنظیم عرض‌های خاص برای ستون‌ها */
@@ -36,6 +45,7 @@ html {
 .responsive-table th:nth-child(1) {
   min-width: 10px !important;
 }
+
 .responsive-table td:nth-child(5),
 .responsive-table th:nth-child(4) {
   min-width: 130px !important;
@@ -48,14 +58,17 @@ html {
   min-width: 110px !important;
   max-width: 110px !important;
 }
+
 .responsive-table td:nth-child(10),
 .responsive-table th:nth-child(9) {
   min-width: 150px !important;
 }
+
 .responsive-table td:nth-child(11),
 .responsive-table th:nth-child(10) {
   min-width: 200px !important;
 }
+
 .responsive-table td:nth-child(12),
 .responsive-table th:nth-child(11) {
   min-width: 130px !important;
@@ -65,20 +78,24 @@ html {
 .responsive-table th:nth-child(14) {
   min-width: 60px !important;
 }
+
 .responsive-table td:nth-child(17),
 .responsive-table th:nth-child(16) {
   min-width: 220px !important;
 }
+
 .responsive-table td:nth-child(20),
 .responsive-table th:nth-child(19) {
   min-width: 110px !important;
 }
+
 .responsive-table td:nth-child(14),
 .responsive-table th:nth-child(13),
 .responsive-table td:nth-child(16),
 .responsive-table th:nth-child(15) {
   min-width: 50px !important;
 }
+
 .responsive-table td:nth-child(19),
 .responsive-table th:nth-child(18) {
   min-width: 50px !important;

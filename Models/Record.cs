@@ -70,6 +70,7 @@ namespace EmployeePerformanceSystem.Models
         [StringLength(10, ErrorMessage = "شماره بیمه حداکثر می‌تواند ۱۰ رقمی باشد.")] // تغییر یافته
         public string insurance_number { get; set; }
         public int insurance_days { get; set; }
+        public string contract_image { get; set; }
         public bool is_deleted { get; set; }
     }
 }

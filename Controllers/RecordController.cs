@@ -1,18 +1,21 @@
-using Microsoft.AspNetCore.Mvc;
-using EmployeePerformanceSystem.Models;
-using EmployeePerformanceSystem.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using EmployeePerformanceSystem.Data;
+using EmployeePerformanceSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+
 namespace EmployeePerformanceSystem.Controllers
 {
     public class RecordController : BaseController
     {
         private readonly ApplicationDbContext _context;
+
         public RecordController(ApplicationDbContext context)
         {
             _context = context;
         }
+
         private static List<Record> Records = new List<Record>
         {
             new Record
@@ -34,15 +37,14 @@ namespace EmployeePerformanceSystem.Controllers
                 bank_name = "بانک سپه",
                 has_insurance = true,
                 insurance_number = "1234567890",
-                insurance_days = 5079
-            }
+                insurance_days = 5079,
+            },
         };
 
         public IActionResult Index()
         {
             // خواندن fullname از Session
             var fullname = HttpContext.Session.GetString("Fullname");
-
             // خواندن لیست ادارات و استان‌ها از دیتابیس
             var offices = _context.Offices.ToList();
             var provinces = _context.Provinces.ToList();
@@ -61,8 +63,8 @@ namespace EmployeePerformanceSystem.Controllers
             var isNational = selectedOffice?.is_national ?? false;
 
             // خواندن رکوردها از دیتابیس با شرط is_deleted = false
-            var dbRecords = _context.Records
-                .Where(r => !r.is_deleted)
+            var dbRecords = _context
+                .Records.Where(r => !r.is_deleted)
                 .Select(r => new Record
                 {
                     Id = r.Id,
@@ -84,12 +86,13 @@ namespace EmployeePerformanceSystem.Controllers
                     bank_name = r.bank_name,
                     has_insurance = r.has_insurance,
                     insurance_number = r.insurance_number,
-                    insurance_days = r.insurance_days
+                    insurance_days = r.insurance_days,
                 })
                 .ToList();
 
             // خواندن رکوردهای موقت از Session
-            var tempRecords = HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
+            var tempRecords =
+                HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
 
             // ترکیب رکوردهای دیتابیس و موقت
             var allRecords = dbRecords.Concat(tempRecords).ToList();
@@ -104,6 +107,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             return View(allRecords);
         }
+
         [HttpPost]
         public IActionResult SetOffice(int officeId)
         {
@@ -119,6 +123,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             return Json(new { isNational = false });
         }
+
         public IActionResult FromLogin()
         {
             // خواندن fullname از Session
@@ -134,18 +139,22 @@ namespace EmployeePerformanceSystem.Controllers
             ViewBag.Fullname = fullname;
             return View();
         }
+
         [HttpGet]
         public IActionResult GetCurrentOffice()
         {
             var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
             var selectedOffice = _context.Offices.FirstOrDefault(o => o.id == selectedOfficeId);
 
-            return Json(new
-            {
-                officeId = selectedOffice?.id,
-                isNational = selectedOffice?.is_national ?? false
-            });
+            return Json(
+                new
+                {
+                    officeId = selectedOffice?.id,
+                    isNational = selectedOffice?.is_national ?? false,
+                }
+            );
         }
+
         [HttpPost]
         [HttpPost]
         public IActionResult AddRecord()
@@ -173,35 +182,42 @@ namespace EmployeePerformanceSystem.Controllers
                 has_insurance = false,
                 insurance_number = "",
                 insurance_days = 0,
-                is_deleted = false
+                is_deleted = false,
             };
 
             // اضافه کردن رکورد به لیست موقت (مثلاً در Session)
-            var tempRecords = HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
+            var tempRecords =
+                HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
             tempRecords.Add(newRecord);
             HttpContext.Session.Set("TempRecords", tempRecords);
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public IActionResult EditRecord(List<Record> records)
         {
             if (ModelState.IsValid)
             {
                 // فیلتر کردن رکوردهای خالی
-                var validRecords = records.Where(r =>
-                    !string.IsNullOrEmpty(r.firstName) ||
-                    !string.IsNullOrEmpty(r.lastName) ||
-                    !string.IsNullOrEmpty(r.national_id)).ToList();
+                var validRecords = records
+                    .Where(r =>
+                        !string.IsNullOrEmpty(r.firstName)
+                        || !string.IsNullOrEmpty(r.lastName)
+                        || !string.IsNullOrEmpty(r.national_id)
+                    )
+                    .ToList();
 
                 foreach (var record in validRecords)
                 {
                     if (record.Id == -1) // رکورد جدید
                     {
                         // فقط رکوردهای با اطلاعات معتبر را ذخیره کنید
-                        if (!string.IsNullOrEmpty(record.firstName) ||
-                            !string.IsNullOrEmpty(record.lastName) ||
-                            !string.IsNullOrEmpty(record.national_id))
+                        if (
+                            !string.IsNullOrEmpty(record.firstName)
+                            || !string.IsNullOrEmpty(record.lastName)
+                            || !string.IsNullOrEmpty(record.national_id)
+                        )
                         {
                             record.Id = 0;
                             _context.Records.Add(record);
@@ -209,7 +225,9 @@ namespace EmployeePerformanceSystem.Controllers
                     }
                     else
                     {
-                        var existingRecord = _context.Records.FirstOrDefault(r => r.Id == record.Id);
+                        var existingRecord = _context.Records.FirstOrDefault(r =>
+                            r.Id == record.Id
+                        );
                         if (existingRecord != null)
                         {
                             _context.Entry(existingRecord).CurrentValues.SetValues(record);
@@ -225,11 +243,13 @@ namespace EmployeePerformanceSystem.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
+                TempData["ErrorMessage"] =
+                    "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
             }
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public IActionResult DeleteRecord(int id)
         {
@@ -242,7 +262,56 @@ namespace EmployeePerformanceSystem.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult UploadContract(int id, IFormFile contractFile)
+        {
+            if (contractFile == null || contractFile.Length == 0)
+            {
+                return BadRequest("فایلی ارسال نشده است.");
+            }
+
+            // مسیر ذخیره‌سازی تصویر
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var extension = Path.GetExtension(contractFile.FileName);
+            var fileName = $"{id}{extension}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+            Console.WriteLine("Full file path: " + filePath);
+            // ذخیره فایل
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                contractFile.CopyTo(stream);
+            }
+
+            // ذخیره اطلاعات تصویر در دیتابیس
+            var record = _context.Records.FirstOrDefault(r => r.Id == id);
+            if (record != null)
+            {
+                record.contract_image = $"/uploads/{fileName}"; // مسیر تصویر
+                _context.SaveChanges();
+            }
+
+            return Ok(new { message = "تصویر با موفقیت ذخیره شد." });
+        }
+
+        [HttpGet]
+        public IActionResult GetContractImage(int id)
+        {
+            var record = _context.Records.FirstOrDefault(r => r.Id == id);
+            if (record == null || string.IsNullOrEmpty(record.contract_image))
+            {
+                return NotFound();
+            }
+
+            return Json(new { imageUrl = record.contract_image });
+        }
     }
+
     public static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)

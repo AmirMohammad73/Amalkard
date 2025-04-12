@@ -16,23 +16,22 @@ $(document).ready(function() {
     });
 });
 // نمایش modal تصویر قرارداد
-$(document).on('click', '.show-contract', function() {
+$(document).on('click', '.show-contract', function () {
     var recordId = $(this).data('id');
     $('#contractRecordId').val(recordId);
-    
-    // در اینجا می‌توانید تصویر موجود را از سرور دریافت و نمایش دهید
-    // مثال:
-    /*
-    $.get('/Records/GetContractImage?id=' + recordId, function(data) {
-        if(data.imageUrl) {
+
+    // دریافت تصویر قرارداد از سرور
+    $.get('/Record/GetContractImage?id=' + recordId, function (data) {
+        if (data.imageUrl) {
             $('#contractImagePreview').attr('src', data.imageUrl).show();
             $('#noContractImage').hide();
         } else {
             $('#contractImagePreview').hide();
             $('#noContractImage').show();
         }
+    }).fail(function () {
+        alert('خطا در دریافت تصویر قرارداد.');
     });
-    */
 });
 
 // پیش‌نمایش تصویر قبل از آپلود
@@ -51,16 +50,14 @@ $('#contractFile').change(function() {
 // آپلود تصویر
 $('#uploadContract').click(function() {
     var formData = new FormData($('#contractForm')[0]);
-    
     $.ajax({
-        url: '/Records/UploadContract',
+        url: '/Record/UploadContract',
         type: 'POST',
         data: formData,
         processData: false,
         contentType: false,
         success: function(response) {
             alert('تصویر با موفقیت ذخیره شد');
-            $('#contractModal').modal('hide');
         },
         error: function() {
             alert('خطا در ذخیره تصویر');
