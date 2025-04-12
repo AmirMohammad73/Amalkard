@@ -8,6 +8,7 @@
 }
 
 body {
+    direction: rtl;
     background-color: #F4F6F7;
     display: flex;
     justify-content: center;
@@ -85,4 +86,12 @@ h2 {
 
 .login-btn:hover {
     background: #16A085;
+}
+.field-validation-error {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+.input-validation-error {
+    border-color: #dc3545;
 }

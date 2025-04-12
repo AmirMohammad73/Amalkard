@@ -1,4 +1,5 @@
 html {
+  direction: rtl;
   font-size: 14px;
 }
 
@@ -89,7 +90,6 @@ html {
 }
 
 body {
-  direction: rtl;
   margin-bottom: 60px;
   font-family: 'B Nazanin';
   font-size: small;

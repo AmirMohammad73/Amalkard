@@ -1,293 +1,405 @@
 @model List<EmployeePerformanceSystem.Models.Record>
 
 @{
-    ViewData["Title"] = "Record Management";
+    ViewData["Title"] = "مدیریت رکوردها";
+    Layout = "_Layout";
 }
+
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="E:\Amalkard\wwwroot\css\styles.css" />
-    
-    <!-- افزودن لینک‌های Persian Datepicker -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- استایل‌های اصلی -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Persian Datepicker -->
     <link rel="stylesheet" href="~/css/jalalidatepicker.min.css" />
-    <script src="~/js/jalalidatepicker.min.js"></script>
-    <!-- استایل اختصاصی برای تقویم -->
+
+    <!-- آیکون‌های Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <style>
+        body {
+            font-family: 'B Nazanin', Tahoma, sans-serif;
+            text-align: right;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            padding: 0.75rem;
+        }
+
+        .form-control,
+        .form-select {
+            min-width: 120px;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+
+        .alert {
+            margin: 1rem 0;
+        }
+
         .pwt-datepicker__container {
             direction: rtl;
         }
+
         .pwt-datepicker__calendar {
             font-family: "B Nazanin", Tahoma, sans-serif;
         }
     </style>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
-<!-- Navbar با چیدمان صحیح -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2 px-0">
-    <div class="container-fluid gx-0 mx-0">
-        <div class="row w-100 mx-0 justify-content-between" style="direction: ltr;">
-            <!-- آیکون خاموش در سمت چپ -->
-            <div class="col-auto d-flex align-items-center">
-                <button class="btn btn-link text-white" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                    <i class="bi bi-power fs-4 text-white"></i>
-                </button>
-            </div>
-            
-            <div class="col-auto d-flex align-items-center" style="font-size: x-large;">
-                <span class="navbar-text text-white">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2 px-0">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between w-100 align-items-center">
+                <div class="text-white fs-4">
                     کاربر گرامی @ViewBag.Fullname!
-                </span>
+                </div>
+                <div>
+                    <button class="btn btn-link text-white" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                        <i class="bi bi-power fs-4 text-white"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal تأیید حذف -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">تأیید حذف</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    آیا مطمئن هستید که می‌خواهید این رکورد را حذف کنید؟
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <form id="deleteForm" method="post" asp-action="DeleteRecord" style="display:inline;">
+                        <input type="hidden" name="id" id="deleteRecordId" value="" />
+                        <button type="submit" class="btn btn-danger">حذف</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</nav>
-<!-- Modal برای تأیید حذف -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">تأیید حذف</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <!-- در بخش modal خروج -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">خروج از سیستم</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    آیا مطمئن هستید که می‌خواهید از سیستم خارج شوید؟
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <form method="post" asp-controller="Login" asp-action="Logout">
+                        <button type="submit" class="btn btn-danger">خروج</button>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-                آیا مطمئن هستید که می‌خواهید این رکورد را حذف کنید؟
+        </div>
+    </div>
+    <div class="container-fluid mt-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <select class="form-select" id="officeDropdown" name="officeId" onchange="setOffice(this.value)">
+                    @foreach (var office in ViewBag.Offices)
+                    {
+                        <option value="@office.id" selected="@(office.id == ViewBag.SelectedOfficeId)">@office.name</option>
+                    }
+                </select>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                <form id="deleteForm" method="post" asp-action="DeleteRecord" style="display:inline;">
-                    <input type="hidden" name="id" value="" />
-                    <button type="submit" class="btn btn-danger">حذف</button>
+            <div class="col-md-4">
+                <select class="form-select" id="provinceDropdown">
+                    <option value="">انتخاب استان</option>
+                    @foreach (var province in ViewBag.Provinces)
+                    {
+                        <option value="@province.id">@province.name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <form method="post" asp-action="AddRecord">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle"></i> افزودن رکورد جدید
+                    </button>
                 </form>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Modal برای دیالوگ خروج -->
-<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">خروج از سیستم</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                آیا مطمئن هستید که می‌خواهید از سیستم خارج شوید؟
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                <button type="button" class="btn btn-danger">خروج</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid mt-4">
-    <!-- DropDowns -->
-    <div class="row mb-2">
-    <div class="col-md-4">
-    <select class="form-select" id="officeDropdown" name="officeId" onchange="setOffice(this.value)">
-        @foreach (var office in ViewBag.Offices)
-        {
-            <option value="@office.id" selected="@(office.id == ViewBag.SelectedOfficeId)">@office.name</option>
-        }
-    </select>
-</div>
-    </div>
-    <!-- Dropdown استان -->
-    <div class="row mb-2">
-        <div class="col-md-4">
-            <select class="form-select" id="provinceDropdown">
-                <option value="">انتخاب استان</option>
-                @foreach (var province in ViewBag.Provinces)
-                {
-                    <option value="@province.id">@province.name</option>
-                }
-            </select>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-md-4">
-            <form method="post" asp-action="AddRecord">
-                <button type="submit" class="btn btn-success">+</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Include Modal Partial -->
-    @await Html.PartialAsync("_PerformanceModal")
-    @await Html.PartialAsync("_ContractModal")
-
-    <!-- Table -->
-    <form method="post" asp-action="EditRecord">
-        <div class="responsive-table">
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>ردیف</th>
-                        <th>نام</th>
-                        <th>نام خانوادگی</th>
-                        <th>کد ملی</th>
-                        <th>نام پدر</th>
-                        <th>تاریخ تولد</th>
-                        <th>شهر محل تولد</th>
-                        <th>محل صدور شناسنامه</th>
-                        <th>مقطع تحصیلی</th>
-                        <th>مدرک تحصیلی</th>
-                        <th>شغل</th>
-                        <th>تاریخ شروع کار</th>
-                        <th>متاهل</th>
-                        <th>تعداد فرزند</th>
-                        <th>سرپرست خانوار</th>
-                        <th>شماره شبا</th>
-                        <th>نام بانک</th>
-                        <th>دارای سابقه بیمه</th>
-                        <th>شماره بیمه</th>
-                        <th>تعداد روزهای بیمه شده</th>
-                        <th>تصویر قرارداد</th>
-                        <th>عملکرد ماهانه</th>
-                        <th>حذف</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var record in Model)
-                    {
+        @await Html.PartialAsync("_PerformanceModal")
+        @await Html.PartialAsync("_ContractModal")
+        <form method="post" asp-action="EditRecord" id="recordsForm">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-light">
                         <tr>
-                            <td>@record.Id</td>
-                            <input type="hidden" name="id" value="@record.Id" />
-                            <td><input type="text" name="firstName" value="@record.firstName" class="form-control" /></td>
-                            <td><input type="text" name="lastName" value="@record.lastName" class="form-control" /></td>
-                            <td><input type="text" name="nationalCode" value="@record.national_id" class="form-control" /></td>
-                            <td><input type="text" name="fatherName" value="@record.father_name" class="form-control" /></td>
-                            <td><input name="birthDate" value="@record.birthdate" class="form-control" data-jdp/></td>
-                            <td><input type="text" name="birthCity" value="@record.b_city" class="form-control" /></td>
-                            <td><input type="text" name="certificateIssuePlace" value="@record.p_city"
-                                    class="form-control" /></td>
-                            <td>
-                                <select name="educationDegree" class="form-select">
-                                    @foreach (var degree in ViewBag.Degrees)
-                                    {
-                                        var degreeValue = Array.IndexOf(ViewBag.Degrees.ToArray(), degree) + 1;
-                                        <option value="@degreeValue" selected="@(record.degree == degreeValue)">@degree</option>
-                                    }
-                                </select>
-                            </td>
-                            <td><input type="text" name="educationCert" value="@record.cert"
-                                    class="form-control" /></td>
-                            <td>
-                                <select name="job" class="form-select">
-                                    @foreach (var job in ViewBag.Jobs)
-                                    {
-                                        var jobValue = Array.IndexOf(ViewBag.Jobs.ToArray(), job) + 1;
-                                        <option value="@jobValue" selected="@(record.Job == jobValue)">@job</option>
-                                    }
-                                </select>
-                            </td>
-                            <td>
-                                <input name="employmentStartDate" value="@record.startdate" class="form-control" data-jdp/></td>
-                            <td>
-                                <input type="checkbox" name="maritalStatus" value="متاهل" @(record.is_married ? "checked" : "") />
-                            </td>
-                            <td><input type="number" name="childrenCount" value="@record.children_no"
-                                    class="form-control" /></td>
-                            <td>
-                                <input type="checkbox" name="isHeadOfHousehold" value="true" @(record.is_head ?
-                                "checked" : "") />
-                            </td>
-                            <td><input type="text" name="sheba" value="@record.Sheba"
-                                    class="form-control" /></td>
-                            <td><input type="text" name="bank_name" value="@record.bank_name"
-                                    class="form-control" /></td>
-                            <td>
-                                <input type="checkbox" name="hasInsurance" value="true" @(record.has_insurance ?
-                                "checked" : "") />
-                            </td>
-                            <td>
-                                <input type="text" name="insuranceNumber" value="@record.insurance_number"
-                                    class="form-control" />
-                            </td>
-                            <td>
-                                <input type="text" name="insuranceHistory" value="@record.insurance_days"
-                                    class="form-control" />
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-info btn-sm show-performance" 
-                                    data-first-name="@record.firstName"
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#contractModal">
-                                    نمایش
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-info btn-sm show-performance" 
-                                    data-first-name="@record.firstName"
-                                    data-last-name="@record.lastName"
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#performanceModal">
-                                    نمایش عملکرد
-                                </button>
-                            </td>
-                            <td>
-                        <!-- دکمه حذف با دیالوگ تأیید -->
-                            <button type="button" class="btn btn-danger btn-sm delete-btn" 
-                                data-id="@record.Id" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#confirmDeleteModal">
-                                🗑️
-                            </button>
-                        </td>
+                            <th>ردیف</th>
+                            <th>نام</th>
+                            <th>نام خانوادگی</th>
+                            <th>کد ملی</th>
+                            <th>نام پدر</th>
+                            <th>تاریخ تولد</th>
+                            <th>شهر محل تولد</th>
+                            <th>محل صدور شناسنامه</th>
+                            <th>مقطع تحصیلی</th>
+                            <th>مدرک تحصیلی</th>
+                            <th>شغل</th>
+                            <th>تاریخ شروع کار</th>
+                            <th>متاهل</th>
+                            <th>تعداد فرزند</th>
+                            <th>سرپرست خانوار</th>
+                            <th>شماره شبا</th>
+                            <th>نام بانک</th>
+                            <th>دارای سابقه بیمه</th>
+                            <th>شماره بیمه</th>
+                            <th>تعداد روزهای بیمه شده</th>
+                            <th>تصویر قرارداد</th>
+                            <th>عملکرد ماهانه</th>
+                            <th>حذف</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <input type="hidden" asp-for="@Model[i].Id" />
 
-        <div class="text-center mt-3">
-            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
-        </div>
-    </form>
-</div>
+                                <td>
+                                    <input asp-for="@Model[i].firstName" class="form-control" />
+                                    <span asp-validation-for="@Model[i].firstName" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].lastName" class="form-control" />
+                                    <span asp-validation-for="@Model[i].lastName" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].national_id" class="form-control" />
+                                    <span asp-validation-for="@Model[i].national_id" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].father_name" class="form-control" />
+                                    <span asp-validation-for="@Model[i].father_name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].birthdate" class="form-control" data-jdp />
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].b_city" class="form-control" />
+                                    <span asp-validation-for="@Model[i].b_city" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].p_city" class="form-control" />
+                                    <span asp-validation-for="@Model[i].p_city" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <select asp-for="@Model[i].degree" class="form-select">
+                                        @foreach (var degree in ViewBag.Degrees)
+                                        {
+                                            var degreeValue = Array.IndexOf(ViewBag.Degrees.ToArray(), degree);
+                                            <option value="@degreeValue" selected="@(Model[i].degree == degreeValue)">@degree
+                                            </option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].cert" class="form-control" />
+                                    <span asp-validation-for="@Model[i].cert" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <select asp-for="@Model[i].Job" class="form-select">
+                                        @foreach (var job in ViewBag.Jobs)
+                                        {
+                                            var jobValue = Array.IndexOf(ViewBag.Jobs.ToArray(), job);
+                                            <option value="@jobValue" selected="@(Model[i].Job == jobValue)">@job</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].startdate" class="form-control" data-jdp />
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" asp-for="@Model[i].is_married" class="form-check-input" />
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].children_no" class="form-control" />
+                                    <span asp-validation-for="@Model[i].children_no" class="text-danger"></span>
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" asp-for="@Model[i].is_head" class="form-check-input" />
+                                </td>
+                                <td>
+                                    @if (Model[i].Id <= 0)
+                                    {
+                                        <input asp-for="@Model[i].Sheba" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <span>@Model[i].Sheba</span>
+                                        <input type="hidden" asp-for="@Model[i].Sheba" />
+                                    }
+                                    <span asp-validation-for="@Model[i].Sheba" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    @if (Model[i].Id <= 0)
+                                    {
+                                        <input asp-for="@Model[i].bank_name" class="form-control" />
+                                    }
+                                    else
+                                    {
+                                        <span>@Model[i].bank_name</span>
+                                        <input type="hidden" asp-for="@Model[i].bank_name" />
+                                    }
+                                    <span asp-validation-for="@Model[i].bank_name" class="text-danger"></span>
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" asp-for="@Model[i].has_insurance" class="form-check-input" />
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].insurance_number" class="form-control" />
+                                    <span asp-validation-for="@Model[i].insurance_number" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].insurance_days" class="form-control" />
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-info btn-sm show-contract" data-id="@Model[i].Id"
+                                        data-bs-toggle="modal" data-bs-target="#contractModal">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-info btn-sm show-performance"
+                                        data-id="@Model[i].Id" data-first-name="@Model[i].firstName"
+                                        data-last-name="@Model[i].lastName" data-bs-toggle="modal"
+                                        data-bs-target="#performanceModal">
+                                        <i class="bi bi-graph-up"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="@Model[i].Id"
+                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
-@section Scripts {
-    
-    <script>
-        jalaliDatepicker.startWatch();
-        console.log("IsNational:", @Json.Serialize(ViewBag.IsNational));
-    </script>
-    <script>
-        function setOffice(officeId) {
-    fetch(`/Record/SetOffice?officeId=${officeId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const provinceDropdown = document.getElementById('provinceDropdown');
-        if (data.isNational) {
-            provinceDropdown.disabled = false;
-        } else {
-            provinceDropdown.disabled = true;
-            provinceDropdown.value = '';
-        }
-        // رفرش صفحه برای اعمال تغییرات
-        window.location.reload();
-    })
-    .catch(error => console.error('Error:', error));
-}
-// در بخش اسکریپت صفحه
-document.addEventListener('DOMContentLoaded', function() {
-    // دریافت وضعیت فعلی اداره
-    fetch('/Record/GetCurrentOffice')
-        .then(response => response.json())
-        .then(data => {
-            if (data.officeId) {
-                document.getElementById('officeDropdown').value = data.officeId;
-                document.getElementById('provinceDropdown').disabled = !data.isNational;
+            <div class="text-center mt-3 mb-4">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-save"></i> ذخیره تغییرات
+                </button>
+            </div>
+        </form>
+    </div>
+
+    @section Scripts {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/js/jalalidatepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // فعال کردن تاریخ‌شمار فارسی
+                jalaliDatepicker.startWatch();
+                // نمایش پیام‌های TempData به صورت Snackbar
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                            toastr.success('@TempData["SuccessMessage"]', 'موفقیت', {
+                                positionClass: 'toast-bottom-left',
+                            timeOut: 5000,
+                            closeButton: true,
+                            progressBar: true,
+                            rtl: true
+                                                                    });
+                </text>
             }
-        });
-});
-    </script>
-    <script src="~/js/recordPerformance.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-}
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                            toastr.error('@TempData["ErrorMessage"]', 'خطا', {
+                                positionClass: 'toast-bottom-left',
+                            timeOut: 5000,
+                            closeButton: true,
+                            progressBar: true,
+                            rtl: true
+                                                                    });
+                </text>
+            }
+                    // مدیریت حذف رکورد
+                    $(document).on('click', '.delete-btn', function () {
+                        var recordId = $(this).data('id');
+                        $('#deleteRecordId').val(recordId);
+                    });
+
+                // غیرفعال کردن دکمه ذخیره اگر فرم تغییر نکرده باشد
+                $('#recordsForm').on('change', function () {
+                    $('button[type="submit"]').prop('disabled', false);
+                });
+
+                // مدیریت انتخاب اداره
+                function setOffice(officeId) {
+                    fetch(`/Record/SetOffice?officeId=${officeId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const provinceDropdown = document.getElementById('provinceDropdown');
+                            provinceDropdown.disabled = !data.isNational;
+                            if (!data.isNational) {
+                                provinceDropdown.value = '';
+                            }
+                            window.location.reload();
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+
+                // بارگذاری اولیه وضعیت اداره
+                fetch('/Record/GetCurrentOffice')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.officeId) {
+                            document.getElementById('officeDropdown').value = data.officeId;
+                            document.getElementById('provinceDropdown').disabled = !data.isNational;
+                        }
+                    });
+            });
+        </script>
+        <script src="~/js/recordPerformance.js"></script>
+
+    }
+</body>

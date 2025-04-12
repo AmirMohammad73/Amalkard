@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EmployeePerformanceSystem.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,6 +16,13 @@ namespace EmployeePerformanceSystem.Controllers
 
         public IActionResult Index()
         {
+            // بررسی وجود Session
+            var fullname = HttpContext.Session.GetString("Fullname");
+            if (!string.IsNullOrEmpty(fullname))
+            {
+                // اگر Session وجود ندارد، به صفحه Login هدایت شود
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -26,10 +33,21 @@ namespace EmployeePerformanceSystem.Controllers
             var existingUser = _context.User
                 .FirstOrDefault(u => u.username == user.username && u.password_hash == user.password_hash);
 
-            if (existingUser == null)
+            if (existingUser != null)
             {
-                ViewBag.ErrorMessage = "نام کاربری یا رمز عبور اشتباه است.";
-                return View("Index");
+                // تنظیم Session با گزینه‌های امنیتی
+                HttpContext.Session.SetString("Fullname", existingUser.fullname);
+
+                // تنظیم کوکی Session
+                Response.Cookies.Append(".AspNetCore.Session", HttpContext.Session.Id, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.UtcNow.AddMinutes(30)
+                });
+
+                return RedirectToAction("Index", "Record");
             }
 
             if (existingUser.is_blacklisted)
@@ -42,5 +60,27 @@ namespace EmployeePerformanceSystem.Controllers
             ViewBag.Message = "Login successful!";
             return RedirectToAction("Index", "Record");
         }
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            // 1. حذف تمام داده‌های Session
+            HttpContext.Session.Clear();
+
+            // 2. باطل کردن Session (بدون await)
+            _ = HttpContext.Session.CommitAsync();
+
+            // 3. حذف کوکی Session
+            Response.Cookies.Delete(".AspNetCore.Session", new CookieOptions
+            {
+                Path = "/",
+                HttpOnly = true,
+                // در محیط Development این خط را غیرفعال کنید
+                // Secure = true,
+                SameSite = SameSiteMode.Strict
+            });
+
+            return RedirectToAction("Index", "Login");
+        }
+
     }
 }

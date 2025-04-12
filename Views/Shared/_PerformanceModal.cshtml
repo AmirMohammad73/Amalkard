@@ -73,66 +73,6 @@
                     </table>
                 </div>
 
-                <!-- جدول جدید برای اقدامات اجرایی -->
-                <h5 class="mt-4 mb-3">اقدامات اجرائی در طول ماه جاری</h5>
-                <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-                    <table class="table table-bordered table-hover mb-0">
-                        <thead class="table-primary sticky-top" style="top: -1px;">
-                            <tr>
-                                <th>استان</th>
-                                <th>شهرستان</th>
-                                <th>بخش</th>
-                                <th>دهستان</th>
-                                <th>روستا</th>
-                                <th>کد نقطه</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="form-control-plaintext">تهران</span></td>
-                                <td><span class="form-control-plaintext">شهریار</span></td>
-                                <td><span class="form-control-plaintext">مرکزی</span></td>
-                                <td><span class="form-control-plaintext">فارسیان</span></td>
-                                <td><span class="form-control-plaintext">قلعه نو</span></td>
-                                <td><span class="form-control-plaintext">12345</span></td>
-                            </tr>
-                            <!-- می‌توانید ردیف‌های بیشتری اضافه کنید -->
-                            <tr>
-                                <td><span class="form-control-plaintext">البرز</span></td>
-                                <td><span class="form-control-plaintext">کرج</span></td>
-                                <td><span class="form-control-plaintext">مرکزی</span></td>
-                                <td><span class="form-control-plaintext">کمال آباد</span></td>
-                                <td><span class="form-control-plaintext">مهرشهر</span></td>
-                                <td><span class="form-control-plaintext">54321</span></td>
-                            </tr>
-                            <!-- نمونه ردیف‌های دیگر -->
-                            <tr>
-                                <td><span class="form-control-plaintext">اصفهان</span></td>
-                                <td><span class="form-control-plaintext">اصفهان</span></td>
-                                <td><span class="form-control-plaintext">مرکزی</span></td>
-                                <td><span class="form-control-plaintext">جی</span></td>
-                                <td><span class="form-control-plaintext">احمدآباد</span></td>
-                                <td><span class="form-control-plaintext">67890</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="form-control-plaintext">فارس</span></td>
-                                <td><span class="form-control-plaintext">شیراز</span></td>
-                                <td><span class="form-control-plaintext">مرکزی</span></td>
-                                <td><span class="form-control-plaintext">سیاخ</span></td>
-                                <td><span class="form-control-plaintext">قصرقمشه</span></td>
-                                <td><span class="form-control-plaintext">09876</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="form-control-plaintext">خراسان رضوی</span></td>
-                                <td><span class="form-control-plaintext">مشهد</span></td>
-                                <td><span class="form-control-plaintext">مرکزی</span></td>
-                                <td><span class="form-control-plaintext">طوس</span></td>
-                                <td><span class="form-control-plaintext">حکیمیه</span></td>
-                                <td><span class="form-control-plaintext">13579</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
@@ -141,3 +81,30 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        // هنگام نمایش مودال
+        $('#performanceModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var userId = button.data('id');
+            
+            // دریافت داده‌ها از سرور
+            $.get('/Performance/GetPerformanceData', { userId: userId })
+                .done(function(data) {
+                    console.log("رکوردهای دریافت شده:", data);
+                    
+                    // نمایش اطلاعات در کنسول به صورت جزئی‌تر
+                    data.forEach(function(record) {
+                        console.log(
+                            `ماه: ${record.month} | ` +
+                            `کارکرد: ${record.work} روز | ` +
+                            `مرخصی استحقاقی: ${record.vacation} روز`
+                        );
+                    });
+                })
+                .fail(function(error) {
+                    console.error("خطا در دریافت داده:", error);
+                });
+        });
+    });
+</script>

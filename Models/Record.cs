@@ -56,7 +56,7 @@ namespace EmployeePerformanceSystem.Models
         public bool is_head { get; set; }
 
         [Required(ErrorMessage = "شماره شبا الزامی است.")]
-        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "فقط حروف قابل قبول است.")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "فقط عدد قابل قبول است.")]
         public string Sheba { get; set; }
 
         [Required(ErrorMessage = "نام بانک الزامی است.")]
@@ -65,11 +65,10 @@ namespace EmployeePerformanceSystem.Models
 
         public bool has_insurance { get; set; }
 
-        [Required(ErrorMessage = "کد ملی الزامی است.")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "کد ملی باید فقط شامل اعداد باشد.")]
-        [StringLength(10, MinimumLength = 10, ErrorMessage = "کد ملی باید ۱۰ رقمی باشد.")]
+        [Required(ErrorMessage = "شماره بیمه الزامی است.")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "شماره بیمه باید فقط شامل اعداد باشد.")]
+        [StringLength(10, ErrorMessage = "شماره بیمه حداکثر می‌تواند ۱۰ رقمی باشد.")] // تغییر یافته
         public string insurance_number { get; set; }
-
         public int insurance_days { get; set; }
         public bool is_deleted { get; set; }
     }
