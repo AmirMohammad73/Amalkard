@@ -66,29 +66,121 @@ $('#uploadContract').click(function () {
 })
 $(document).ready(function () {
   // هنگام نمایش مودال
-  $('#performanceModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget)
-    var userId = button.data('id')
+  $('#performanceModal').one('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var userId = button.data('id');
+    var firstName = button.data('first-name');
+    var lastName = button.data('last-name');
+
+    // نمایش نام و نام خانوادگی در مودال
+    $('#fullNameDisplay').text(firstName + ' ' + lastName);
+    $('#performanceModal').data('user-id', userId); // ذخیره شناسه کاربر
+
+    // خالی کردن جدول قبل از پر کردن
+    $('#performanceTableBody').empty();
 
     // دریافت داده‌ها از سرور
     $.get('/Performance/GetPerformanceData', { userId: userId })
       .done(function (data) {
-        console.log('رکوردهای دریافت شده:', data)
+        console.log("رکوردهای دریافت شده:", data);
 
-        // نمایش اطلاعات در کنسول به صورت جزئی‌تر
+        // ایجاد ردیف‌ها برای هر رکورد
         data.forEach(function (record) {
-          console.log(
-            `ماه: ${record.month} | ` +
-              `کارکرد: ${record.work} روز | ` +
-              `مرخصی استحقاقی: ${record.vacation} روز`
-          )
-        })
+          var row = `
+                    <tr data-month="${record.month}">
+                        <td>${record.monthName}</td>
+                        <td>
+                            <select class="form-select" name="work">
+                                ${Array.from({ length: 32 }, (_, i) => `
+                                    <option value="${i}" ${record.work === i ? 'selected' : ''}>${i}</option>
+                                `).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="vacation">
+                                ${Array.from({ length: 32 }, (_, i) => `
+                                    <option value="${i}" ${record.vacation === i ? 'selected' : ''}>${i}</option>
+                                `).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="vacation_sick">
+                                ${Array.from({ length: 32 }, (_, i) => `
+                                    <option value="${i}" ${record.vacation_sick === i ? 'selected' : ''}>${i}</option>
+                                `).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="mission">
+                                ${Array.from({ length: 32 }, (_, i) => `
+                                    <option value="${i}" ${record.mission === i ? 'selected' : ''}>${i}</option>
+                                `).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="overtime_system" min="0" value="${record.overtime_system || 0}">
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="overtime_final" min="0" value="${record.overtime_final || 0}">
+                        </td>
+                        <td>
+                            <span class="form-control-plaintext">${record.sum_work || 0} روز</span>
+                        </td>
+                    </tr>
+                `;
+          $('#performanceTableBody').append(row);
+        });
       })
       .fail(function (error) {
-        console.error('خطا در دریافت داده:', error)
-      })
-  })
-})
+        console.error("خطا در دریافت داده:", error);
+      });
+  });
+  $('#performanceModal .btn-primary').on('click', function () {
+    var userId = $('#performanceModal').data('user-id'); // شناسه کاربر
+    var records = [];
+
+    // خواندن داده‌های جدول
+    $('#performanceTableBody tr').each(function () {
+      var month = $(this).data('month'); // ماه
+      var work = $(this).find('select[name="work"]').val(); // کارکرد
+      var vacation = $(this).find('select[name="vacation"]').val(); // مرخصی استحقاقی
+      var vacation_sick = $(this).find('select[name="vacation_sick"]').val(); // مرخصی استعلاجی
+      var mission = $(this).find('select[name="mission"]').val(); // ماموریت
+      var overtime_system = $(this).find('input[name="overtime_system"]').val(); // اضافه کار سیستمی
+      var overtime_final = $(this).find('input[name="overtime_final"]').val(); // اضافه کار نهایی
+
+      records.push({
+        user_id: userId,
+        month: month,
+        work: work,
+        vacation: vacation,
+        vacation_sick: vacation_sick,
+        mission: mission,
+        overtime_system: overtime_system,
+        overtime_final: overtime_final,
+      });
+    });
+    // نمایش داده‌ها در کنسول
+    console.log("داده‌های جمع‌آوری شده برای ارسال:", records);
+    // ارسال داده‌ها به سرور
+    $.ajax({
+      url: '/Performance/SavePerformanceData',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(records),
+      success: function (response) {
+        if (response.success) {
+          alert('تغییرات با موفقیت ذخیره شد.');
+        } else {
+          alert('خطا در ذخیره تغییرات!');
+        }
+      },
+      error: function () {
+        alert('خطا در ارتباط با سرور!');
+      },
+    });
+  });
+});
 // مدیریت دیالوگ تأیید حذف
 $(document).on('click', '.delete-btn', function () {
   var recordId = $(this).data('id')

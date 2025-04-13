@@ -1,8 +1,8 @@
 // Controllers/PerformanceController.cs
+using System.Globalization;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace EmployeePerformanceSystem.Controllers
 {
@@ -18,67 +18,87 @@ namespace EmployeePerformanceSystem.Controllers
         [HttpGet]
         public IActionResult GetPerformanceData(int userId)
         {
-            var records = _context.MonthlyRecords
-                .Where(m => m.user_id == userId)
+            var records = _context
+                .MonthlyRecords.Where(m => m.user_id == userId)
                 .OrderBy(m => m.month)
                 .ToList();
-            var persianCalendar = new PersianCalendar();
-            var formattedRecords = records.Select(r => new
-            {
-                monthName = GetPersianMonthName(r.month),
-                work = r.work,
-                vacation = r.vacation,
-                vacation_sick = r.vacation_sick,
-                mission = r.mission,
-                overtime_system = r.overtime_system,
-                overtime_final = r.overtime_final,
-                sum_work = r.sum_work
-            }).ToList();
+
+            var formattedRecords = records
+                .Select(r => new
+                {
+                    monthName = GetPersianMonthName(r.month),
+                    work = r.work,
+                    vacation = r.vacation,
+                    vacation_sick = r.vacation_sick,
+                    mission = r.mission,
+                    overtime_system = r.overtime_system,
+                    overtime_final = r.overtime_final,
+                    sum_work = r.sum_work,
+                })
+                .ToList();
 
             return Json(formattedRecords);
         }
 
         [HttpPost]
-        public IActionResult SavePerformanceData([FromBody] MonthlyRecord model)
+        public IActionResult SavePerformanceData([FromBody] List<MonthlyRecord> records)
         {
             if (ModelState.IsValid)
             {
-                var existingRecord = _context.MonthlyRecords
-                    .FirstOrDefault(m => m.user_id == model.user_id && m.month == model.month);
+                foreach (var record in records)
+                {
+                    var existingRecord = _context.MonthlyRecords.FirstOrDefault(m =>
+                        m.user_id == record.user_id && m.month == record.month
+                    );
 
-                if (existingRecord != null)
-                {
-                    // Update existing record
-                    existingRecord.work = model.work;
-                    existingRecord.vacation = model.vacation;
-                    existingRecord.vacation_sick = model.vacation_sick;
-                    existingRecord.mission = model.mission;
-                    existingRecord.overtime_system = model.overtime_system;
-                    existingRecord.overtime_final = model.overtime_final;
-                    existingRecord.sum_work = model.sum_work;
-                }
-                else
-                {
-                    // Create new record
-                    _context.MonthlyRecords.Add(model);
+                    if (existingRecord != null)
+                    {
+                        // به‌روزرسانی رکورد موجود
+                        existingRecord.work = record.work;
+                        existingRecord.vacation = record.vacation;
+                        existingRecord.vacation_sick = record.vacation_sick;
+                        existingRecord.mission = record.mission;
+                        existingRecord.overtime_system = record.overtime_system;
+                        existingRecord.overtime_final = record.overtime_final;
+                    }
+                    else
+                    {
+                        // افزودن رکورد جدید
+                        _context.MonthlyRecords.Add(record);
+                    }
                 }
 
                 _context.SaveChanges();
                 return Json(new { success = true });
             }
+            else
+            {
+                Console.WriteLine("خطا در اعتبارسنجی مدل.");
+                return Json(new { success = false });
+            }
 
             return Json(new { success = false });
         }
 
-        private string GetPersianMonthName(int month)
+        private string GetPersianMonthName(byte month)
         {
             var persianMonthNames = new[]
             {
-                "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
-                "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
+                "فروردین",
+                "اردیبهشت",
+                "خرداد",
+                "تیر",
+                "مرداد",
+                "شهریور",
+                "مهر",
+                "آبان",
+                "آذر",
+                "دی",
+                "بهمن",
+                "اسفند",
             };
 
-            return month >= 1 && month <= 12 ? persianMonthNames[month - 1] : "نامشخص";
+            return month >= 0 && month <= 11 ? persianMonthNames[month] : "نامشخص";
         }
     }
 }
