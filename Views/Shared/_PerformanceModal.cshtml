@@ -81,30 +81,3 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        // هنگام نمایش مودال
-        $('#performanceModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            var userId = button.data('id');
-            
-            // دریافت داده‌ها از سرور
-            $.get('/Performance/GetPerformanceData', { userId: userId })
-                .done(function(data) {
-                    console.log("رکوردهای دریافت شده:", data);
-                    
-                    // نمایش اطلاعات در کنسول به صورت جزئی‌تر
-                    data.forEach(function(record) {
-                        console.log(
-                            `ماه: ${record.month} | ` +
-                            `کارکرد: ${record.work} روز | ` +
-                            `مرخصی استحقاقی: ${record.vacation} روز`
-                        );
-                    });
-                })
-                .fail(function(error) {
-                    console.error("خطا در دریافت داده:", error);
-                });
-        });
-    });
-</script>

@@ -67,10 +67,14 @@ namespace EmployeePerformanceSystem.Models
 
         [Required(ErrorMessage = "شماره بیمه الزامی است.")]
         [RegularExpression(@"^\d+$", ErrorMessage = "شماره بیمه باید فقط شامل اعداد باشد.")]
-        [StringLength(10, ErrorMessage = "شماره بیمه حداکثر می‌تواند ۱۰ رقمی باشد.")] // تغییر یافته
+        [StringLength(10, ErrorMessage = "شماره بیمه حداکثر می‌تواند ۱۰ رقمی باشد.")]
         public string insurance_number { get; set; }
+
         public int insurance_days { get; set; }
-        public string contract_image { get; set; }
+
+        // تصویر قرارداد (اختیاری)
+        public string? contract_image { get; set; }
+
         public bool is_deleted { get; set; }
     }
 }

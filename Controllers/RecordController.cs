@@ -195,39 +195,48 @@ namespace EmployeePerformanceSystem.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public IActionResult EditRecord(List<Record> records)
         {
-            if (ModelState.IsValid)
+            // لاگ کردن داده‌های ارسالی از فرم
+            Console.WriteLine("Received Records:");
+            foreach (var record in records)
             {
-                // فیلتر کردن رکوردهای خالی
-                var validRecords = records
-                    .Where(r =>
-                        !string.IsNullOrEmpty(r.firstName)
-                        || !string.IsNullOrEmpty(r.lastName)
-                        || !string.IsNullOrEmpty(r.national_id)
-                    )
-                    .ToList();
+                Console.WriteLine($"Id: {record.Id}, FirstName: {record.firstName}, LastName: {record.lastName}, Contract: {record.contract_image}");
+            }
 
-                foreach (var record in validRecords)
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Model State is Invalid.");
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine($"Validation Error: {error.ErrorMessage}");
+                }
+                TempData["ErrorMessage"] = "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                foreach (var record in records)
                 {
                     if (record.Id == -1) // رکورد جدید
                     {
                         // فقط رکوردهای با اطلاعات معتبر را ذخیره کنید
                         if (
-                            !string.IsNullOrEmpty(record.firstName)
-                            || !string.IsNullOrEmpty(record.lastName)
-                            || !string.IsNullOrEmpty(record.national_id)
+                            !string.IsNullOrEmpty(record.firstName) &&
+                            !string.IsNullOrEmpty(record.lastName) &&
+                            !string.IsNullOrEmpty(record.national_id)
                         )
                         {
-                            record.Id = 0;
+                            record.Id = 0; // تنظیم Id برای رکورد جدید
                             _context.Records.Add(record);
                         }
                     }
                     else
                     {
-                        var existingRecord = _context.Records.FirstOrDefault(r =>
-                            r.Id == record.Id
-                        );
+                        var existingRecord = _context.Records.FirstOrDefault(r => r.Id == record.Id);
                         if (existingRecord != null)
                         {
                             _context.Entry(existingRecord).CurrentValues.SetValues(record);
@@ -237,19 +246,15 @@ namespace EmployeePerformanceSystem.Controllers
 
                 _context.SaveChanges();
                 TempData["SuccessMessage"] = "تغییرات با موفقیت ذخیره شد.";
-
-                // پاک کردن رکوردهای موقت از Session
-                HttpContext.Session.Remove("TempRecords");
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] =
-                    "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
+                Console.WriteLine($"Error during saving records: {ex.Message}");
+                TempData["ErrorMessage"] = "خطا در ذخیره‌سازی تغییرات.";
             }
 
             return RedirectToAction("Index");
         }
-
         [HttpPost]
         public IActionResult DeleteRecord(int id)
         {
