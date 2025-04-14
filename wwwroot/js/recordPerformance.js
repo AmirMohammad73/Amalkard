@@ -4,15 +4,6 @@ $(document).ready(function () {
     var firstName = $(this).data('first-name')
     var lastName = $(this).data('last-name')
     $('#fullNameDisplay').text(firstName + ' ' + lastName)
-    // اعتبارسنجی شماره شبا
-    $('input[placeholder="IR..."]').on('input', function () {
-      var sheba = $(this).val()
-      if (sheba.length === 24 && sheba.startsWith('IR')) {
-        $(this).removeClass('is-invalid').addClass('is-valid')
-      } else {
-        $(this).removeClass('is-valid').addClass('is-invalid')
-      }
-    })
   })
 })
 // نمایش modal تصویر قرارداد
