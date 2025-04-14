@@ -47,6 +47,7 @@ namespace EmployeePerformanceSystem.Controllers
             {
                 foreach (var record in records)
                 {
+                    // جستجوی رکورد موجود بر اساس user_id و month
                     var existingRecord = _context.MonthlyRecords.FirstOrDefault(m =>
                         m.user_id == record.user_id && m.month == record.month
                     );
@@ -60,15 +61,18 @@ namespace EmployeePerformanceSystem.Controllers
                         existingRecord.mission = record.mission;
                         existingRecord.overtime_system = record.overtime_system;
                         existingRecord.overtime_final = record.overtime_final;
+                        existingRecord.sum_work = record.sum_work;
                     }
                     else
                     {
-                        // افزودن رکورد جدید
-                        _context.MonthlyRecords.Add(record);
+                        // اگر رکوردی وجود نداشت، خطایی ثبت کنید یا هیچ عملی انجام ندهید
+                        Console.WriteLine(
+                            $"رکوردی برای user_id={record.user_id} و month={record.month} وجود ندارد."
+                        );
                     }
                 }
 
-                _context.SaveChanges();
+                _context.SaveChanges(); // ذخیره تغییرات در دیتابیس
                 return Json(new { success = true });
             }
             else
@@ -76,8 +80,6 @@ namespace EmployeePerformanceSystem.Controllers
                 Console.WriteLine("خطا در اعتبارسنجی مدل.");
                 return Json(new { success = false });
             }
-
-            return Json(new { success = false });
         }
 
         private string GetPersianMonthName(byte month)

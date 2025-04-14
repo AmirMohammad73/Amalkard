@@ -97,7 +97,19 @@ namespace EmployeePerformanceSystem.Controllers
             // ترکیب رکوردهای دیتابیس و موقت
             var allRecords = dbRecords.Concat(tempRecords).ToList();
 
-            ViewBag.Jobs = new List<string> { "فهرست بردار", "آمارگر" };
+            ViewBag.Jobs = new List<string>
+            {
+                "کارشناس پایگاه داده",
+                "کارشناس پشتیبان وب سرویس",
+                "کارشناس داده آمائی",
+                "کارشناس رایانه",
+                "کارشناس ساختمان و تاسیسات",
+                "کارشناس فناوری اطلاعات",
+                "کارشناس فهرست برداری",
+                "کارشناس فهرست برداری و داده آمائی",
+                "کارشناس مالی",
+                "کارشناس نقشه",
+            };
             ViewBag.Degrees = new List<string> { "کارشناسی", "کارشناسی ارشد", "دکترا" };
             ViewBag.Fullname = fullname;
             ViewBag.Offices = offices;
@@ -201,7 +213,9 @@ namespace EmployeePerformanceSystem.Controllers
             Console.WriteLine("Received Records:");
             foreach (var record in records)
             {
-                Console.WriteLine($"Id: {record.Id}, FirstName: {record.firstName}, LastName: {record.lastName}, Contract: {record.contract_image}");
+                Console.WriteLine(
+                    $"Id: {record.Id}, FirstName: {record.firstName}, LastName: {record.lastName}, Contract: {record.insurance_number}"
+                );
             }
 
             if (!ModelState.IsValid)
@@ -212,7 +226,8 @@ namespace EmployeePerformanceSystem.Controllers
                 {
                     Console.WriteLine($"Validation Error: {error.ErrorMessage}");
                 }
-                TempData["ErrorMessage"] = "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
+                TempData["ErrorMessage"] =
+                    "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
                 return RedirectToAction("Index");
             }
 
@@ -224,9 +239,9 @@ namespace EmployeePerformanceSystem.Controllers
                     {
                         // فقط رکوردهای با اطلاعات معتبر را ذخیره کنید
                         if (
-                            !string.IsNullOrEmpty(record.firstName) &&
-                            !string.IsNullOrEmpty(record.lastName) &&
-                            !string.IsNullOrEmpty(record.national_id)
+                            !string.IsNullOrEmpty(record.firstName)
+                            && !string.IsNullOrEmpty(record.lastName)
+                            && !string.IsNullOrEmpty(record.national_id)
                         )
                         {
                             record.Id = 0; // تنظیم Id برای رکورد جدید
@@ -235,7 +250,9 @@ namespace EmployeePerformanceSystem.Controllers
                     }
                     else
                     {
-                        var existingRecord = _context.Records.FirstOrDefault(r => r.Id == record.Id);
+                        var existingRecord = _context.Records.FirstOrDefault(r =>
+                            r.Id == record.Id
+                        );
                         if (existingRecord != null)
                         {
                             _context.Entry(existingRecord).CurrentValues.SetValues(record);
@@ -254,6 +271,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public IActionResult DeleteRecord(int id)
         {
