@@ -4711,20 +4711,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\Amir Mohammad\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\New folder (3)\\Amalkard\\Amalkard.csproj",
+      "projectUniqueName": "E:\\Amalkard\\Amalkard.csproj",
       "projectName": "Amalkard",
-      "projectPath": "E:\\New folder (3)\\Amalkard\\Amalkard.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "E:\\New folder (3)\\Amalkard\\obj\\",
+      "projectPath": "E:\\Amalkard\\Amalkard.csproj",
+      "packagesPath": "C:\\Users\\Amir Mohammad\\.nuget\\packages\\",
+      "outputPath": "E:\\Amalkard\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "E:\\New folder (3)\\Amalkard\\NuGet.Config",
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "E:\\Amalkard\\NuGet.Config",
+        "C:\\Users\\Amir Mohammad\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -4788,7 +4788,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

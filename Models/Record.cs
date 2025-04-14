@@ -76,5 +76,6 @@ namespace EmployeePerformanceSystem.Models
         public string? contract_image { get; set; }
 
         public bool is_deleted { get; set; }
+        public int office_id { get; set; }
     }
 }

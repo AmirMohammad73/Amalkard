@@ -195,7 +195,6 @@ namespace EmployeePerformanceSystem.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public IActionResult EditRecord(List<Record> records)
         {
             // لاگ کردن داده‌های ارسالی از فرم
