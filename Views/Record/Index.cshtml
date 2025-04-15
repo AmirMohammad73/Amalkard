@@ -189,7 +189,6 @@
                             <tr>
                                 <td>@(i + 1)</td>
                                 <input type="hidden" asp-for="@Model[i].Id" />
-
                                 <td>
                                     <input asp-for="@Model[i].firstName" class="form-control" />
                                     <span asp-validation-for="@Model[i].firstName" class="text-danger"></span>
@@ -307,6 +306,8 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
+                                <input type="hidden" name="office_id" id="office_id" value="@ViewBag.SelectedOfficeId" />
+                                <input type="hidden" name="ostan_id" id="ostan_id" value="@ViewBag.SelectedProvinceId" />
                             </tr>
                         }
                     </tbody>
@@ -355,6 +356,11 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+        document.getElementById('recordsForm').addEventListener('submit', function() {
+            setTimeout(function() {
+                window.location.reload();
+            }, 1000);
+        });
     </script>
     @section Scripts {
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
