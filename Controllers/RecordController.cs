@@ -51,6 +51,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             // خواندن مقدار is_national برای اداره انتخاب‌شده
             var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
+            var selectedProvinceId = HttpContext.Session.GetInt32("SelectedProvinceId"); // اضافه کردن این خط
 
             // اگر selectedOfficeId null بود و لیست ادارات خالی نباشد، اولین اداره را انتخاب کنید
             if (selectedOfficeId == null && offices.Any())
@@ -62,9 +63,13 @@ namespace EmployeePerformanceSystem.Controllers
             var selectedOffice = _context.Offices.FirstOrDefault(o => o.id == selectedOfficeId);
             var isNational = selectedOffice?.is_national ?? false;
 
-            // خواندن رکوردها از دیتابیس با شرط is_deleted = false
+            // خواندن رکوردها از دیتابیس با فیلتر office_id و ostan_id
             var dbRecords = _context
-                .Records.Where(r => !r.is_deleted)
+                .Records.Where(r =>
+                    !r.is_deleted
+                    && r.office_id == selectedOfficeId
+                    && (selectedProvinceId == null || r.ostan_id == selectedProvinceId)
+                ) // اضافه کردن این شرط
                 .Select(r => new Record
                 {
                     Id = r.Id,
@@ -87,6 +92,8 @@ namespace EmployeePerformanceSystem.Controllers
                     has_insurance = r.has_insurance,
                     insurance_number = r.insurance_number,
                     insurance_days = r.insurance_days,
+                    office_id = r.office_id,
+                    ostan_id = r.ostan_id, // اضافه کردن این خط
                 })
                 .ToList();
 
@@ -115,6 +122,7 @@ namespace EmployeePerformanceSystem.Controllers
             ViewBag.Offices = offices;
             ViewBag.IsNational = isNational;
             ViewBag.SelectedOfficeId = selectedOfficeId;
+            ViewBag.SelectedProvinceId = selectedProvinceId; // اضافه کردن این خط
             ViewBag.Provinces = provinces;
 
             return View(allRecords);
@@ -134,6 +142,13 @@ namespace EmployeePerformanceSystem.Controllers
             }
 
             return Json(new { isNational = false });
+        }
+
+        [HttpPost]
+        public IActionResult SetProvince(int provinceId)
+        {
+            HttpContext.Session.SetInt32("SelectedProvinceId", provinceId);
+            return Json(new { success = true });
         }
 
         public IActionResult FromLogin()

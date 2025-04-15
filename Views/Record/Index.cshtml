@@ -23,7 +23,9 @@
             font-family: 'B Nazanin', Tahoma, sans-serif;
             text-align: right;
         }
-
+        .sheba-column {
+            width: 200px !important;
+        }
         .table-responsive {
             overflow-x: auto;
         }
@@ -133,11 +135,10 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <select class="form-select" id="provinceDropdown">
-                    <option value="">انتخاب استان</option>
+                <select class="form-select" id="provinceDropdown" name="provinceId" onchange="setProvince(this.value)">
                     @foreach (var province in ViewBag.Provinces)
                     {
-                        <option value="@province.id">@province.name</option>
+                        <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">@province.name</option>
                     }
                 </select>
             </div>
@@ -154,7 +155,7 @@
         @await Html.PartialAsync("_ContractModal")
         <form method="post" asp-action="EditRecord" id="recordsForm">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" style="width: auto;">
                     <thead class="table-light">
                         <tr>
                             <th>ردیف</th>
@@ -172,7 +173,7 @@
                             <th>متاهل</th>
                             <th>تعداد فرزند</th>
                             <th>سرپرست خانوار</th>
-                            <th>شماره شبا</th>
+                            <th class="sheba-column">شماره شبا</th>
                             <th>نام بانک</th>
                             <th>دارای سابقه بیمه</th>
                             <th>شماره بیمه</th>
@@ -252,7 +253,7 @@
                                 <td class="text-center">
                                     <input type="checkbox" asp-for="@Model[i].is_head" class="form-check-input" />
                                 </td>
-                                <td>
+                                <td style="width: 200px">
                                     @if (Model[i].Id <= 0)
                                     {
                                         <input asp-for="@Model[i].Sheba" class="form-control" />
@@ -319,7 +320,42 @@
             </div>
         </form>
     </div>
-
+    <script>
+        // مدیریت انتخاب اداره
+        function setOffice(officeId) {
+            fetch(`/Record/SetOffice?officeId=${officeId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const provinceDropdown = document.getElementById('provinceDropdown');
+                    provinceDropdown.disabled = !data.isNational;
+                    if (!data.isNational) {
+                        provinceDropdown.value = '';
+                    }
+                    window.location.reload(); // صفحه را رفرش می‌کند تا داده‌ها فیلتر شوند
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        function setProvince(provinceId) {
+            fetch(`/Record/SetProvince?provinceId=${provinceId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload(); // صفحه را رفرش می‌کند تا داده‌ها فیلتر شوند
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
     @section Scripts {
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -328,7 +364,29 @@
         <script src="~/js/jalalidatepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script>
+            // تابع لاگ مقادیر اولیه
+            function logInitialDropdownValues() {
+                var officeDropdown = document.getElementById('officeDropdown');
+                var provinceDropdown = document.getElementById('provinceDropdown');
+
+                console.log("آیدی اولیه اداره:", officeDropdown.value);
+                console.log("آیدی اولیه استان:", provinceDropdown.value);
+            }
             $(document).ready(function () {
+                // لاگ مقادیر اولیه دراپ‌داون‌ها
+                logInitialDropdownValues();
+
+                // سایر کدهای موجود در $(document).ready()
+                jalaliDatepicker.startWatch();
+
+                // مدیریت رویداد تغییر مقدار دراپ‌داون‌ها
+                $('#officeDropdown').on('change', function () {
+                    console.log("آیدی اداره انتخاب‌شده:", this.value);
+                });
+
+                $('#provinceDropdown').on('change', function () {
+                    console.log("آیدی استان انتخاب‌شده:", this.value);
+                });
                 // فعال کردن تاریخ‌شمار فارسی
                 jalaliDatepicker.startWatch();
                 // نمایش پیام‌های TempData به صورت Snackbar
@@ -368,35 +426,17 @@
                     $('button[type="submit"]').prop('disabled', false);
                 });
 
-                // مدیریت انتخاب اداره
-                function setOffice(officeId) {
-                    fetch(`/Record/SetOffice?officeId=${officeId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    })
+                // بارگذاری اولیه وضعیت اداره
+                document.addEventListener('DOMContentLoaded', function () {
+                    fetch('/Record/GetCurrentOffice')
                         .then(response => response.json())
                         .then(data => {
-                            const provinceDropdown = document.getElementById('provinceDropdown');
-                            provinceDropdown.disabled = !data.isNational;
-                            if (!data.isNational) {
-                                provinceDropdown.value = '';
+                            if (data.officeId) {
+                                document.getElementById('officeDropdown').value = data.officeId;
+                                document.getElementById('provinceDropdown').disabled = !data.isNational;
                             }
-                            window.location.reload();
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-
-                // بارگذاری اولیه وضعیت اداره
-                fetch('/Record/GetCurrentOffice')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.officeId) {
-                            document.getElementById('officeDropdown').value = data.officeId;
-                            document.getElementById('provinceDropdown').disabled = !data.isNational;
-                        }
-                    });
+                        });
+                });
             });
         </script>
         <script src="~/js/recordPerformance.js"></script>

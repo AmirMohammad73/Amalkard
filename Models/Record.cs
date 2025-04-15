@@ -92,5 +92,6 @@ namespace EmployeePerformanceSystem.Models
 
         public bool is_deleted { get; set; }
         public int? office_id { get; set; }
+        public int? ostan_id { get; set; }
     }
 }
