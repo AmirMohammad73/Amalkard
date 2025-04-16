@@ -1,7 +1,7 @@
+using System.Linq;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace EmployeePerformanceSystem.Controllers
 {
@@ -27,25 +27,31 @@ namespace EmployeePerformanceSystem.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public IActionResult Authenticate(User user)
         {
-            var existingUser = _context.User
-                .FirstOrDefault(u => u.username == user.username && u.password_hash == user.password_hash);
+            var existingUser = _context.User.FirstOrDefault(u =>
+                u.username == user.username && u.password_hash == user.password_hash
+            );
 
             if (existingUser != null)
             {
                 // تنظیم Session با گزینه‌های امنیتی
                 HttpContext.Session.SetString("Fullname", existingUser.fullname);
+                HttpContext.Session.SetInt32("OfficePermission", existingUser.office_permission);
+                HttpContext.Session.SetInt32("OstanPermission", existingUser.ostan_permission);
 
                 // تنظیم کوکی Session
-                Response.Cookies.Append(".AspNetCore.Session", HttpContext.Session.Id, new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    SameSite = SameSiteMode.Strict,
-                    Expires = DateTimeOffset.UtcNow.AddMinutes(30)
-                });
+                Response.Cookies.Append(
+                    ".AspNetCore.Session",
+                    HttpContext.Session.Id,
+                    new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                    }
+                );
 
                 return RedirectToAction("Index", "Record");
             }
@@ -56,10 +62,9 @@ namespace EmployeePerformanceSystem.Controllers
                 return View("Index");
             }
 
-            HttpContext.Session.SetString("Fullname", existingUser.fullname);
-            ViewBag.Message = "Login successful!";
-            return RedirectToAction("Index", "Record");
+            return View("Index");
         }
+
         [HttpPost]
         public IActionResult Logout()
         {
@@ -70,17 +75,17 @@ namespace EmployeePerformanceSystem.Controllers
             _ = HttpContext.Session.CommitAsync();
 
             // 3. حذف کوکی Session
-            Response.Cookies.Delete(".AspNetCore.Session", new CookieOptions
-            {
-                Path = "/",
-                HttpOnly = true,
-                // در محیط Development این خط را غیرفعال کنید
-                // Secure = true,
-                SameSite = SameSiteMode.Strict
-            });
+            Response.Cookies.Delete(
+                ".AspNetCore.Session",
+                new CookieOptions
+                {
+                    Path = "/",
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Strict,
+                }
+            );
 
             return RedirectToAction("Index", "Login");
         }
-
     }
 }

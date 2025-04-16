@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <style>
         body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             font-family: 'B Nazanin', Tahoma, sans-serif;
             text-align: right;
         }
@@ -35,7 +36,11 @@
             vertical-align: middle;
             padding: 0.75rem;
         }
-
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
         .form-control,
         .form-select {
             min-width: 120px;
@@ -125,8 +130,9 @@
         </div>
     </div>
     <div class="container-fluid mt-4">
-        <div class="row mb-3">
+        <div class="row mb-3 align-items-end">
             <div class="col-md-4">
+                <label for="officeDropdown" class="form-label">انتخاب اداره:</label>
                 <select class="form-select" id="officeDropdown" name="officeId" onchange="setOffice(this.value)">
                     @foreach (var office in ViewBag.Offices)
                     {
@@ -135,6 +141,7 @@
                 </select>
             </div>
             <div class="col-md-4">
+                <label for="provinceDropdown" class="form-label">انتخاب استان:</label>
                 <select class="form-select" id="provinceDropdown" name="provinceId" onchange="setProvince(this.value)">
                     @foreach (var province in ViewBag.Provinces)
                     {
@@ -142,7 +149,8 @@
                     }
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 d-flex align-items-end">
+                <label class="form-label"></label>
                 <form method="post" asp-action="AddRecord">
                     <button type="submit" class="btn btn-success w-100">
                         <i class="bi bi-plus-circle"></i> افزودن رکورد جدید
@@ -322,7 +330,18 @@
         </form>
     </div>
     <script>
-        // مدیریت انتخاب اداره
+        // اضافه کردن این کد به اسکریپت‌های موجود
+        window.addEventListener('beforeunload', function() {
+            // ارسال درخواست برای پاک کردن رکوردهای موقت
+            fetch('/Record/ClearTempRecords', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+        });
+
+        // و اصلاح تابع setOffice و setProvince
         function setOffice(officeId) {
             fetch(`/Record/SetOffice?officeId=${officeId}`, {
                 method: 'POST',
@@ -330,17 +349,18 @@
                     'Content-Type': 'application/json',
                 },
             })
-                .then(response => response.json())
-                .then(data => {
-                    const provinceDropdown = document.getElementById('provinceDropdown');
-                    provinceDropdown.disabled = !data.isNational;
-                    if (!data.isNational) {
-                        provinceDropdown.value = '';
-                    }
-                    window.location.reload(); // صفحه را رفرش می‌کند تا داده‌ها فیلتر شوند
-                })
-                .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                const provinceDropdown = document.getElementById('provinceDropdown');
+                provinceDropdown.disabled = !data.isNational;
+                if (!data.isNational) {
+                    provinceDropdown.value = '';
+                }
+                window.location.reload();
+            })
+            .catch(error => console.error('Error:', error));
         }
+
         function setProvince(provinceId) {
             fetch(`/Record/SetProvince?provinceId=${provinceId}`, {
                 method: 'POST',
@@ -348,13 +368,13 @@
                     'Content-Type': 'application/json',
                 },
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.reload(); // صفحه را رفرش می‌کند تا داده‌ها فیلتر شوند
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
         document.getElementById('recordsForm').addEventListener('submit', function() {
             setTimeout(function() {

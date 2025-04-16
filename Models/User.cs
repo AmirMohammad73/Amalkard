@@ -17,5 +17,9 @@ namespace EmployeePerformanceSystem.Models
 
         // ستون جدید fullname
         public string fullname { get; set; }
+
+        public int office_permission { get; set; }
+
+        public int ostan_permission { get; set; }
     }
 }

@@ -42,10 +42,6 @@ namespace EmployeePerformanceSystem.Models
         public string b_city { get; set; }
 
         [Required(ErrorMessage = "محل صدور شناسنامه الزامی است.")]
-        [RegularExpression(
-            @"^[a-zA-Z\u0600-\u06FF\s]+$",
-            ErrorMessage = "فقط حروف قابل قبول است.5"
-        )]
         public string p_city { get; set; }
 
         [Required(ErrorMessage = "مقطع تحصیلی الزامی است.")]

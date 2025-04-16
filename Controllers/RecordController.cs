@@ -43,17 +43,30 @@ namespace EmployeePerformanceSystem.Controllers
 
         public IActionResult Index()
         {
-            // خواندن fullname از Session
+            // خواندن اطلاعات کاربر از Session
             var fullname = HttpContext.Session.GetString("Fullname");
+            var officePermission = HttpContext.Session.GetInt32("OfficePermission") ?? 0;
+            var ostanPermission = HttpContext.Session.GetInt32("OstanPermission") ?? 0;
+
             // خواندن لیست ادارات و استان‌ها از دیتابیس
             var offices = _context.Offices.ToList();
             var provinces = _context.Provinces.ToList();
 
-            // خواندن مقدار is_national برای اداره انتخاب‌شده
-            var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
-            var selectedProvinceId = HttpContext.Session.GetInt32("SelectedProvinceId"); // اضافه کردن این خط
+            // فیلتر کردن ادارات و استان‌ها بر اساس مجوزهای کاربر
+            if (officePermission != 0)
+            {
+                offices = offices.Where(o => o.id == officePermission).ToList();
+            }
 
-            // اگر selectedOfficeId null بود و لیست ادارات خالی نباشد، اولین اداره را انتخاب کنید
+            if (ostanPermission != 0)
+            {
+                provinces = provinces.Where(p => p.id == ostanPermission).ToList();
+            }
+
+            // خواندن مقدار اداره انتخاب‌شده
+            var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
+            var selectedProvinceId = HttpContext.Session.GetInt32("SelectedProvinceId");
+
             if (selectedOfficeId == null && offices.Any())
             {
                 selectedOfficeId = offices.First().id;
@@ -64,12 +77,12 @@ namespace EmployeePerformanceSystem.Controllers
             var isNational = selectedOffice?.is_national ?? false;
 
             // خواندن رکوردها از دیتابیس با فیلتر office_id و ostan_id
-            var dbRecords = _context
+            var records = _context
                 .Records.Where(r =>
                     !r.is_deleted
                     && r.office_id == selectedOfficeId
                     && (selectedProvinceId == null || r.ostan_id == selectedProvinceId)
-                ) // اضافه کردن این شرط
+                )
                 .Select(r => new Record
                 {
                     Id = r.Id,
@@ -93,17 +106,11 @@ namespace EmployeePerformanceSystem.Controllers
                     insurance_number = r.insurance_number,
                     insurance_days = r.insurance_days,
                     office_id = r.office_id,
-                    ostan_id = r.ostan_id, // اضافه کردن این خط
+                    ostan_id = r.ostan_id,
                 })
                 .ToList();
 
-            // خواندن رکوردهای موقت از Session
-            var tempRecords =
-                HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
-
-            // ترکیب رکوردهای دیتابیس و موقت
-            var allRecords = dbRecords.Concat(tempRecords).ToList();
-
+            // ارسال داده‌ها به View
             ViewBag.Jobs = new List<string>
             {
                 "کارشناس پایگاه داده",
@@ -117,54 +124,49 @@ namespace EmployeePerformanceSystem.Controllers
                 "کارشناس مالی",
                 "کارشناس نقشه",
             };
+
             ViewBag.Degrees = new List<string> { "کارشناسی", "کارشناسی ارشد", "دکترا" };
             ViewBag.Fullname = fullname;
             ViewBag.Offices = offices;
             ViewBag.IsNational = isNational;
             ViewBag.SelectedOfficeId = selectedOfficeId;
-            ViewBag.SelectedProvinceId = selectedProvinceId; // اضافه کردن این خط
+            ViewBag.SelectedProvinceId = selectedProvinceId;
             ViewBag.Provinces = provinces;
 
-            return View(allRecords);
+            return View(records);
         }
 
         [HttpPost]
         public IActionResult SetOffice(int officeId)
         {
-            // بررسی مقدار is_national برای اداره انتخاب‌شده
+            // پاک کردن رکوردهای موقت هنگام تغییر اداره
+            HttpContext.Session.Remove("TempRecords");
+
             var selectedOffice = _context.Offices.FirstOrDefault(o => o.id == officeId);
             if (selectedOffice != null)
             {
-                // HttpContext.Session.SetString("SelectedOfficeName", selectedOffice.name);
                 HttpContext.Session.SetInt32("SelectedOfficeId", selectedOffice.id);
-
-                return Json(new { success = true });
+                return Json(new { success = true, isNational = selectedOffice.is_national });
             }
 
-            return Json(new { isNational = false });
+            return Json(new { success = true });
         }
 
         [HttpPost]
         public IActionResult SetProvince(int provinceId)
         {
+            // پاک کردن رکوردهای موقت هنگام تغییر استان
+            HttpContext.Session.Remove("TempRecords");
+
             HttpContext.Session.SetInt32("SelectedProvinceId", provinceId);
             return Json(new { success = true });
         }
 
-        public IActionResult FromLogin()
+        [HttpPost]
+        public IActionResult ClearTempRecords()
         {
-            // خواندن fullname از Session
-            var fullname = HttpContext.Session.GetString("Fullname");
-
-            // تنظیم اداره پیش‌فرض اگر وجود ندارد
-            var offices = _context.Offices.ToList();
-            if (offices.Any() && !HttpContext.Session.TryGetValue("SelectedOfficeId", out _))
-            {
-                HttpContext.Session.SetInt32("SelectedOfficeId", offices.First().id);
-            }
-
-            ViewBag.Fullname = fullname;
-            return View();
+            HttpContext.Session.Remove("TempRecords");
+            return Ok();
         }
 
         [HttpGet]
@@ -186,12 +188,17 @@ namespace EmployeePerformanceSystem.Controllers
         public IActionResult AddRecord()
         {
             // بررسی آیا رکورد خالی قبلی وجود دارد که پر نشده باشد
-            var tempRecords = HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
+            var tempRecords =
+                HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
 
             // اگر رکورد خالی از قبل وجود دارد، همان را نگه دارید
-            if (!tempRecords.Any(r => string.IsNullOrEmpty(r.firstName) &&
-                string.IsNullOrEmpty(r.lastName) &&
-                string.IsNullOrEmpty(r.national_id)))
+            if (
+                !tempRecords.Any(r =>
+                    string.IsNullOrEmpty(r.firstName)
+                    && string.IsNullOrEmpty(r.lastName)
+                    && string.IsNullOrEmpty(r.national_id)
+                )
+            )
             {
                 // ایجاد یک رکورد موقت در حافظه (بدون ذخیره در دیتابیس)
                 var newRecord = new Record
@@ -218,7 +225,7 @@ namespace EmployeePerformanceSystem.Controllers
                     insurance_days = 0,
                     is_deleted = false,
                     office_id = HttpContext.Session.GetInt32("SelectedOfficeId"),
-                    ostan_id = HttpContext.Session.GetInt32("SelectedProvinceId")
+                    ostan_id = HttpContext.Session.GetInt32("SelectedProvinceId"),
                 };
 
                 tempRecords.Add(newRecord);
@@ -227,6 +234,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public IActionResult EditRecord(List<Record> records)
         {
@@ -238,7 +246,8 @@ namespace EmployeePerformanceSystem.Controllers
                 {
                     Console.WriteLine($"Validation Error: {error.ErrorMessage}");
                 }
-                TempData["ErrorMessage"] = "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
+                TempData["ErrorMessage"] =
+                    "برخی از ورودی‌ها نامعتبر هستند. لطفاً تمام فیلدها را صحیح پر کنید.";
                 return RedirectToAction("Index");
             }
 
@@ -246,7 +255,8 @@ namespace EmployeePerformanceSystem.Controllers
             {
                 var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
                 var selectedProvinceId = HttpContext.Session.GetInt32("SelectedProvinceId");
-                var tempRecords = HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
+                var tempRecords =
+                    HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
                 var recordsToKeep = new List<Record>();
 
                 foreach (var record in records)
@@ -254,9 +264,11 @@ namespace EmployeePerformanceSystem.Controllers
                     if (record.Id == -1) // رکورد جدید
                     {
                         // فقط رکوردهای با اطلاعات معتبر را ذخیره کنید
-                        if (!string.IsNullOrEmpty(record.firstName) &&
-                            !string.IsNullOrEmpty(record.lastName) &&
-                            !string.IsNullOrEmpty(record.national_id))
+                        if (
+                            !string.IsNullOrEmpty(record.firstName)
+                            && !string.IsNullOrEmpty(record.lastName)
+                            && !string.IsNullOrEmpty(record.national_id)
+                        )
                         {
                             // تنظیم مقادیر office_id و ostan_id برای رکورد جدید
                             record.office_id = selectedOfficeId;
@@ -272,7 +284,9 @@ namespace EmployeePerformanceSystem.Controllers
                     }
                     else
                     {
-                        var existingRecord = _context.Records.FirstOrDefault(r => r.Id == record.Id);
+                        var existingRecord = _context.Records.FirstOrDefault(r =>
+                            r.Id == record.Id
+                        );
                         if (existingRecord != null)
                         {
                             existingRecord.firstName = record.firstName;
@@ -313,6 +327,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public IActionResult DeleteRecord(int id)
         {
