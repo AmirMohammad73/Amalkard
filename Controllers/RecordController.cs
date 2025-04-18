@@ -349,44 +349,52 @@ namespace EmployeePerformanceSystem.Controllers
                 return BadRequest("فایلی ارسال نشده است.");
             }
 
-            // مسیر ذخیره‌سازی تصویر
+            // بررسی نوع فایل
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var extension = Path.GetExtension(contractFile.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest("فرمت فایل باید jpg, jpeg یا png باشد.");
+            }
+
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            var extension = Path.GetExtension(contractFile.FileName);
             var fileName = $"{id}{extension}";
             var filePath = Path.Combine(uploadsFolder, fileName);
-            Console.WriteLine("Full file path: " + filePath);
-            // ذخیره فایل
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 contractFile.CopyTo(stream);
             }
 
-            // ذخیره اطلاعات تصویر در دیتابیس
             var record = _context.Records.FirstOrDefault(r => r.Id == id);
             if (record != null)
             {
-                record.contract_image = $"/uploads/{fileName}"; // مسیر تصویر
+                record.contract_image = $"/uploads/{fileName}";
                 _context.SaveChanges();
             }
 
-            return Ok(new { message = "تصویر با موفقیت ذخیره شد." });
+            return Ok(new { imageUrl = $"/uploads/{fileName}" });
         }
 
         [HttpGet]
         public IActionResult GetContractImage(int id)
         {
             var record = _context.Records.FirstOrDefault(r => r.Id == id);
-            if (record == null || string.IsNullOrEmpty(record.contract_image))
+            if (record == null)
             {
                 return NotFound();
             }
 
-            return Json(new { imageUrl = record.contract_image });
+            return Json(new
+            {
+                hasImage = !string.IsNullOrEmpty(record.contract_image),
+                imageUrl = record.contract_image
+            });
         }
     }
 

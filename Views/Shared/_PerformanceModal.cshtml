@@ -1,40 +1,108 @@
 @* Views/Shared/_PerformanceModal.cshtml *@
 <div class="modal fade" id="performanceModal" tabindex="-1" aria-labelledby="performanceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="performanceModalLabel">عملکرد ماهانه</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="performanceModalLabel">
+                    <i class="bi bi-graph-up me-2"></i>عملکرد ماهانه
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p class="mb-3">نام و نام خانوادگی: <strong><span id="fullNameDisplay"></span></strong></p>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-light p-3 rounded-3 me-3">
+                        <i class="bi bi-person-badge fs-4 text-primary"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 text-muted">نام و نام خانوادگی</h6>
+                        <h4 class="mb-0 text-primary" id="fullNameDisplay"></h4>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-primary">
+                    <table class="table table-bordered table-hover table-striped align-middle">
+                        <thead class="table-light">
                             <tr>
-                                <th>ماه گزارش</th>
-                                <th>کارکرد (روز)</th>
-                                <th>مرخصی استحقاقی</th>
-                                <th>مرخصی استعلاجی</th>
-                                <th>تعداد روز ماموریت</th>
-                                <th>ساعت اضافه کار(سیستمی)</th>
-                                <th>ساعت اضافه کار(نهائی)</th>
-                                <th>کارکرد روز (از زمان شروع قرارداد)</th>
+                                <th class="text-center" style="width: 120px">
+                                    <i class="bi bi-calendar-month me-1"></i>ماه گزارش
+                                </th>
+                                <th class="text-center" style="width: 100px">
+                                    <i class="bi bi-briefcase me-1"></i>کارکرد (روز)
+                                </th>
+                                <th class="text-center" style="width: 100px">
+                                    <i class="bi bi-sun me-1"></i>مرخصی استحقاقی
+                                </th>
+                                <th class="text-center" style="width: 100px">
+                                    <i class="bi bi-heart-pulse me-1"></i>مرخصی استعلاجی
+                                </th>
+                                <th class="text-center" style="width: 100px">
+                                    <i class="bi bi-airplane me-1"></i>ماموریت
+                                </th>
+                                <th class="text-center" style="width: 120px">
+                                    <i class="bi bi-clock-history me-1"></i>اضافه کار (سیستمی)
+                                </th>
+                                <th class="text-center" style="width: 120px">
+                                    <i class="bi bi-clock me-1"></i>اضافه کار (نهایی)
+                                </th>
+                                <th class="text-center" style="width: 150px">
+                                    <i class="bi bi-calendar-check me-1"></i>کارکرد کل
+                                </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tbody id="performanceTableBody">
-                                <!-- ردیف‌ها به‌صورت پویا اضافه می‌شوند -->
-                            </tbody>
+                        <tbody id="performanceTableBody" class="table-group-divider">
+                            <!-- ردیف‌ها به‌صورت پویا اضافه می‌شوند -->
                         </tbody>
                     </table>
                 </div>
-
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
-                <button type="button" class="btn btn-primary">ذخیره اطلاعات</button>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i> بستن
+                </button>
+                <button type="button" class="btn btn-primary shadow-sm" id="savePerformanceData">
+                    <i class="bi bi-save me-1"></i> ذخیره اطلاعات
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* استایل‌های خاص مدال عملکرد */
+    #performanceModal .modal-content {
+        border-radius: 0.75rem;
+    }
+
+    #performanceModal .modal-header {
+        border-radius: 0.75rem 0.75rem 0 0;
+    }
+
+    #performanceModal .table th {
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        background-color: #4a6fdc;
+        color: white;
+        font-weight: 500;
+
+    }
+
+    #performanceModal .table td,
+    #performanceModal .table th {
+        vertical-align: middle;
+    }
+
+    #performanceModal .form-select,
+    #performanceModal .form-control {
+        min-width: 80px;
+    }
+
+    th .text-center {
+        background-color: #4a6fdc;
+        color: white;
+        font-weight: 500;
+        position: sticky;
+        top: 0;
+    }
+</style>

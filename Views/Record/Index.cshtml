@@ -24,9 +24,11 @@
             font-family: 'B Nazanin', Tahoma, sans-serif;
             text-align: right;
         }
+
         .sheba-column {
             width: 200px !important;
         }
+
         .table-responsive {
             overflow-x: auto;
         }
@@ -36,11 +38,13 @@
             vertical-align: middle;
             padding: 0.75rem;
         }
+
         .form-label {
             font-weight: bold;
             margin-bottom: 0.5rem;
             display: block;
         }
+
         .form-control,
         .form-select {
             min-width: 120px;
@@ -65,6 +69,39 @@
 
         .pwt-datepicker__calendar {
             font-family: "B Nazanin", Tahoma, sans-serif;
+        }
+
+        .table {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead th {
+            background-color: #4a6fdc;
+            color: white;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(74, 111, 220, 0.1);
+        }
+
+        .action-buttons .btn {
+            margin: 0 3px;
+            min-width: 32px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #4a6fdc;
+            box-shadow: 0 0 0 0.25rem rgba(74, 111, 220, 0.25);
+        }
+
+        /* اسکرول عمودی برای جدول با ارتفاع ثابت */
+        .table-container {
+            max-height: 70vh;
+            overflow-y: auto;
         }
     </style>
     <link rel="stylesheet" href="~/css/site.css" />
@@ -133,7 +170,8 @@
         <div class="row mb-3 align-items-end">
             <div class="col-md-4">
                 <label for="officeDropdown" class="form-label">انتخاب اداره:</label>
-                <select class="form-select" id="officeDropdown" name="officeId" onchange="setOffice(this.value)">
+                <select class="form-select shadow-sm" id="officeDropdown" name="officeId"
+                    onchange="setOffice(this.value)">
                     @foreach (var office in ViewBag.Offices)
                     {
                         <option value="@office.id" selected="@(office.id == ViewBag.SelectedOfficeId)">@office.name</option>
@@ -142,10 +180,12 @@
             </div>
             <div class="col-md-4">
                 <label for="provinceDropdown" class="form-label">انتخاب استان:</label>
-                <select class="form-select" id="provinceDropdown" name="provinceId" onchange="setProvince(this.value)">
+                <select class="form-select shadow-sm" id="provinceDropdown" name="provinceId"
+                    onchange="setProvince(this.value)">
                     @foreach (var province in ViewBag.Provinces)
                     {
-                        <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">@province.name</option>
+                        <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">@province.name
+                        </option>
                     }
                 </select>
             </div>
@@ -153,7 +193,7 @@
                 <label class="form-label"></label>
                 <form method="post" asp-action="AddRecord">
                     <button type="submit" class="btn btn-success w-100">
-                        <i class="bi bi-plus-circle"></i> افزودن رکورد جدید
+                        <i class="bi bi-plus-circle me-2"></i> افزودن رکورد جدید
                     </button>
                 </form>
             </div>
@@ -162,33 +202,33 @@
         @await Html.PartialAsync("_PerformanceModal")
         @await Html.PartialAsync("_ContractModal")
         <form method="post" asp-action="EditRecord" id="recordsForm">
-            <div class="table-responsive">
+            <div class="table-container">
                 <table class="table table-bordered table-hover table-striped" style="width: auto;">
                     <thead class="table-light">
                         <tr>
-                            <th>ردیف</th>
-                            <th>نام</th>
-                            <th>نام خانوادگی</th>
-                            <th>کد ملی</th>
-                            <th>نام پدر</th>
-                            <th>تاریخ تولد</th>
-                            <th>شهر محل تولد</th>
-                            <th>محل صدور شناسنامه</th>
-                            <th>مقطع تحصیلی</th>
-                            <th>مدرک تحصیلی</th>
-                            <th>شغل</th>
-                            <th>تاریخ شروع کار</th>
-                            <th>متاهل</th>
-                            <th>تعداد فرزند</th>
-                            <th>سرپرست خانوار</th>
-                            <th class="sheba-column">شماره شبا</th>
-                            <th>نام بانک</th>
-                            <th>دارای سابقه بیمه</th>
-                            <th>شماره بیمه</th>
-                            <th>تعداد روزهای بیمه شده</th>
-                            <th>تصویر قرارداد</th>
-                            <th>عملکرد ماهانه</th>
-                            <th>حذف</th>
+                            <th><i class="bi bi-list-ol"></i> ردیف</th>
+                            <th><i class="bi bi-person"></i> نام</th>
+                            <th><i class="bi bi-people"></i> نام خانوادگی</th>
+                            <th><i class="bi bi-credit-card"></i> کد ملی</th>
+                            <th><i class="bi bi-gender-male"></i> نام پدر</th>
+                            <th><i class="bi bi-calendar-event"></i> تاریخ تولد</th>
+                            <th><i class="bi bi-geo-alt"></i> شهر محل تولد</th>
+                            <th><i class="bi bi-building"></i> محل صدور شناسنامه</th>
+                            <th><i class="bi bi-mortarboard"></i> مقطع تحصیلی</th>
+                            <th><i class="bi bi-file-earmark-text"></i> مدرک تحصیلی</th>
+                            <th><i class="bi bi-briefcase"></i> شغل</th>
+                            <th><i class="bi bi-calendar-check"></i> تاریخ شروع کار</th>
+                            <th><i class="bi bi-ring"></i> متاهل</th>
+                            <th><i class="bi bi-emoji-smile"></i> تعداد فرزند</th>
+                            <th><i class="bi bi-house-door"></i> سرپرست خانوار</th>
+                            <th><i class="bi bi-wallet2"></i> شماره شبا</th>
+                            <th><i class="bi bi-bank"></i> نام بانک</th>
+                            <th><i class="bi bi-shield-check"></i> دارای سابقه بیمه</th>
+                            <th><i class="bi bi-file-text"></i> شماره بیمه</th>
+                            <th><i class="bi bi-calendar-range"></i> تعداد روزهای بیمه شده</th>
+                            <th><i class="bi bi-file-image"></i> تصویر قرارداد</th>
+                            <th><i class="bi bi-graph-up"></i> عملکرد ماهانه</th>
+                            <th><i class="bi bi-box-arrow-right"></i> ترک شغل</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -322,8 +362,8 @@
                 </table>
             </div>
 
-            <div class="text-center mt-3 mb-4">
-                <button type="submit" class="btn btn-primary px-4">
+            <div class="text-center mb-4">
+                <button type="submit" class="btn btn-primary px-4 shadow-sm">
                     <i class="bi bi-save"></i> ذخیره تغییرات
                 </button>
             </div>
@@ -331,7 +371,7 @@
     </div>
     <script>
         // اضافه کردن این کد به اسکریپت‌های موجود
-        window.addEventListener('beforeunload', function() {
+        window.addEventListener('beforeunload', function () {
             // ارسال درخواست برای پاک کردن رکوردهای موقت
             fetch('/Record/ClearTempRecords', {
                 method: 'POST',
@@ -349,16 +389,16 @@
                     'Content-Type': 'application/json',
                 },
             })
-            .then(response => response.json())
-            .then(data => {
-                const provinceDropdown = document.getElementById('provinceDropdown');
-                provinceDropdown.disabled = !data.isNational;
-                if (!data.isNational) {
-                    provinceDropdown.value = '';
-                }
-                window.location.reload();
-            })
-            .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+                .then(data => {
+                    const provinceDropdown = document.getElementById('provinceDropdown');
+                    provinceDropdown.disabled = !data.isNational;
+                    if (!data.isNational) {
+                        provinceDropdown.value = '';
+                    }
+                    window.location.reload();
+                })
+                .catch(error => console.error('Error:', error));
         }
 
         function setProvince(provinceId) {
@@ -368,16 +408,16 @@
                     'Content-Type': 'application/json',
                 },
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.reload();
-                }
-            })
-            .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
-        document.getElementById('recordsForm').addEventListener('submit', function() {
-            setTimeout(function() {
+        document.getElementById('recordsForm').addEventListener('submit', function () {
+            setTimeout(function () {
                 window.location.reload();
             }, 1000);
         });
@@ -425,7 +465,7 @@
                             closeButton: true,
                             progressBar: true,
                             rtl: true
-                                                            });
+                                                                            });
                 </text>
             }
 
@@ -438,7 +478,7 @@
                             closeButton: true,
                             progressBar: true,
                             rtl: true
-                                                            });
+                                                                            });
                 </text>
             }
                     // مدیریت حذف رکورد
