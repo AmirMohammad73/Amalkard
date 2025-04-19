@@ -63,54 +63,40 @@ namespace EmployeePerformanceSystem.Controllers
                 provinces = provinces.Where(p => p.id == ostanPermission).ToList();
             }
 
-            // خواندن مقدار اداره انتخاب‌شده
+            // خواندن مقدار اداره و استان انتخاب‌شده
             var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
             var selectedProvinceId = HttpContext.Session.GetInt32("SelectedProvinceId");
 
+            // مقدار پیش‌فرض برای اداره اگر انتخاب نشده باشد
             if (selectedOfficeId == null && offices.Any())
             {
                 selectedOfficeId = offices.First().id;
                 HttpContext.Session.SetInt32("SelectedOfficeId", selectedOfficeId.Value);
             }
 
-            var selectedOffice = _context.Offices.FirstOrDefault(o => o.id == selectedOfficeId);
-            var isNational = selectedOffice?.is_national ?? false;
+            // مقدار پیش‌فرض برای استان اگر انتخاب نشده باشد
+            if (selectedProvinceId == null && provinces.Any())
+            {
+                selectedProvinceId = provinces.First().id;
+                HttpContext.Session.SetInt32("SelectedProvinceId", selectedProvinceId.Value);
+            }
 
-            // خواندن رکوردها از دیتابیس با فیلتر office_id و ostan_id
-            var records = _context
+            // خواندن رکوردها از دیتابیس
+            var dbRecords = _context
                 .Records.Where(r =>
                     !r.is_deleted
                     && r.office_id == selectedOfficeId
-                    && (selectedProvinceId == null || r.ostan_id == selectedProvinceId)
+                    && r.ostan_id == selectedProvinceId
                 )
-                .Select(r => new Record
-                {
-                    Id = r.Id,
-                    firstName = r.firstName,
-                    lastName = r.lastName,
-                    national_id = r.national_id,
-                    father_name = r.father_name,
-                    birthdate = r.birthdate,
-                    b_city = r.b_city,
-                    p_city = r.p_city,
-                    degree = r.degree,
-                    cert = r.cert,
-                    Job = r.Job,
-                    startdate = r.startdate,
-                    is_married = r.is_married,
-                    children_no = r.children_no,
-                    is_head = r.is_head,
-                    Sheba = r.Sheba,
-                    bank_name = r.bank_name,
-                    has_insurance = r.has_insurance,
-                    insurance_number = r.insurance_number,
-                    insurance_days = r.insurance_days,
-                    office_id = r.office_id,
-                    ostan_id = r.ostan_id,
-                })
                 .ToList();
 
-            // ارسال داده‌ها به View
+            // خواندن رکوردهای موقت از Session
+            var tempRecords =
+                HttpContext.Session.Get<List<Record>>("TempRecords") ?? new List<Record>();
+
+            // ترکیب رکوردهای دیتابیس و موقت - این قسمت حیاتی است
+            var allRecords = dbRecords.Concat(tempRecords).ToList();
+
             ViewBag.Jobs = new List<string>
             {
                 "کارشناس پایگاه داده",
@@ -128,12 +114,11 @@ namespace EmployeePerformanceSystem.Controllers
             ViewBag.Degrees = new List<string> { "کارشناسی", "کارشناسی ارشد", "دکترا" };
             ViewBag.Fullname = fullname;
             ViewBag.Offices = offices;
-            ViewBag.IsNational = isNational;
             ViewBag.SelectedOfficeId = selectedOfficeId;
             ViewBag.SelectedProvinceId = selectedProvinceId;
             ViewBag.Provinces = provinces;
 
-            return View(records);
+            return View(allRecords); // ارسال رکوردهای ترکیبی به ویو
         }
 
         [HttpPost]
@@ -146,7 +131,6 @@ namespace EmployeePerformanceSystem.Controllers
             if (selectedOffice != null)
             {
                 HttpContext.Session.SetInt32("SelectedOfficeId", selectedOffice.id);
-                return Json(new { success = true, isNational = selectedOffice.is_national });
             }
 
             return Json(new { success = true });
@@ -158,8 +142,14 @@ namespace EmployeePerformanceSystem.Controllers
             // پاک کردن رکوردهای موقت هنگام تغییر استان
             HttpContext.Session.Remove("TempRecords");
 
-            HttpContext.Session.SetInt32("SelectedProvinceId", provinceId);
-            return Json(new { success = true });
+            var selectedProvince = _context.Provinces.FirstOrDefault(p => p.id == provinceId);
+            if (selectedProvince != null)
+            {
+                HttpContext.Session.SetInt32("SelectedProvinceId", selectedProvince.id);
+                return Json(new { success = true, provinceId = selectedProvince.id });
+            }
+
+            return Json(new { success = false });
         }
 
         [HttpPost]
@@ -172,14 +162,11 @@ namespace EmployeePerformanceSystem.Controllers
         [HttpGet]
         public IActionResult GetCurrentOffice()
         {
-            var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
-            var selectedOffice = _context.Offices.FirstOrDefault(o => o.id == selectedOfficeId);
-
             return Json(
                 new
                 {
-                    officeId = selectedOffice?.id,
-                    isNational = selectedOffice?.is_national ?? false,
+                    officeId = HttpContext.Session.GetInt32("SelectedOfficeId"),
+                    provinceId = HttpContext.Session.GetInt32("SelectedProvinceId"),
                 }
             );
         }
@@ -200,6 +187,10 @@ namespace EmployeePerformanceSystem.Controllers
                 )
             )
             {
+                // دریافت مقادیر جلسه
+                var selectedOfficeId = HttpContext.Session.GetInt32("SelectedOfficeId");
+                var selectedProvinceId = HttpContext.Session.GetInt32("SelectedProvinceId");
+
                 // ایجاد یک رکورد موقت در حافظه (بدون ذخیره در دیتابیس)
                 var newRecord = new Record
                 {
@@ -224,8 +215,8 @@ namespace EmployeePerformanceSystem.Controllers
                     insurance_number = "",
                     insurance_days = 0,
                     is_deleted = false,
-                    office_id = HttpContext.Session.GetInt32("SelectedOfficeId"),
-                    ostan_id = HttpContext.Session.GetInt32("SelectedProvinceId"),
+                    office_id = selectedOfficeId,
+                    ostan_id = selectedProvinceId, // اینجا مقداردهی می‌شود
                 };
 
                 tempRecords.Add(newRecord);
@@ -349,52 +340,44 @@ namespace EmployeePerformanceSystem.Controllers
                 return BadRequest("فایلی ارسال نشده است.");
             }
 
-            // بررسی نوع فایل
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-            var extension = Path.GetExtension(contractFile.FileName).ToLowerInvariant();
-            if (!allowedExtensions.Contains(extension))
-            {
-                return BadRequest("فرمت فایل باید jpg, jpeg یا png باشد.");
-            }
-
+            // مسیر ذخیره‌سازی تصویر
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
+            var extension = Path.GetExtension(contractFile.FileName);
             var fileName = $"{id}{extension}";
             var filePath = Path.Combine(uploadsFolder, fileName);
-
+            Console.WriteLine("Full file path: " + filePath);
+            // ذخیره فایل
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 contractFile.CopyTo(stream);
             }
 
+            // ذخیره اطلاعات تصویر در دیتابیس
             var record = _context.Records.FirstOrDefault(r => r.Id == id);
             if (record != null)
             {
-                record.contract_image = $"/uploads/{fileName}";
+                record.contract_image = $"/uploads/{fileName}"; // مسیر تصویر
                 _context.SaveChanges();
             }
 
-            return Ok(new { imageUrl = $"/uploads/{fileName}" });
+            return Ok(new { message = "تصویر با موفقیت ذخیره شد." });
         }
 
         [HttpGet]
         public IActionResult GetContractImage(int id)
         {
             var record = _context.Records.FirstOrDefault(r => r.Id == id);
-            if (record == null)
+            if (record == null || string.IsNullOrEmpty(record.contract_image))
             {
                 return NotFound();
             }
 
-            return Json(new
-            {
-                hasImage = !string.IsNullOrEmpty(record.contract_image),
-                imageUrl = record.contract_image
-            });
+            return Json(new { imageUrl = record.contract_image });
         }
     }
 

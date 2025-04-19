@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Employee Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="~/css/css3.css" rel="stylesheet">
     <style>
         /* Base styling */
         * {
@@ -25,13 +25,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'B Nazanin', serif; /* فونت B Nazanin */
         }
 
         /* Login container */
         .login-wrapper {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 420px;
             padding: 40px;
@@ -39,7 +40,7 @@
         }
 
         .login-wrapper:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
         }
 
         /* Header styling */
@@ -50,17 +51,18 @@
 
         .login-header h2 {
             color: #2c3e50;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: -0.5px;
+            font-size: 28px;
         }
 
         /* Input fields */
         .form-input {
             width: 100%;
-            padding: 14px;
-            margin: 10px 0;
+            padding: 16px;
+            margin: 12px 0;
             border: 2px solid #ecf0f1;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             transition: all 0.3s ease;
         }
@@ -68,27 +70,31 @@
         .form-input:focus {
             border-color: #3498db;
             outline: none;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
         /* Button styling */
         .btn-login {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             color: white;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 20px;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-login:hover {
             background: linear-gradient(135deg, #2980b9 0%, #2c3e50 100%);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         /* Additional links */
@@ -112,10 +118,11 @@
         .error-message {
             background: #ffebee;
             color: #c62828;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 10px;
             margin-bottom: 20px;
             text-align: center;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -123,7 +130,7 @@
 <body>
     <div class="login-wrapper">
         <div class="login-header">
-            <h2>Welcome Back</h2>
+            <h2>خوش آمدید</h2>
         </div>
 
         @if (ViewBag.ErrorMessage != null)
@@ -132,14 +139,10 @@
         }
 
         <form method="post" asp-action="Authenticate">
-            <input type="text" class="form-input" name="username" placeholder="Username" required>
-            <input type="password" class="form-input" name="password_hash" placeholder="Password" required>
-            <button type="submit" class="btn-login">Login</button>
+            <input type="text" class="form-input" name="username" placeholder="نام کاربری" required>
+            <input type="password" class="form-input" name="password_hash" placeholder="کلمه عبور" required>
+            <button type="submit" class="btn-login">ورود</button>
         </form>
-
-        <div class="login-footer">
-            <a href="#">Forgot password?</a>
-        </div>
     </div>
 </body>
 

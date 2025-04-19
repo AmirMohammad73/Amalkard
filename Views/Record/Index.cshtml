@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="~/css/jalalidatepicker.min.css" />
 
     <!-- آیکون‌های Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/toastr.min.css" />
     <style>
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -26,7 +26,8 @@
         }
 
         .sheba-column {
-            width: 200px !important;
+            width: 150px !important; /* افزایش عرض از 200px به 300px */
+            min-width: 150px !important; /* اضافه کردن min-width برای اطمینان */
         }
 
         .table-responsive {
@@ -181,10 +182,11 @@
             <div class="col-md-4">
                 <label for="provinceDropdown" class="form-label">انتخاب استان:</label>
                 <select class="form-select shadow-sm" id="provinceDropdown" name="provinceId"
-                    onchange="setProvince(this.value)">
+                        onchange="setProvince(this.value)">
                     @foreach (var province in ViewBag.Provinces)
                     {
-                        <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">@province.name
+                        <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">
+                            @province.name
                         </option>
                     }
                 </select>
@@ -221,7 +223,7 @@
                             <th><i class="bi bi-ring"></i> متاهل</th>
                             <th><i class="bi bi-emoji-smile"></i> تعداد فرزند</th>
                             <th><i class="bi bi-house-door"></i> سرپرست خانوار</th>
-                            <th><i class="bi bi-wallet2"></i> شماره شبا</th>
+                            <th class="sheba-column"><i class="bi bi-wallet2"></i> شماره شبا</th>
                             <th><i class="bi bi-bank"></i> نام بانک</th>
                             <th><i class="bi bi-shield-check"></i> دارای سابقه بیمه</th>
                             <th><i class="bi bi-file-text"></i> شماره بیمه</th>
@@ -300,14 +302,14 @@
                                 <td class="text-center">
                                     <input type="checkbox" asp-for="@Model[i].is_head" class="form-check-input" />
                                 </td>
-                                <td style="width: 200px">
+                                <td class="sheba-column">
                                     @if (Model[i].Id <= 0)
                                     {
-                                        <input asp-for="@Model[i].Sheba" class="form-control" />
+                                        <input asp-for="@Model[i].Sheba" class="form-control" style="min-width: 250px;" />
                                     }
                                     else
                                     {
-                                        <span>@Model[i].Sheba</span>
+                                        <span style="word-break: keep-all; display: inline-block; min-width: 250px;">@Model[i].Sheba</span>
                                         <input type="hidden" asp-for="@Model[i].Sheba" />
                                     }
                                     <span asp-validation-for="@Model[i].Sheba" class="text-danger"></span>
@@ -354,8 +356,8 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
-                                <input type="hidden" name="office_id" id="office_id" value="@ViewBag.SelectedOfficeId" />
-                                <input type="hidden" name="ostan_id" id="ostan_id" value="@ViewBag.SelectedProvinceId" />
+                                <input type="hidden" name="office_id" value="@ViewBag.SelectedOfficeId" />
+                                <input type="hidden" name="ostan_id" value="@ViewBag.SelectedProvinceId" />
                             </tr>
                         }
                     </tbody>
@@ -384,37 +386,29 @@
         // و اصلاح تابع setOffice و setProvince
         function setOffice(officeId) {
             fetch(`/Record/SetOffice?officeId=${officeId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                method: 'POST'
             })
-                .then(response => response.json())
-                .then(data => {
-                    const provinceDropdown = document.getElementById('provinceDropdown');
-                    provinceDropdown.disabled = !data.isNational;
-                    if (!data.isNational) {
-                        provinceDropdown.value = '';
-                    }
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     window.location.reload();
-                })
-                .catch(error => console.error('Error:', error));
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
 
         function setProvince(provinceId) {
             fetch(`/Record/SetProvince?provinceId=${provinceId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                method: 'POST'
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.reload();
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('input[name="ostan_id"]').value = data.provinceId;
+                    window.location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
         document.getElementById('recordsForm').addEventListener('submit', function () {
             setTimeout(function () {
@@ -428,7 +422,7 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/js/jalalidatepicker.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script src="~/js/toastr.min.js"></script>
         <script>
             // تابع لاگ مقادیر اولیه
             function logInitialDropdownValues() {
@@ -493,13 +487,17 @@
                 });
 
                 // بارگذاری اولیه وضعیت اداره
-                document.addEventListener('DOMContentLoaded', function () {
+                $(document).ready(function() {
                     fetch('/Record/GetCurrentOffice')
                         .then(response => response.json())
                         .then(data => {
+                            console.log("Current office:", data);
                             if (data.officeId) {
-                                document.getElementById('officeDropdown').value = data.officeId;
-                                document.getElementById('provinceDropdown').disabled = !data.isNational;
+                                $('#officeDropdown').val(data.officeId);
+                            }
+                            if (data.provinceId) {
+                                $('#provinceDropdown').val(data.provinceId);
+                                document.querySelector('input[name="ostan_id"]').value = data.provinceId;
                             }
                         });
                 });
