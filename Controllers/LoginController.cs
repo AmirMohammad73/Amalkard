@@ -27,42 +27,47 @@ namespace EmployeePerformanceSystem.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public IActionResult Authenticate(User user)
         {
+            // بررسی وجود کاربر در دیتابیس
             var existingUser = _context.User.FirstOrDefault(u =>
                 u.username == user.username && u.password_hash == user.password_hash
             );
 
-            if (existingUser != null)
+            if (existingUser == null)
             {
-                // تنظیم Session با گزینه‌های امنیتی
-                HttpContext.Session.SetString("Fullname", existingUser.fullname);
-                HttpContext.Session.SetInt32("OfficePermission", existingUser.office_permission);
-                HttpContext.Session.SetInt32("OstanPermission", existingUser.ostan_permission);
-
-                // تنظیم کوکی Session
-                Response.Cookies.Append(
-                    ".AspNetCore.Session",
-                    HttpContext.Session.Id,
-                    new CookieOptions
-                    {
-                        HttpOnly = true,
-                        Secure = true,
-                        SameSite = SameSiteMode.Strict,
-                        Expires = DateTimeOffset.UtcNow.AddMinutes(30),
-                    }
-                );
-
-                return RedirectToAction("Index", "Record");
-            }
-
-            if (existingUser.is_blacklisted)
-            {
-                ViewBag.ErrorMessage = "حساب شما مسدود شده است.";
+                // اگر کاربر وجود ندارد
+                ViewBag.ErrorMessage = "نام کاربری یا کلمه عبور اشتباه است";
                 return View("Index");
             }
 
-            return View("Index");
+            // بررسی اینکه آیا کاربر مسدود شده است
+            if (existingUser.is_blacklisted)
+            {
+                ViewBag.ErrorMessage = "حساب شما مسدود شده است";
+                return View("Index");
+            }
+
+            // تنظیم Session با گزینه‌های امنیتی
+            HttpContext.Session.SetString("Fullname", existingUser.fullname);
+            HttpContext.Session.SetInt32("OfficePermission", existingUser.office_permission);
+            HttpContext.Session.SetInt32("OstanPermission", existingUser.ostan_permission);
+
+            // تنظیم کوکی Session
+            Response.Cookies.Append(
+                ".AspNetCore.Session",
+                HttpContext.Session.Id,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                }
+            );
+
+            return RedirectToAction("Index", "Record");
         }
 
         [HttpPost]

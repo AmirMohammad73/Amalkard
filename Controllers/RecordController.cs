@@ -337,47 +337,80 @@ namespace EmployeePerformanceSystem.Controllers
         {
             if (contractFile == null || contractFile.Length == 0)
             {
-                return BadRequest("فایلی ارسال نشده است.");
+                return BadRequest(new { message = "فایلی انتخاب نشده است" });
             }
 
-            // مسیر ذخیره‌سازی تصویر
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            if (!Directory.Exists(uploadsFolder))
+            // بررسی نوع فایل
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var extension = Path.GetExtension(contractFile.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(extension))
             {
-                Directory.CreateDirectory(uploadsFolder);
+                return BadRequest(new { message = "فرمت فایل نامعتبر است. فقط فایل‌های JPG, JPEG و PNG قابل قبول هستند" });
             }
 
-            var extension = Path.GetExtension(contractFile.FileName);
-            var fileName = $"{id}{extension}";
-            var filePath = Path.Combine(uploadsFolder, fileName);
-            Console.WriteLine("Full file path: " + filePath);
-            // ذخیره فایل
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            try
             {
-                contractFile.CopyTo(stream);
-            }
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
 
-            // ذخیره اطلاعات تصویر در دیتابیس
-            var record = _context.Records.FirstOrDefault(r => r.Id == id);
-            if (record != null)
+                var fileName = $"{id}{extension}";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    contractFile.CopyTo(stream);
+                }
+
+                var record = _context.Records.FirstOrDefault(r => r.Id == id);
+                if (record != null)
+                {
+                    record.contract_image = $"/uploads/{fileName}";
+                    _context.SaveChanges();
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    imageUrl = $"/uploads/{fileName}",
+                    message = "تصویر با موفقیت ذخیره شد"
+                });
+            }
+            catch (Exception ex)
             {
-                record.contract_image = $"/uploads/{fileName}"; // مسیر تصویر
-                _context.SaveChanges();
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "خطا در پردازش تصویر: " + ex.Message
+                });
             }
-
-            return Ok(new { message = "تصویر با موفقیت ذخیره شد." });
         }
-
+        [HttpGet]
         [HttpGet]
         public IActionResult GetContractImage(int id)
         {
             var record = _context.Records.FirstOrDefault(r => r.Id == id);
-            if (record == null || string.IsNullOrEmpty(record.contract_image))
+            if (record == null)
             {
-                return NotFound();
+                return NotFound(new { message = "رکورد مورد نظر یافت نشد" });
             }
 
-            return Json(new { imageUrl = record.contract_image });
+            if (string.IsNullOrEmpty(record.contract_image))
+            {
+                return Ok(new
+                {
+                    hasImage = false,
+                    message = "تصویر قرارداد موجود نیست"
+                });
+            }
+
+            return Json(new
+            {
+                hasImage = true,
+                imageUrl = record.contract_image
+            });
         }
     }
 

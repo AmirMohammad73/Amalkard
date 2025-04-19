@@ -14,21 +14,30 @@ $(document).on('click', '.show-contract', function () {
   $('#noContractImage').show()
   $('#contractFile').val('')
 
-  // دریافت تصویر قرارداد از سرور با استفاده از fetch
+  // دریافت تصویر قرارداد از سرور
   fetch(`/Record/GetContractImage?id=${recordId}`)
     .then(response => {
-      if (!response.ok) throw new Error('خطا در دریافت تصویر')
+      if (!response.ok) {
+        // اگر وضعیت 404 بود (تصویر وجود ندارد)، پیام خطا نمایش ندهید
+        if (response.status === 404) {
+          return { imageUrl: null }
+        }
+        throw new Error('خطا در دریافت تصویر')
+      }
       return response.json()
     })
     .then(data => {
-      if (data.hasImage && data.imageUrl) {
+      if (data.imageUrl) {
         $('#contractImagePreview').attr('src', data.imageUrl).show()
         $('#noContractImage').hide()
       }
     })
     .catch(error => {
-      console.error('Error:', error)
-      toastr.error('خطا در دریافت تصویر قرارداد', 'خطا')
+      // فقط خطاهای غیر از 404 را نمایش دهید
+      if (!error.message.includes('404')) {
+        console.error('Error:', error)
+        toastr.error('خطا در دریافت تصویر قرارداد', 'خطا')
+      }
     })
 })
 
@@ -47,6 +56,14 @@ $('#contractFile').change(function () {
 
 // آپلود تصویر - نسخه بهبودیافته
 $('#uploadContract').click(function () {
+  var fileInput = $('#contractFile')[0]
+
+  // بررسی اینکه آیا فایلی انتخاب شده است
+  if (!fileInput.files || fileInput.files.length === 0) {
+    toastr.error('لطفاً یک فایل تصویر انتخاب کنید', 'خطا')
+    return
+  }
+
   var formData = new FormData($('#contractForm')[0])
 
   fetch('/Record/UploadContract', {
@@ -56,7 +73,7 @@ $('#uploadContract').click(function () {
     .then(response => {
       if (!response.ok) {
         return response.json().then(err => {
-          throw err
+          throw new Error(err.message || 'خطا در ذخیره تصویر')
         })
       }
       return response.json()
@@ -65,6 +82,7 @@ $('#uploadContract').click(function () {
       toastr.success('تصویر با موفقیت ذخیره شد', 'موفقیت')
       $('#contractImagePreview').attr('src', data.imageUrl).show()
       $('#noContractImage').hide()
+      $('#contractFile').val('') // پاک کردن فایل انتخاب شده
     })
     .catch(error => {
       console.error('Error:', error)
