@@ -111,7 +111,14 @@ namespace EmployeePerformanceSystem.Controllers
                 "کارشناس نقشه",
             };
 
-            ViewBag.Degrees = new List<string> { "کارشناسی", "کارشناسی ارشد", "دکترا" };
+            ViewBag.Degrees = new List<string>
+            {
+                "دیپلم",
+                "کاردانی",
+                "کارشناسی",
+                "کارشناسی ارشد",
+                "دکترا",
+            };
             ViewBag.Fullname = fullname;
             ViewBag.Offices = offices;
             ViewBag.SelectedOfficeId = selectedOfficeId;
@@ -345,12 +352,21 @@ namespace EmployeePerformanceSystem.Controllers
             var extension = Path.GetExtension(contractFile.FileName).ToLowerInvariant();
             if (!allowedExtensions.Contains(extension))
             {
-                return BadRequest(new { message = "فرمت فایل نامعتبر است. فقط فایل‌های JPG, JPEG و PNG قابل قبول هستند" });
+                return BadRequest(
+                    new
+                    {
+                        message = "فرمت فایل نامعتبر است. فقط فایل‌های JPG, JPEG و PNG قابل قبول هستند",
+                    }
+                );
             }
 
             try
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "uploads"
+                );
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
@@ -371,22 +387,24 @@ namespace EmployeePerformanceSystem.Controllers
                     _context.SaveChanges();
                 }
 
-                return Ok(new
-                {
-                    success = true,
-                    imageUrl = $"/uploads/{fileName}",
-                    message = "تصویر با موفقیت ذخیره شد"
-                });
+                return Ok(
+                    new
+                    {
+                        success = true,
+                        imageUrl = $"/uploads/{fileName}",
+                        message = "تصویر با موفقیت ذخیره شد",
+                    }
+                );
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "خطا در پردازش تصویر: " + ex.Message
-                });
+                return StatusCode(
+                    500,
+                    new { success = false, message = "خطا در پردازش تصویر: " + ex.Message }
+                );
             }
         }
+
         [HttpGet]
         [HttpGet]
         public IActionResult GetContractImage(int id)
@@ -399,18 +417,10 @@ namespace EmployeePerformanceSystem.Controllers
 
             if (string.IsNullOrEmpty(record.contract_image))
             {
-                return Ok(new
-                {
-                    hasImage = false,
-                    message = "تصویر قرارداد موجود نیست"
-                });
+                return Ok(new { hasImage = false, message = "تصویر قرارداد موجود نیست" });
             }
 
-            return Json(new
-            {
-                hasImage = true,
-                imageUrl = record.contract_image
-            });
+            return Json(new { hasImage = true, imageUrl = record.contract_image });
         }
     }
 
