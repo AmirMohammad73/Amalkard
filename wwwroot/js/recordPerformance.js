@@ -91,7 +91,7 @@ $('#uploadContract').click(function () {
 })
 let counter = 0
 $(document).ready(function () {
-  // هنگام نمایش مودال
+  // در بخش ایجاد ردیف‌ها، این تغییرات را اعمال کنید
   $('#performanceModal').on('show.bs.modal', function (event) {
     if (counter == 0) {
       counter++
@@ -100,25 +100,28 @@ $(document).ready(function () {
       var firstName = button.data('first-name')
       var lastName = button.data('last-name')
 
-      // نمایش نام و نام خانوادگی در مودال
       $('#fullNameDisplay').text(firstName + ' ' + lastName)
-      $('#performanceModal').data('user-id', userId) // ذخیره شناسه کاربر
-
-      // خالی کردن جدول قبل از پر کردن
+      $('#performanceModal').data('user-id', userId)
       $('#performanceTableBody').empty()
 
-      // دریافت داده‌ها از سرور
       $.get('/Performance/GetPerformanceData', { userId: userId })
         .done(function (data) {
           console.log('رکوردهای دریافت شده:', data)
 
-          // ایجاد ردیف‌ها برای هر رکورد
-          data.forEach(function (record) {
+          // تعیین تعداد رکوردها
+          var recordCount = data.length
+
+          data.forEach(function (record, index) {
+            // آیا این رکورد آخرین رکورد است؟
+            var isLastRecord = index === recordCount - 1
+
             var row = `
                       <tr data-month="${record.month}">
                           <td>${record.monthName}</td>
                           <td>
-                              <select class="form-select" name="work">
+                              <select class="form-select" name="work" ${
+                                isLastRecord ? '' : 'disabled'
+                              }>
                                   ${Array.from(
                                     { length: 32 },
                                     (_, i) => `
@@ -130,7 +133,9 @@ $(document).ready(function () {
                               </select>
                           </td>
                           <td>
-                              <select class="form-select" name="vacation">
+                              <select class="form-select" name="vacation" ${
+                                isLastRecord ? '' : 'disabled'
+                              }>
                                   ${Array.from(
                                     { length: 32 },
                                     (_, i) => `
@@ -142,7 +147,9 @@ $(document).ready(function () {
                               </select>
                           </td>
                           <td>
-                              <select class="form-select" name="vacation_sick">
+                              <select class="form-select" name="vacation_sick" ${
+                                isLastRecord ? '' : 'disabled'
+                              }>
                                   ${Array.from(
                                     { length: 32 },
                                     (_, i) => `
@@ -156,7 +163,9 @@ $(document).ready(function () {
                               </select>
                           </td>
                           <td>
-                              <select class="form-select" name="mission">
+                              <select class="form-select" name="mission" ${
+                                isLastRecord ? '' : 'disabled'
+                              }>
                                   ${Array.from(
                                     { length: 32 },
                                     (_, i) => `
@@ -168,14 +177,16 @@ $(document).ready(function () {
                               </select>
                           </td>
                           <td>
-                              <input type="number" class="form-control" name="overtime_system" min="0" value="${
-                                record.overtime_system || 0
-                              }">
+                              <input type="number" class="form-control" name="overtime_system" min="0" 
+                                  value="${record.overtime_system || 0}" ${
+              isLastRecord ? '' : 'disabled'
+            }>
                           </td>
                           <td>
-                              <input type="number" class="form-control" name="overtime_final" min="0" value="${
-                                record.overtime_final || 0
-                              }">
+                              <input type="number" class="form-control" name="overtime_final" min="0" 
+                                  value="${record.overtime_final || 0}" ${
+              isLastRecord ? '' : 'disabled'
+            }>
                           </td>
                           <td>
                               <span class="form-control-plaintext">${
@@ -195,9 +206,8 @@ $(document).ready(function () {
     }
   })
   $('#performanceModal .btn-primary').on('click', function () {
-    var userId = $('#performanceModal').data('user-id') // شناسه کاربر
+    var userId = $('#performanceModal').data('user-id')
     var records = []
-    // مپ ماه‌ها به اعداد
     const persianMonthsMap = {
       فروردین: 0,
       اردیبهشت: 1,
@@ -213,39 +223,33 @@ $(document).ready(function () {
       اسفند: 11
     }
 
-    // خواندن داده‌های جدول
-    $('#performanceTableBody tr').each(function () {
-      var monthName = $(this).find('td:first-child').text().trim() // نام ماه از ستون اول
-      var month = persianMonthsMap[monthName] // تبدیل نام ماه به عدد
+    // فقط آخرین ردیف را پردازش کنید
+    var lastRow = $('#performanceTableBody tr').last()
+    var monthName = lastRow.find('td:first-child').text().trim()
+    var month = persianMonthsMap[monthName]
 
-      if (month === undefined) {
-        console.error(`نام ماه "${monthName}" نامعتبر است.`)
-        return // رد کردن این ردیف
-      }
+    if (month === undefined) {
+      console.error(`نام ماه "${monthName}" نامعتبر است.`)
+      return
+    }
 
-      var work = $(this).find('select[name="work"]').val() // کارکرد
-      var vacation = $(this).find('select[name="vacation"]').val() // مرخصی استحقاقی
-      var vacation_sick = $(this).find('select[name="vacation_sick"]').val() // مرخصی استعلاجی
-      var mission = $(this).find('select[name="mission"]').val() // ماموریت
-      var overtime_system = $(this).find('input[name="overtime_system"]').val() // اضافه کار سیستمی
-      var overtime_final = $(this).find('input[name="overtime_final"]').val() // اضافه کار نهایی
-
-      records.push({
-        user_id: userId,
-        month: month, // مقدار عددی ماه
-        work: work ? parseInt(work) : null,
-        vacation: vacation ? parseInt(vacation) : null,
-        vacation_sick: vacation_sick ? parseInt(vacation_sick) : null,
-        mission: mission ? parseInt(mission) : null,
-        overtime_system: overtime_system ? parseInt(overtime_system) : null,
-        overtime_final: overtime_final ? parseInt(overtime_final) : null
-      })
+    records.push({
+      user_id: userId,
+      month: month,
+      work: parseInt(lastRow.find('select[name="work"]').val()),
+      vacation: parseInt(lastRow.find('select[name="vacation"]').val()),
+      vacation_sick: parseInt(
+        lastRow.find('select[name="vacation_sick"]').val()
+      ),
+      mission: parseInt(lastRow.find('select[name="mission"]').val()),
+      overtime_system: parseInt(
+        lastRow.find('input[name="overtime_system"]').val()
+      ),
+      overtime_final: parseInt(
+        lastRow.find('input[name="overtime_final"]').val()
+      )
     })
 
-    // نمایش داده‌ها در کنسول برای تست
-    console.log('ماه:', records.month)
-
-    // ارسال داده‌ها به سرور
     $.ajax({
       url: '/Performance/SavePerformanceData',
       type: 'POST',
@@ -253,13 +257,13 @@ $(document).ready(function () {
       data: JSON.stringify(records),
       success: function (response) {
         if (response.success) {
-          alert('تغییرات با موفقیت ذخیره شد.')
+          toastr.success('تغییرات با موفقیت ذخیره شد', 'موفقیت')
         } else {
-          alert('خطا در ذخیره تغییرات.')
+          toastr.error('خطا در ذخیره تغییرات', 'خطا')
         }
       },
       error: function () {
-        alert('خطا در ارسال داده‌ها به سرور.')
+        toastr.error('خطا در ارسال داده‌ها به سرور', 'خطا')
       }
     })
   })
