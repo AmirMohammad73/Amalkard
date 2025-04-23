@@ -53,7 +53,10 @@ $('#contractFile').change(function () {
     reader.readAsDataURL(file)
   }
 })
-
+$('#exportButton').click(function () {
+  var selectedMonth = $('#monthDropdown').val();
+  window.location.href = `/Record/ExportToExcel?month=${selectedMonth}`;
+});
 // آپلود تصویر - نسخه بهبودیافته
 $('#uploadContract').click(function () {
   var fileInput = $('#contractFile')[0]

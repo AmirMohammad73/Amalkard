@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.Json;
+using ClosedXML.Excel;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -406,7 +408,6 @@ namespace EmployeePerformanceSystem.Controllers
         }
 
         [HttpGet]
-        [HttpGet]
         public IActionResult GetContractImage(int id)
         {
             var record = _context.Records.FirstOrDefault(r => r.Id == id);
@@ -421,6 +422,233 @@ namespace EmployeePerformanceSystem.Controllers
             }
 
             return Json(new { hasImage = true, imageUrl = record.contract_image });
+        }
+
+        [HttpGet]
+        public IActionResult ExportToExcel(int month)
+        {
+            var ostanPermission = HttpContext.Session.GetInt32("OstanPermission") ?? 0;
+
+            var data = _context
+                .Records.Join(
+                    _context.MonthlyRecords,
+                    record => record.Id,
+                    monthlyRecord => monthlyRecord.user_id,
+                    (record, monthlyRecord) => new { record, monthlyRecord }
+                )
+                .Join(
+                    _context.Offices,
+                    x => x.record.office_id,
+                    office => office.id,
+                    (x, office) =>
+                        new
+                        {
+                            x.record,
+                            x.monthlyRecord,
+                            office,
+                        }
+                )
+                .Join(
+                    _context.Provinces,
+                    x => x.record.ostan_id,
+                    province => province.id,
+                    (x, province) =>
+                        new
+                        {
+                            OfficeName = x.office.name,
+                            ProvinceName = province.name,
+                            OstanId = x.record.ostan_id,
+                            x.record.firstName,
+                            x.record.lastName,
+                            x.record.national_id,
+                            x.record.father_name,
+                            x.record.birthdate,
+                            x.record.b_city,
+                            x.record.p_city,
+                            Degree = x.record.degree == 0 ? "دیپلم"
+                            : x.record.degree == 1 ? "کاردانی"
+                            : x.record.degree == 2 ? "کارشناسی"
+                            : x.record.degree == 3 ? "کارشناسی ارشد"
+                            : x.record.degree == 4 ? "دکترا"
+                            : "نامشخص",
+                            x.record.cert,
+                            Job = x.record.Job == 0 ? "کارشناس پایگاه داده"
+                            : x.record.Job == 1 ? "کارشناس پشتیبان وب سرویس"
+                            : x.record.Job == 2 ? "کارشناس داده آمائی"
+                            : x.record.Job == 3 ? "کارشناس رایانه"
+                            : x.record.Job == 4 ? "کارشناس ساختمان و تاسیسات"
+                            : x.record.Job == 5 ? "کارشناس فناوری اطلاعات"
+                            : x.record.Job == 6 ? "کارشناس فهرست برداری"
+                            : x.record.Job == 7 ? "کارشناس فهرست برداری و داده آمائی"
+                            : x.record.Job == 8 ? "کارشناس مالی"
+                            : x.record.Job == 9 ? "کارشناس نقشه"
+                            : "نامشخص",
+                            x.record.startdate,
+                            IsMarried = x.record.is_married ? "*" : "",
+                            x.record.children_no,
+                            IsHead = x.record.is_head ? "*" : "",
+                            x.record.Sheba,
+                            x.record.bank_name,
+                            HasInsurance = x.record.has_insurance ? "*" : "",
+                            x.record.insurance_number,
+                            x.record.insurance_days,
+                            x.monthlyRecord.work,
+                            x.monthlyRecord.vacation,
+                            x.monthlyRecord.vacation_sick,
+                            x.monthlyRecord.mission,
+                            x.monthlyRecord.overtime_system,
+                            x.monthlyRecord.overtime_final,
+                            x.monthlyRecord.sum_work,
+                            Month = x.monthlyRecord.month,
+                            MonthName = x.monthlyRecord.month == 0 ? "فروردین"
+                            : x.monthlyRecord.month == 1 ? "اردیبهشت"
+                            : x.monthlyRecord.month == 2 ? "خرداد"
+                            : x.monthlyRecord.month == 3 ? "تیر"
+                            : x.monthlyRecord.month == 4 ? "مرداد"
+                            : x.monthlyRecord.month == 5 ? "شهریور"
+                            : x.monthlyRecord.month == 6 ? "مهر"
+                            : x.monthlyRecord.month == 7 ? "آبان"
+                            : x.monthlyRecord.month == 8 ? "آذر"
+                            : x.monthlyRecord.month == 9 ? "دی"
+                            : x.monthlyRecord.month == 10 ? "بهمن"
+                            : x.monthlyRecord.month == 11 ? "اسفند"
+                            : "نامشخص",
+                        }
+                )
+                .Where(x =>
+                    x.Month == month && (ostanPermission == 0 || x.OstanId == ostanPermission)
+                )
+                .OrderBy(x => x.OfficeName)
+                .ThenBy(x => x.ProvinceName)
+                .ToList();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("MonthlyReport");
+                worksheet.RightToLeft = true;
+                worksheet.Style.Border.OutsideBorder = XLBorderStyleValues.None;
+                worksheet.Style.Border.InsideBorder = XLBorderStyleValues.None;
+
+                worksheet.Row(1).Height = 5;
+
+                var titleRow = worksheet.Row(2);
+                titleRow.Height = 30;
+                var titleCell = titleRow.Cell(1);
+                titleCell.Value =
+                    $"کارکرد نیروهای طرح تملک دارایی‌های سرمایه‌ای کشور در {data.FirstOrDefault()?.MonthName} ماه سال 1404";
+                titleCell.Style.Font.SetBold();
+                titleCell.Style.Font.FontSize = 14;
+                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                titleCell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                worksheet.Range(2, 1, 2, 32).Merge();
+
+                int headerRowNumber = 3;
+                var headers = new string[]
+                {
+                    "نام اداره",
+                    "نام استان",
+                    "نام",
+                    "نام خانوادگی",
+                    "کد ملی",
+                    "نام پدر",
+                    "تاریخ تولد",
+                    "شهر محل تولد",
+                    "محل صدور شناسنامه",
+                    "مقطع تحصیلی",
+                    "مدرک تحصیلی",
+                    "شغل",
+                    "تاریخ شروع کار",
+                    "متاهل",
+                    "تعداد فرزند",
+                    "سرپرست خانوار",
+                    "شماره شبا",
+                    "نام بانک",
+                    "دارای سابقه بیمه",
+                    "شماره بیمه",
+                    "تعداد روزهای بیمه شده",
+                    "کارکرد",
+                    "مرخصی",
+                    "مرخصی استعلاجی",
+                    "ماموریت",
+                    "اضافه کار سیستم",
+                    "اضافه کار نهایی",
+                    "مجموع کارکرد(روز)",
+                    "کمک هزینه رفاهی",
+                    "عیدی",
+                    "بن",
+                    "اقدامات اجرائی",
+                };
+
+                for (int col = 1; col <= headers.Length; col++)
+                {
+                    var cell = worksheet.Cell(headerRowNumber, col);
+                    cell.Value = headers[col - 1];
+                    cell.Style.Font.SetBold();
+                    cell.Style.Fill.BackgroundColor = XLColor.LightGreen;
+                    cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                    cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                }
+
+                int row = 4;
+                foreach (var item in data)
+                {
+                    worksheet.Cell(row, 1).Value = item.OfficeName;
+                    worksheet.Cell(row, 2).Value = item.ProvinceName;
+                    worksheet.Cell(row, 3).Value = item.firstName;
+                    worksheet.Cell(row, 4).Value = item.lastName;
+                    worksheet.Cell(row, 5).Value = item.national_id;
+                    worksheet.Cell(row, 6).Value = item.father_name;
+                    worksheet.Cell(row, 7).Value = item.birthdate;
+                    worksheet.Cell(row, 8).Value = item.b_city;
+                    worksheet.Cell(row, 9).Value = item.p_city;
+                    worksheet.Cell(row, 10).Value = item.Degree;
+                    worksheet.Cell(row, 11).Value = item.cert;
+                    worksheet.Cell(row, 12).Value = item.Job;
+                    worksheet.Cell(row, 13).Value = item.startdate;
+                    worksheet.Cell(row, 14).Value = item.IsMarried;
+                    worksheet.Cell(row, 15).Value = item.children_no;
+                    worksheet.Cell(row, 16).Value = item.IsHead;
+                    worksheet.Cell(row, 17).Value = item.Sheba;
+                    worksheet.Cell(row, 18).Value = item.bank_name;
+                    worksheet.Cell(row, 19).Value = item.HasInsurance;
+                    worksheet.Cell(row, 20).Value = item.insurance_number;
+                    worksheet.Cell(row, 21).Value = item.insurance_days;
+                    worksheet.Cell(row, 22).Value = item.work;
+                    worksheet.Cell(row, 23).Value = item.vacation;
+                    worksheet.Cell(row, 24).Value = item.vacation_sick;
+                    worksheet.Cell(row, 25).Value = item.mission;
+                    worksheet.Cell(row, 26).Value = item.overtime_system;
+                    worksheet.Cell(row, 27).Value = item.overtime_final;
+                    worksheet.Cell(row, 28).Value = item.sum_work;
+                    worksheet.Cell(row, 29).Value = "";
+                    worksheet.Cell(row, 30).Value = "";
+                    worksheet.Cell(row, 31).Value = "";
+                    worksheet.Cell(row, 32).Value = "";
+                    row++;
+                }
+
+                var dataRange = worksheet.Range(3, 1, row - 1, 32);
+                dataRange.Style.Border.OutsideBorder = XLBorderStyleValues.Medium;
+                dataRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                worksheet.Rows(3, row - 1).AdjustToContents();
+                worksheet.Columns(1, 32).AdjustToContents();
+                // تنظیم حداقل عرض ستون‌ها
+                worksheet.Columns().Where(c => c.Width < 10).ToList().ForEach(c => c.Width = 10);
+                worksheet.SheetView.Freeze(3, 0);
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var fileName =
+                        $"جدول کلی عملکرد استان ها {data.FirstOrDefault()?.MonthName} 1404.xlsx";
+                    return File(
+                        stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName
+                    );
+                }
+            }
         }
     }
 

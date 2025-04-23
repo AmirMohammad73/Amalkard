@@ -169,38 +169,65 @@
     </div>
     <div class="container-fluid mt-4">
         <div class="row mb-3 align-items-end">
-            <div class="col-md-4">
-                <label for="officeDropdown" class="form-label">انتخاب اداره:</label>
-                <select class="form-select shadow-sm" id="officeDropdown" name="officeId"
-                    onchange="setOffice(this.value)">
-                    @foreach (var office in ViewBag.Offices)
-                    {
-                        <option value="@office.id" selected="@(office.id == ViewBag.SelectedOfficeId)">@office.name</option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="provinceDropdown" class="form-label">انتخاب استان:</label>
-                <select class="form-select shadow-sm" id="provinceDropdown" name="provinceId"
-                        onchange="setProvince(this.value)">
-                    @foreach (var province in ViewBag.Provinces)
-                    {
-                        <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">
-                            @province.name
-                        </option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-4 d-flex align-items-end">
-                <label class="form-label"></label>
-                <form method="post" asp-action="AddRecord">
-                    <button type="submit" class="btn btn-success w-100">
-                        <i class="bi bi-plus-circle me-2"></i> افزودن رکورد جدید
-                    </button>
-                </form>
-            </div>
+        <!-- انتخاب اداره -->
+        <div class="col-md-2">
+            <label for="officeDropdown" class="form-label">انتخاب اداره:</label>
+            <select class="form-select shadow-sm" id="officeDropdown" name="officeId" onchange="setOffice(this.value)">
+                @foreach (var office in ViewBag.Offices)
+                {
+                    <option value="@office.id" selected="@(office.id == ViewBag.SelectedOfficeId)">@office.name</option>
+                }
+            </select>
         </div>
 
+        <!-- انتخاب استان -->
+        <div class="col-md-2">
+            <label for="provinceDropdown" class="form-label">انتخاب استان:</label>
+            <select class="form-select shadow-sm" id="provinceDropdown" name="provinceId" onchange="setProvince(this.value)">
+                @foreach (var province in ViewBag.Provinces)
+                {
+                    <option value="@province.id" selected="@(province.id == ViewBag.SelectedProvinceId)">
+                        @province.name
+                    </option>
+                }
+            </select>
+        </div>
+
+        <!-- افزودن رکورد جدید -->
+        <div class="col-md-2 d-flex align-items-end">
+            <form method="post" asp-action="AddRecord">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-plus-circle me-2"></i> افزودن رکورد جدید
+                </button>
+            </form>
+        </div>
+
+        <!-- انتخاب ماه -->
+        <div class="col-md-2">
+            <label for="monthDropdown" class="form-label">انتخاب ماه:</label>
+            <select class="form-select shadow-sm" id="monthDropdown" name="month">
+                <option value="0">فروردین</option>
+                <option value="1">اردیبهشت</option>
+                <option value="2">خرداد</option>
+                <option value="3">تیر</option>
+                <option value="4">مرداد</option>
+                <option value="5">شهریور</option>
+                <option value="6">مهر</option>
+                <option value="7">آبان</option>
+                <option value="8">آذر</option>
+                <option value="9">دی</option>
+                <option value="10">بهمن</option>
+                <option value="11">اسفند</option>
+            </select>
+        </div>
+
+        <!-- دکمه خروجی گرفتن -->
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="button" class="btn btn-primary w-100" id="exportButton">
+                <i class="bi bi-file-earmark-excel"></i> خروجی گرفتن
+            </button>
+        </div>
+    </div>
         @await Html.PartialAsync("_PerformanceModal")
         @await Html.PartialAsync("_ContractModal")
         <form method="post" asp-action="EditRecord" id="recordsForm">
@@ -404,7 +431,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.querySelector('input[name="ostan_id"]').value = data.provinceId;
+                    // document.querySelector('input[name="ostan_id"]').value = data.provinceId;
                     window.location.reload();
                 }
             })
