@@ -526,6 +526,7 @@ namespace EmployeePerformanceSystem.Controllers
             {
                 var worksheet = workbook.Worksheets.Add("MonthlyReport");
                 worksheet.RightToLeft = true;
+                worksheet.Style.Font.FontName = "B Nazanin";
                 worksheet.Style.Border.OutsideBorder = XLBorderStyleValues.None;
                 worksheet.Style.Border.InsideBorder = XLBorderStyleValues.None;
 
@@ -578,6 +579,8 @@ namespace EmployeePerformanceSystem.Controllers
                     "بن",
                     "اقدامات اجرائی",
                 };
+                string prevOfficeName = "";
+                string prevProvinceName = "";
 
                 for (int col = 1; col <= headers.Length; col++)
                 {
@@ -593,38 +596,49 @@ namespace EmployeePerformanceSystem.Controllers
                 int row = 4;
                 foreach (var item in data)
                 {
-                    worksheet.Cell(row, 1).Value = item.OfficeName;
-                    worksheet.Cell(row, 2).Value = item.ProvinceName;
-                    worksheet.Cell(row, 3).Value = item.firstName;
-                    worksheet.Cell(row, 4).Value = item.lastName;
-                    worksheet.Cell(row, 5).Value = item.national_id;
-                    worksheet.Cell(row, 6).Value = item.father_name;
-                    worksheet.Cell(row, 7).Value = item.birthdate;
-                    worksheet.Cell(row, 8).Value = item.b_city;
-                    worksheet.Cell(row, 9).Value = item.p_city;
-                    worksheet.Cell(row, 10).Value = item.Degree;
-                    worksheet.Cell(row, 11).Value = item.cert;
-                    worksheet.Cell(row, 12).Value = item.Job;
-                    worksheet.Cell(row, 13).Value = item.startdate;
-                    worksheet.Cell(row, 14).Value = item.IsMarried;
-                    worksheet.Cell(row, 15).Value = item.children_no;
-                    worksheet.Cell(row, 16).Value = item.IsHead;
-                    worksheet.Cell(row, 17).Value = item.Sheba;
-                    worksheet.Cell(row, 18).Value = item.bank_name;
-                    worksheet.Cell(row, 19).Value = item.HasInsurance;
-                    worksheet.Cell(row, 20).Value = item.insurance_number;
-                    worksheet.Cell(row, 21).Value = item.insurance_days;
-                    worksheet.Cell(row, 22).Value = item.work;
-                    worksheet.Cell(row, 23).Value = item.vacation;
-                    worksheet.Cell(row, 24).Value = item.vacation_sick;
-                    worksheet.Cell(row, 25).Value = item.mission;
-                    worksheet.Cell(row, 26).Value = item.overtime_system;
-                    worksheet.Cell(row, 27).Value = item.overtime_final;
-                    worksheet.Cell(row, 28).Value = item.sum_work;
-                    worksheet.Cell(row, 29).Value = "";
-                    worksheet.Cell(row, 30).Value = "";
-                    worksheet.Cell(row, 31).Value = "";
-                    worksheet.Cell(row, 32).Value = "";
+                    for (int col = 1; col <= headers.Length; col++)
+                    {
+                        var cell = worksheet.Cell(row, col);
+                        switch (col)
+                        {
+                            case 1: cell.Value = item.OfficeName; break;
+                            case 2: cell.Value = item.ProvinceName; break;
+                            case 3: cell.Value = item.firstName; break;
+                            case 4: cell.Value = item.lastName; break;
+                            case 5: cell.Value = item.national_id; break;
+                            case 6: cell.Value = item.father_name; break;
+                            case 7: cell.Value = item.birthdate; break;
+                            case 8: cell.Value = item.b_city; break;
+                            case 9: cell.Value = item.p_city; break;
+                            case 10: cell.Value = item.Degree; break;
+                            case 11: cell.Value = item.cert; break;
+                            case 12: cell.Value = item.Job; break;
+                            case 13: cell.Value = item.startdate; break;
+                            case 14: cell.Value = item.IsMarried; break;
+                            case 15: cell.Value = item.children_no; break;
+                            case 16: cell.Value = item.IsHead; break;
+                            case 17: cell.Value = item.Sheba; break;
+                            case 18: cell.Value = item.bank_name; break;
+                            case 19: cell.Value = item.HasInsurance; break;
+                            case 20: cell.Value = item.insurance_number; break;
+                            case 21: cell.Value = item.insurance_days; break;
+                            case 22: cell.Value = item.work; break;
+                            case 23: cell.Value = item.vacation; break;
+                            case 24: cell.Value = item.vacation_sick; break;
+                            case 25: cell.Value = item.mission; break;
+                            case 26: cell.Value = item.overtime_system; break;
+                            case 27: cell.Value = item.overtime_final; break;
+                            case 28: cell.Value = item.sum_work; break;
+                            case 29: cell.Value = ""; break;
+                            case 30: cell.Value = ""; break;
+                            case 31: cell.Value = ""; break;
+                            case 32: cell.Value = ""; break;
+                        }
+
+                        // تنظیم متن در وسط سلول (افقی و عمودی)
+                        cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                        cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                    }
                     row++;
                 }
 

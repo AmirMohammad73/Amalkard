@@ -51,6 +51,7 @@ namespace EmployeePerformanceSystem.Controllers
 
             // تنظیم Session با گزینه‌های امنیتی
             HttpContext.Session.SetString("Fullname", existingUser.fullname);
+            HttpContext.Session.SetInt32("UserId", existingUser.id);
             HttpContext.Session.SetInt32("OfficePermission", existingUser.office_permission);
             HttpContext.Session.SetInt32("OstanPermission", existingUser.ostan_permission);
 
