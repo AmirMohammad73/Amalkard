@@ -4598,7 +4598,6 @@ E:\New folder (3)\Amalkard\bin\Debug\net9.0\ExcelNumberFormat.dll
 E:\New folder (3)\Amalkard\bin\Debug\net9.0\RBush.dll
 E:\New folder (3)\Amalkard\bin\Debug\net9.0\SixLabors.Fonts.dll
 E:\New folder (3)\Amalkard\bin\Debug\net9.0\System.IO.Packaging.dll
-E:\New folder (3)\Amalkard\obj\Debug\net9.0\compressed\uaj2mq4ggs-vupqfmzecz.gz
 E:\Amalkard\bin\Debug\net9.0\packages\microsoft.codeanalysis.workspaces.msbuild\4.8.0\lib\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
 E:\Amalkard\bin\Debug\net9.0\packages\microsoft.codeanalysis.workspaces.msbuild\4.8.0\lib\net7.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
 E:\Amalkard\bin\Debug\net9.0\packages\microsoft.entityframeworkcore.tools\9.0.3\tools\netcoreapp2.0\any\ef.runtimeconfig.json
@@ -4613,3 +4612,9 @@ E:\Amalkard\bin\Debug\net9.0\RBush.dll
 E:\Amalkard\bin\Debug\net9.0\SixLabors.Fonts.dll
 E:\Amalkard\bin\Debug\net9.0\System.IO.Packaging.dll
 E:\Amalkard\obj\Debug\net9.0\compressed\uaj2mq4ggs-6my8hhvsx1.gz
+E:\New folder (3)\Amalkard\bin\Debug\net9.0\packages\microsoft.codeanalysis.workspaces.msbuild\4.8.0\lib\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
+E:\New folder (3)\Amalkard\bin\Debug\net9.0\packages\microsoft.codeanalysis.workspaces.msbuild\4.8.0\lib\net7.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
+E:\New folder (3)\Amalkard\bin\Debug\net9.0\packages\microsoft.entityframeworkcore.tools\9.0.3\tools\netcoreapp2.0\any\ef.runtimeconfig.json
+E:\New folder (3)\Amalkard\bin\Debug\net9.0\packages\microsoft.netcore.platforms\1.1.0\runtime.json
+E:\New folder (3)\Amalkard\bin\Debug\net9.0\packages\microsoft.netcore.targets\1.1.0\runtime.json
+E:\New folder (3)\Amalkard\obj\Debug\net9.0\compressed\uaj2mq4ggs-6my8hhvsx1.gz
