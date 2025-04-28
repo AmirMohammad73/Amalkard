@@ -52,26 +52,26 @@ app.UseSession();
 app.UseAuthorization();
 
 // پیکربندی مسیرها
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Login}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Login}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "performance",
-    pattern: "Performance/{action=Index}/{id?}");
+app.MapControllerRoute(name: "performance", pattern: "Performance/{action=Index}/{id?}");
 
 // میدلور مدیریت لاگاوت
-app.Use(async (context, next) =>
-{
-    await next();
-
-    if (context.Request.Path.Equals("/Login/Logout", StringComparison.OrdinalIgnoreCase) &&
-        context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
+app.Use(
+    async (context, next) =>
     {
-        context.Session.Clear();
-        await context.Session.CommitAsync();
-        context.Response.Cookies.Delete(".AspNetCore.Session");
+        await next();
+
+        if (
+            context.Request.Path.Equals("/Login/Logout", StringComparison.OrdinalIgnoreCase)
+            && context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase)
+        )
+        {
+            context.Session.Clear();
+            await context.Session.CommitAsync();
+            context.Response.Cookies.Delete(".AspNetCore.Session");
+        }
     }
-});
+);
 
 app.Run();

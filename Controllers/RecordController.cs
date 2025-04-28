@@ -458,6 +458,7 @@ namespace EmployeePerformanceSystem.Controllers
                             OfficeName = x.office.name,
                             ProvinceName = province.name,
                             OstanId = x.record.ostan_id,
+                            LeaveMonth = x.record.leave_month,
                             x.record.firstName,
                             x.record.lastName,
                             x.record.national_id,
@@ -516,7 +517,9 @@ namespace EmployeePerformanceSystem.Controllers
                         }
                 )
                 .Where(x =>
-                    x.Month == month && (ostanPermission == 0 || x.OstanId == ostanPermission)
+                    x.Month == month
+                    && (ostanPermission == 0 || x.OstanId == ostanPermission)
+                    && (x.LeaveMonth ?? 0) <= 2
                 )
                 .OrderBy(x => x.OfficeName)
                 .ThenBy(x => x.ProvinceName)
@@ -601,38 +604,102 @@ namespace EmployeePerformanceSystem.Controllers
                         var cell = worksheet.Cell(row, col);
                         switch (col)
                         {
-                            case 1: cell.Value = item.OfficeName; break;
-                            case 2: cell.Value = item.ProvinceName; break;
-                            case 3: cell.Value = item.firstName; break;
-                            case 4: cell.Value = item.lastName; break;
-                            case 5: cell.Value = item.national_id; break;
-                            case 6: cell.Value = item.father_name; break;
-                            case 7: cell.Value = item.birthdate; break;
-                            case 8: cell.Value = item.b_city; break;
-                            case 9: cell.Value = item.p_city; break;
-                            case 10: cell.Value = item.Degree; break;
-                            case 11: cell.Value = item.cert; break;
-                            case 12: cell.Value = item.Job; break;
-                            case 13: cell.Value = item.startdate; break;
-                            case 14: cell.Value = item.IsMarried; break;
-                            case 15: cell.Value = item.children_no; break;
-                            case 16: cell.Value = item.IsHead; break;
-                            case 17: cell.Value = item.Sheba; break;
-                            case 18: cell.Value = item.bank_name; break;
-                            case 19: cell.Value = item.HasInsurance; break;
-                            case 20: cell.Value = item.insurance_number; break;
-                            case 21: cell.Value = item.insurance_days; break;
-                            case 22: cell.Value = item.work; break;
-                            case 23: cell.Value = item.vacation; break;
-                            case 24: cell.Value = item.vacation_sick; break;
-                            case 25: cell.Value = item.mission; break;
-                            case 26: cell.Value = item.overtime_system; break;
-                            case 27: cell.Value = item.overtime_final; break;
-                            case 28: cell.Value = item.sum_work; break;
-                            case 29: cell.Value = ""; break;
-                            case 30: cell.Value = ""; break;
-                            case 31: cell.Value = ""; break;
-                            case 32: cell.Value = ""; break;
+                            case 1:
+                                cell.Value = item.OfficeName;
+                                break;
+                            case 2:
+                                cell.Value = item.ProvinceName;
+                                break;
+                            case 3:
+                                cell.Value = item.firstName;
+                                break;
+                            case 4:
+                                cell.Value = item.lastName;
+                                break;
+                            case 5:
+                                cell.Value = item.national_id;
+                                break;
+                            case 6:
+                                cell.Value = item.father_name;
+                                break;
+                            case 7:
+                                cell.Value = item.birthdate;
+                                break;
+                            case 8:
+                                cell.Value = item.b_city;
+                                break;
+                            case 9:
+                                cell.Value = item.p_city;
+                                break;
+                            case 10:
+                                cell.Value = item.Degree;
+                                break;
+                            case 11:
+                                cell.Value = item.cert;
+                                break;
+                            case 12:
+                                cell.Value = item.Job;
+                                break;
+                            case 13:
+                                cell.Value = item.startdate;
+                                break;
+                            case 14:
+                                cell.Value = item.IsMarried;
+                                break;
+                            case 15:
+                                cell.Value = item.children_no;
+                                break;
+                            case 16:
+                                cell.Value = item.IsHead;
+                                break;
+                            case 17:
+                                cell.Value = item.Sheba;
+                                break;
+                            case 18:
+                                cell.Value = item.bank_name;
+                                break;
+                            case 19:
+                                cell.Value = item.HasInsurance;
+                                break;
+                            case 20:
+                                cell.Value = item.insurance_number;
+                                break;
+                            case 21:
+                                cell.Value = item.insurance_days;
+                                break;
+                            case 22:
+                                cell.Value = item.work;
+                                break;
+                            case 23:
+                                cell.Value = item.vacation;
+                                break;
+                            case 24:
+                                cell.Value = item.vacation_sick;
+                                break;
+                            case 25:
+                                cell.Value = item.mission;
+                                break;
+                            case 26:
+                                cell.Value = item.overtime_system;
+                                break;
+                            case 27:
+                                cell.Value = item.overtime_final;
+                                break;
+                            case 28:
+                                cell.Value = item.sum_work;
+                                break;
+                            case 29:
+                                cell.Value = "";
+                                break;
+                            case 30:
+                                cell.Value = "";
+                                break;
+                            case 31:
+                                cell.Value = "";
+                                break;
+                            case 32:
+                                cell.Value = "";
+                                break;
                         }
 
                         // تنظیم متن در وسط سلول (افقی و عمودی)

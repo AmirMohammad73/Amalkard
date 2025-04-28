@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Amalkard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6eb227333c358fde4147a4d19d3bbc6a7baa9c0e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61f9cbf630db39732343468d40db56a103568f10")]
 [assembly: System.Reflection.AssemblyProductAttribute("Amalkard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Amalkard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
