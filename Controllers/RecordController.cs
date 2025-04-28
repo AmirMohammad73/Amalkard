@@ -6,6 +6,7 @@ using ClosedXML.Excel;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace EmployeePerformanceSystem.Controllers
 {
@@ -424,11 +425,13 @@ namespace EmployeePerformanceSystem.Controllers
             return Json(new { hasImage = true, imageUrl = record.contract_image });
         }
 
+
         [HttpGet]
         public IActionResult ExportToExcel(int month)
         {
             var ostanPermission = HttpContext.Session.GetInt32("OstanPermission") ?? 0;
-
+            PersianCalendar pc = new PersianCalendar();
+            int persianMonth = pc.GetMonth(DateTime.Now);
             var data = _context
                 .Records.Join(
                     _context.MonthlyRecords,
@@ -458,7 +461,6 @@ namespace EmployeePerformanceSystem.Controllers
                             OfficeName = x.office.name,
                             ProvinceName = province.name,
                             OstanId = x.record.ostan_id,
-                            LeaveMonth = x.record.leave_month,
                             x.record.firstName,
                             x.record.lastName,
                             x.record.national_id,
@@ -514,12 +516,13 @@ namespace EmployeePerformanceSystem.Controllers
                             : x.monthlyRecord.month == 10 ? "بهمن"
                             : x.monthlyRecord.month == 11 ? "اسفند"
                             : "نامشخص",
+                            leave_month = x.record.leave_month,
                         }
                 )
                 .Where(x =>
                     x.Month == month
                     && (ostanPermission == 0 || x.OstanId == ostanPermission)
-                    && (x.LeaveMonth ?? 0) <= 2
+                    && (x.leave_month == null || x.leave_month < persianMonth)
                 )
                 .OrderBy(x => x.OfficeName)
                 .ThenBy(x => x.ProvinceName)
