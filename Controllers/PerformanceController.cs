@@ -2,6 +2,7 @@ using System.Globalization;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeePerformanceSystem.Controllers
 {
@@ -50,12 +51,29 @@ namespace EmployeePerformanceSystem.Controllers
         [HttpPost]
         public IActionResult SavePerformanceData([FromBody] List<MonthlyRecord> records)
         {
+            Console.WriteLine("BINGO");
             // دریافت اطلاعات کاربر جاری از Session
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var currentUser = _context.User.FirstOrDefault(u => u.id == currentUserId);
-            Console.WriteLine("HEY YOU!");
-            if (ModelState.IsValid)
+
+            if (currentUser == null)
             {
+                return Json(new { success = false, message = "کاربر جاری یافت نشد." });
+            }
+
+            try
+            {
+                // ایجاد جدول موقت برای ذخیره خروجی
+                _context.Database.ExecuteSqlRaw(
+                    @"
+            CREATE TABLE #TempOutput (
+                id INT,
+                overtime_final INT,
+                sum_work INT
+            );
+        "
+                );
+
                 foreach (var record in records)
                 {
                     var existingRecord = _context.MonthlyRecords.FirstOrDefault(m =>
@@ -72,25 +90,62 @@ namespace EmployeePerformanceSystem.Controllers
                         existingRecord.overtime_system = record.overtime_system;
 
                         // فقط اگر کاربر مجوز دارد، مقدار overtime_final را به‌روزرسانی کنید
-                        if (
-                            currentUser?.office_permission == 0
-                            && currentUser?.ostan_permission == 0
-                        )
+                        if (currentUser.office_permission == 0 && currentUser.ostan_permission == 0)
                         {
                             existingRecord.overtime_final = record.overtime_final;
                         }
 
                         existingRecord.sum_work = record.sum_work;
+
+                        // استفاده از OUTPUT INTO برای ذخیره خروجی
+                        _context.Database.ExecuteSqlRaw(
+                            @"
+                    UPDATE MonthlyRecords
+                    SET 
+                        work = {0},
+                        vacation = {1},
+                        vacation_sick = {2},
+                        mission = {3},
+                        overtime_system = {4},
+                        overtime_final = {5},
+                        sum_work = {6}
+                    OUTPUT INSERTED.id, INSERTED.overtime_final, INSERTED.sum_work INTO #TempOutput
+                    WHERE id = {7};
+                ",
+                            existingRecord.work,
+                            existingRecord.vacation,
+                            existingRecord.vacation_sick,
+                            existingRecord.mission,
+                            existingRecord.overtime_system,
+                            existingRecord.overtime_final,
+                            existingRecord.sum_work,
+                            existingRecord.id
+                        );
                     }
                     else
                     {
                         // اگر رکورد جدید است و کاربر مجوز دارد
-                        if (
-                            currentUser?.office_permission == 0
-                            && currentUser?.ostan_permission == 0
-                        )
+                        if (currentUser.office_permission == 0 && currentUser.ostan_permission == 0)
                         {
-                            _context.MonthlyRecords.Add(record);
+                            // اضافه کردن رکورد جدید
+                            _context.Database.ExecuteSqlRaw(
+                                @"
+                        INSERT INTO MonthlyRecords (
+                            user_id, month, work, vacation, vacation_sick, mission, overtime_system, overtime_final, sum_work
+                        )
+                        OUTPUT INSERTED.id, INSERTED.overtime_final, INSERTED.sum_work INTO #TempOutput
+                        VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8});
+                    ",
+                                record.user_id,
+                                record.month,
+                                record.work,
+                                record.vacation,
+                                record.vacation_sick,
+                                record.mission,
+                                record.overtime_system,
+                                record.overtime_final,
+                                record.sum_work
+                            );
                         }
                         else
                         {
@@ -101,14 +156,36 @@ namespace EmployeePerformanceSystem.Controllers
                     }
                 }
 
+                // ذخیره تغییرات در دیتابیس
                 _context.SaveChanges();
-                return Json(new { success = true });
+
+                // خواندن مقادیر خروجی از جدول موقت
+                var outputRecords = _context
+                    .Database.SqlQueryRaw<TempOutput>(
+                        @"
+            SELECT id, overtime_final, sum_work FROM #TempOutput;
+        "
+                    )
+                    .ToList();
+
+                // حذف جدول موقت
+                _context.Database.ExecuteSqlRaw("DROP TABLE #TempOutput;");
+
+                return Json(new { success = true, outputRecords });
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("خطا در اعتبارسنجی مدل.");
-                return Json(new { success = false });
+                Console.WriteLine($"خطا در ذخیره داده‌ها: {ex.Message}");
+                return Json(new { success = false, message = "خطا در ذخیره داده‌ها." });
             }
+        }
+
+        // کلاس برای ذخیره مقادیر خروجی
+        public class TempOutput
+        {
+            public int id { get; set; }
+            public int? overtime_final { get; set; }
+            public int? sum_work { get; set; }
         }
 
         private string GetPersianMonthName(byte month)

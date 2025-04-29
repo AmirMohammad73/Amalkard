@@ -121,81 +121,70 @@ $(document).ready(function () {
                           <tr data-month="${record.month}">
                               <td>${record.monthName}</td>
                               <td>
-                                  <select class="form-select" name="work" ${
-                                    isLastRecord ? '' : 'disabled'
-                                  }>
+                                  <select class="form-select" name="work" ${isLastRecord ? '' : 'disabled'
+              }>
                                       ${Array.from(
-                                        { length: 32 },
-                                        (_, i) => `
-                                          <option value="${i}" ${
-                                          record.work === i ? 'selected' : ''
-                                        }>${i}</option>
+                { length: 32 },
+                (_, i) => `
+                                          <option value="${i}" ${record.work === i ? 'selected' : ''
+                  }>${i}</option>
                                       `
-                                      ).join('')}
+              ).join('')}
                                   </select>
                               </td>
                               <td>
-                                  <select class="form-select" name="vacation" ${
-                                    isLastRecord ? '' : 'disabled'
-                                  }>
+                                  <select class="form-select" name="vacation" ${isLastRecord ? '' : 'disabled'
+              }>
                                       ${Array.from(
-                                        { length: 32 },
-                                        (_, i) => `
-                                          <option value="${i}" ${
-                                          record.vacation === i
-                                            ? 'selected'
-                                            : ''
-                                        }>${i}</option>
+                { length: 32 },
+                (_, i) => `
+                                          <option value="${i}" ${record.vacation === i
+                    ? 'selected'
+                    : ''
+                  }>${i}</option>
                                       `
-                                      ).join('')}
+              ).join('')}
                                   </select>
                               </td>
                               <td>
-                                  <select class="form-select" name="vacation_sick" ${
-                                    isLastRecord ? '' : 'disabled'
-                                  }>
+                                  <select class="form-select" name="vacation_sick" ${isLastRecord ? '' : 'disabled'
+              }>
                                       ${Array.from(
-                                        { length: 32 },
-                                        (_, i) => `
-                                          <option value="${i}" ${
-                                          record.vacation_sick === i
-                                            ? 'selected'
-                                            : ''
-                                        }>${i}</option>
+                { length: 32 },
+                (_, i) => `
+                                          <option value="${i}" ${record.vacation_sick === i
+                    ? 'selected'
+                    : ''
+                  }>${i}</option>
                                       `
-                                      ).join('')}
+              ).join('')}
                                   </select>
                               </td>
                               <td>
-                                  <select class="form-select" name="mission" ${
-                                    isLastRecord ? '' : 'disabled'
-                                  }>
+                                  <select class="form-select" name="mission" ${isLastRecord ? '' : 'disabled'
+              }>
                                       ${Array.from(
-                                        { length: 32 },
-                                        (_, i) => `
-                                          <option value="${i}" ${
-                                          record.mission === i ? 'selected' : ''
-                                        }>${i}</option>
+                { length: 32 },
+                (_, i) => `
+                                          <option value="${i}" ${record.mission === i ? 'selected' : ''
+                  }>${i}</option>
                                       `
-                                      ).join('')}
+              ).join('')}
                                   </select>
                               </td>
                               <td>
                                   <input type="number" class="form-control" name="overtime_system" min="0" 
-                                      value="${record.overtime_system || 0}" ${
-              isLastRecord ? '' : 'disabled'
-            }>
+                                      value="${record.overtime_system || 0}" ${isLastRecord ? '' : 'disabled'
+              }>
                               </td>
                               <td>
                                   <input type="number" class="form-control" name="overtime_final" min="0" 
-                                      value="${record.overtime_final || 0}" ${
-              canEditOvertimeFinal ? '' : 'disabled'
-            }>
+                                      value="${record.overtime_final || 0}" ${canEditOvertimeFinal ? '' : 'disabled'
+              }>
                               </td>
                               <td>
-                                  <span class="form-control-plaintext">${
-                                    record.sum_work || 0
-                                  } روز</span>
+                                  <span class="form-control-plaintext">${record.sum_work || 0
+              } روز</span>
                               </td>
                           </tr>
                       `
@@ -208,6 +197,75 @@ $(document).ready(function () {
     } else {
       counter = 0
     }
+  })
+  $('#performanceModal .btn-primary').on('click', function () {
+    var userId = $('#performanceModal').data('user-id') // شناسه کاربر
+    var records = []
+    // مپ ماه‌ها به اعداد
+    const persianMonthsMap = {
+      فروردین: 0,
+      اردیبهشت: 1,
+      خرداد: 2,
+      تیر: 3,
+      مرداد: 4,
+      شهریور: 5,
+      مهر: 6,
+      آبان: 7,
+      آذر: 8,
+      دی: 9,
+      بهمن: 10,
+      اسفند: 11
+    }
+
+    // خواندن داده‌های جدول
+    $('#performanceTableBody tr').each(function () {
+      var monthName = $(this).find('td:first-child').text().trim() // نام ماه از ستون اول
+      var month = persianMonthsMap[monthName] // تبدیل نام ماه به عدد
+
+      if (month === undefined) {
+        console.error(`نام ماه "${monthName}" نامعتبر است.`)
+        return // رد کردن این ردیف
+      }
+
+      var work = $(this).find('select[name="work"]').val() // کارکرد
+      var vacation = $(this).find('select[name="vacation"]').val() // مرخصی استحقاقی
+      var vacation_sick = $(this).find('select[name="vacation_sick"]').val() // مرخصی استعلاجی
+      var mission = $(this).find('select[name="mission"]').val() // ماموریت
+      var overtime_system = $(this).find('input[name="overtime_system"]').val() // اضافه کار سیستمی
+      var overtime_final = $(this).find('input[name="overtime_final"]').val() // اضافه کار نهایی
+
+      records.push({
+        user_id: userId,
+        month: month, // مقدار عددی ماه
+        work: work ? parseInt(work) : null,
+        vacation: vacation ? parseInt(vacation) : null,
+        vacation_sick: vacation_sick ? parseInt(vacation_sick) : null,
+        mission: mission ? parseInt(mission) : null,
+        overtime_system: overtime_system ? parseInt(overtime_system) : null,
+        overtime_final: overtime_final ? parseInt(overtime_final) : null
+      })
+    })
+
+    // نمایش داده‌ها در کنسول برای تست
+    console.log('ماه:', records.month)
+
+    // ارسال داده‌ها به سرور
+    $.ajax({
+      url: '/Performance/SavePerformanceData',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(records),
+      success: function (response) {
+        if (response.success) {
+          alert('تغییرات با موفقیت ذخیره شد.')
+        } else {
+          alert('خطا در ذخیره تغییرات.')
+        }
+      },
+      error: function () {
+        alert('خطا در ارسال داده‌ها به سرور.')
+      }
+    })
   })
 })
 // مدیریت دیالوگ تأیید حذف
