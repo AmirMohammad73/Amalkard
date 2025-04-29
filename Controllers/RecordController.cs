@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using ClosedXML.Excel;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeePerformanceSystem.Controllers
 {
@@ -332,13 +333,7 @@ namespace EmployeePerformanceSystem.Controllers
         [HttpPost]
         public IActionResult DeleteRecord(int id)
         {
-            var record = _context.Records.FirstOrDefault(r => r.Id == id);
-            if (record != null)
-            {
-                // به جای حذف فیزیکی، مقدار is_deleted را true می‌کنیم
-                record.is_deleted = true;
-                _context.SaveChanges();
-            }
+            _context.Database.ExecuteSqlRaw("UPDATE Records SET is_deleted = 1 WHERE Id = {0}", id);
             return RedirectToAction("Index");
         }
 
@@ -425,14 +420,15 @@ namespace EmployeePerformanceSystem.Controllers
             return Json(new { hasImage = true, imageUrl = record.contract_image });
         }
 
-
         [HttpGet]
         public IActionResult ExportToExcel(int month)
         {
             var ostanPermission = HttpContext.Session.GetInt32("OstanPermission") ?? 0;
+            var officePermission = HttpContext.Session.GetInt32("OfficePermission") ?? 0;
+
             PersianCalendar pc = new PersianCalendar();
             int persianMonth = pc.GetMonth(DateTime.Now);
-            var data = _context
+            var rawData = _context
                 .Records.Join(
                     _context.MonthlyRecords,
                     record => record.Id,
@@ -449,6 +445,7 @@ namespace EmployeePerformanceSystem.Controllers
                             x.record,
                             x.monthlyRecord,
                             office,
+                            OfficeId = x.record.office_id,
                         }
                 )
                 .Join(
@@ -461,6 +458,7 @@ namespace EmployeePerformanceSystem.Controllers
                             OfficeName = x.office.name,
                             ProvinceName = province.name,
                             OstanId = x.record.ostan_id,
+                            OfficeId = x.OfficeId,
                             x.record.firstName,
                             x.record.lastName,
                             x.record.national_id,
@@ -522,7 +520,54 @@ namespace EmployeePerformanceSystem.Controllers
                 .Where(x =>
                     x.Month == month
                     && (ostanPermission == 0 || x.OstanId == ostanPermission)
-                    && (x.leave_month == null || x.leave_month < persianMonth)
+                    && (officePermission == 0 || x.OfficeId == officePermission)
+                )
+                .ToList();
+            var data = rawData
+                .Select(x =>
+                {
+                    int sm = 0;
+                    int.TryParse(x.startdate?.Substring(5, 2), out sm);
+                    return new
+                    {
+                        x.OfficeName,
+                        x.ProvinceName,
+                        x.OstanId,
+                        x.firstName,
+                        x.lastName,
+                        x.national_id,
+                        x.father_name,
+                        x.birthdate,
+                        x.b_city,
+                        x.p_city,
+                        x.Degree,
+                        x.cert,
+                        x.Job,
+                        x.startdate,
+                        x.IsMarried,
+                        x.children_no,
+                        x.IsHead,
+                        x.Sheba,
+                        x.bank_name,
+                        x.HasInsurance,
+                        x.insurance_number,
+                        x.insurance_days,
+                        x.work,
+                        x.vacation,
+                        x.vacation_sick,
+                        x.mission,
+                        x.overtime_system,
+                        x.overtime_final,
+                        x.sum_work,
+                        x.Month,
+                        x.MonthName,
+                        x.leave_month,
+                        StartMonth = sm,
+                    };
+                })
+                .Where(x =>
+                    x.leave_month == null
+                    || (x.leave_month >= month + 1 && month + 1 >= x.StartMonth)
                 )
                 .OrderBy(x => x.OfficeName)
                 .ThenBy(x => x.ProvinceName)

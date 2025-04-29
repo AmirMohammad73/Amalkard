@@ -20,7 +20,7 @@ namespace EmployeePerformanceSystem.Controllers
             // دریافت اطلاعات کاربر جاری از Session
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var currentUser = _context.User.FirstOrDefault(u => u.id == currentUserId);
-            
+
             var records = _context
                 .MonthlyRecords.Where(m => m.user_id == userId)
                 .OrderBy(m => m.month)
@@ -39,10 +39,11 @@ namespace EmployeePerformanceSystem.Controllers
                     overtime_final = r.overtime_final,
                     sum_work = r.sum_work,
                     // اضافه کردن وضعیت دسترسی کاربر
-                    canEditOvertimeFinal = currentUser?.office_permission == 0 && currentUser?.ostan_permission == 0
+                    canEditOvertimeFinal = currentUser?.office_permission == 0
+                        && currentUser?.ostan_permission == 0,
                 })
                 .ToList();
-                Console.WriteLine(currentUser?.office_permission);
+            Console.WriteLine(currentUser?.office_permission);
             return Json(formattedRecords);
         }
 
@@ -52,7 +53,7 @@ namespace EmployeePerformanceSystem.Controllers
             // دریافت اطلاعات کاربر جاری از Session
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var currentUser = _context.User.FirstOrDefault(u => u.id == currentUserId);
-            
+            Console.WriteLine("HEY YOU!");
             if (ModelState.IsValid)
             {
                 foreach (var record in records)
@@ -69,19 +70,25 @@ namespace EmployeePerformanceSystem.Controllers
                         existingRecord.vacation_sick = record.vacation_sick;
                         existingRecord.mission = record.mission;
                         existingRecord.overtime_system = record.overtime_system;
-                        
+
                         // فقط اگر کاربر مجوز دارد، مقدار overtime_final را به‌روزرسانی کنید
-                        if (currentUser?.office_permission == 0 && currentUser?.ostan_permission == 0)
+                        if (
+                            currentUser?.office_permission == 0
+                            && currentUser?.ostan_permission == 0
+                        )
                         {
                             existingRecord.overtime_final = record.overtime_final;
                         }
-                        
+
                         existingRecord.sum_work = record.sum_work;
                     }
                     else
                     {
                         // اگر رکورد جدید است و کاربر مجوز دارد
-                        if (currentUser?.office_permission == 0 && currentUser?.ostan_permission == 0)
+                        if (
+                            currentUser?.office_permission == 0
+                            && currentUser?.ostan_permission == 0
+                        )
                         {
                             _context.MonthlyRecords.Add(record);
                         }
