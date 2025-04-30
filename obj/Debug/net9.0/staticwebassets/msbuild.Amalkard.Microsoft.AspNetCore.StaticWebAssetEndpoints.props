@@ -24808,13 +24808,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\recordPerformance.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ly0WrwRzbLIebkA3U4gf8qfd9X2ODsYNLcdNrFhQ1tw="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"10886"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022ly0WrwRzbLIebkA3U4gf8qfd9X2ODsYNLcdNrFhQ1tw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 29 Apr 2025 14:46:54 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"10886"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022ly0WrwRzbLIebkA3U4gf8qfd9X2ODsYNLcdNrFhQ1tw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 29 Apr 2025 14:50:36 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Amalkard/js/recordPerformance.rjt4jz25u5.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\recordPerformance.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rjt4jz25u5"},{"Name":"integrity","Value":"sha256-ly0WrwRzbLIebkA3U4gf8qfd9X2ODsYNLcdNrFhQ1tw="},{"Name":"label","Value":"_content/Amalkard/js/recordPerformance.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"10886"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022ly0WrwRzbLIebkA3U4gf8qfd9X2ODsYNLcdNrFhQ1tw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 29 Apr 2025 14:46:54 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"10886"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022ly0WrwRzbLIebkA3U4gf8qfd9X2ODsYNLcdNrFhQ1tw=\u0022"},{"Name":"Last-Modified","Value":"Tue, 29 Apr 2025 14:50:36 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Amalkard/js/script.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\script.js'))</AssetFile>

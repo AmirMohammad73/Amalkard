@@ -7,6 +7,7 @@ using ClosedXML.Excel;
 using EmployeePerformanceSystem.Data;
 using EmployeePerformanceSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeePerformanceSystem.Controllers
@@ -263,62 +264,157 @@ namespace EmployeePerformanceSystem.Controllers
 
                 foreach (var record in records)
                 {
-                    if (record.Id == -1) // رکورد جدید
+                    if (record.Id == -1)
                     {
-                        // فقط رکوردهای با اطلاعات معتبر را ذخیره کنید
                         if (
                             !string.IsNullOrEmpty(record.firstName)
                             && !string.IsNullOrEmpty(record.lastName)
                             && !string.IsNullOrEmpty(record.national_id)
                         )
                         {
-                            // تنظیم مقادیر office_id و ostan_id برای رکورد جدید
-                            record.office_id = selectedOfficeId;
-                            record.ostan_id = selectedProvinceId;
-                            record.Id = 0; // تنظیم Id برای رکورد جدید
-                            _context.Records.Add(record);
+                            var sqlInsert =
+                                @"
+                        INSERT INTO Records
+                        (firstName, lastName, national_id, father_name, birthdate, b_city, p_city, degree, cert, Job, startdate, is_married, children_no, is_head, Sheba, bank_name, has_insurance, insurance_number, insurance_days, is_deleted, office_id, ostan_id)
+                        VALUES
+                        (@firstName, @lastName, @national_id, @father_name, @birthdate, @b_city, @p_city, @degree, @cert, @Job, @startdate, @is_married, @children_no, @is_head, @Sheba, @bank_name, @has_insurance, @insurance_number, @insurance_days, 0, @office_id, @ostan_id)
+                    ";
+
+                            _context.Database.ExecuteSqlRaw(
+                                sqlInsert,
+                                new SqlParameter(
+                                    "@firstName",
+                                    record.firstName ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter(
+                                    "@lastName",
+                                    record.lastName ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter(
+                                    "@national_id",
+                                    record.national_id ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter(
+                                    "@father_name",
+                                    record.father_name ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter(
+                                    "@birthdate",
+                                    record.birthdate ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter("@b_city", record.b_city ?? (object)DBNull.Value),
+                                new SqlParameter("@p_city", record.p_city ?? (object)DBNull.Value),
+                                new SqlParameter("@degree", record.degree),
+                                new SqlParameter("@cert", record.cert ?? (object)DBNull.Value),
+                                new SqlParameter("@Job", record.Job),
+                                new SqlParameter(
+                                    "@startdate",
+                                    record.startdate ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter("@is_married", record.is_married),
+                                new SqlParameter("@children_no", record.children_no),
+                                new SqlParameter("@is_head", record.is_head),
+                                new SqlParameter("@Sheba", record.Sheba ?? (object)DBNull.Value),
+                                new SqlParameter(
+                                    "@bank_name",
+                                    record.bank_name ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter("@has_insurance", record.has_insurance),
+                                new SqlParameter(
+                                    "@insurance_number",
+                                    record.insurance_number ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter("@insurance_days", record.insurance_days),
+                                new SqlParameter(
+                                    "@office_id",
+                                    selectedOfficeId ?? (object)DBNull.Value
+                                ),
+                                new SqlParameter(
+                                    "@ostan_id",
+                                    selectedProvinceId ?? (object)DBNull.Value
+                                )
+                            );
                         }
                         else
                         {
-                            // اگر رکورد جدید معتبر نیست، آن را در لیست موقت نگه دارید
                             recordsToKeep.Add(record);
                         }
                     }
                     else
                     {
-                        var existingRecord = _context.Records.FirstOrDefault(r =>
-                            r.Id == record.Id
+                        var sqlUpdate =
+                            @"
+                    UPDATE Records SET
+                        firstName = @firstName,
+                        lastName = @lastName,
+                        national_id = @national_id,
+                        father_name = @father_name,
+                        birthdate = @birthdate,
+                        b_city = @b_city,
+                        p_city = @p_city,
+                        degree = @degree,
+                        cert = @cert,
+                        Job = @Job,
+                        startdate = @startdate,
+                        is_married = @is_married,
+                        children_no = @children_no,
+                        is_head = @is_head,
+                        Sheba = @Sheba,
+                        bank_name = @bank_name,
+                        has_insurance = @has_insurance,
+                        insurance_number = @insurance_number,
+                        insurance_days = @insurance_days
+                    WHERE Id = @Id
+                ";
+
+                        _context.Database.ExecuteSqlRaw(
+                            sqlUpdate,
+                            new SqlParameter(
+                                "@firstName",
+                                record.firstName ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter("@lastName", record.lastName ?? (object)DBNull.Value),
+                            new SqlParameter(
+                                "@national_id",
+                                record.national_id ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter(
+                                "@father_name",
+                                record.father_name ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter(
+                                "@birthdate",
+                                record.birthdate ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter("@b_city", record.b_city ?? (object)DBNull.Value),
+                            new SqlParameter("@p_city", record.p_city ?? (object)DBNull.Value),
+                            new SqlParameter("@degree", record.degree),
+                            new SqlParameter("@cert", record.cert ?? (object)DBNull.Value),
+                            new SqlParameter("@Job", record.Job),
+                            new SqlParameter(
+                                "@startdate",
+                                record.startdate ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter("@is_married", record.is_married),
+                            new SqlParameter("@children_no", record.children_no),
+                            new SqlParameter("@is_head", record.is_head),
+                            new SqlParameter("@Sheba", record.Sheba ?? (object)DBNull.Value),
+                            new SqlParameter(
+                                "@bank_name",
+                                record.bank_name ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter("@has_insurance", record.has_insurance),
+                            new SqlParameter(
+                                "@insurance_number",
+                                record.insurance_number ?? (object)DBNull.Value
+                            ),
+                            new SqlParameter("@insurance_days", record.insurance_days),
+                            new SqlParameter("@Id", record.Id)
                         );
-                        if (existingRecord != null)
-                        {
-                            existingRecord.firstName = record.firstName;
-                            existingRecord.lastName = record.lastName;
-                            existingRecord.national_id = record.national_id;
-                            existingRecord.father_name = record.father_name;
-                            existingRecord.birthdate = record.birthdate;
-                            existingRecord.b_city = record.b_city;
-                            existingRecord.p_city = record.p_city;
-                            existingRecord.degree = record.degree;
-                            existingRecord.cert = record.cert;
-                            existingRecord.Job = record.Job;
-                            existingRecord.startdate = record.startdate;
-                            existingRecord.is_married = record.is_married;
-                            existingRecord.children_no = record.children_no;
-                            existingRecord.is_head = record.is_head;
-                            existingRecord.Sheba = record.Sheba;
-                            existingRecord.bank_name = record.bank_name;
-                            existingRecord.has_insurance = record.has_insurance;
-                            existingRecord.insurance_number = record.insurance_number;
-                            existingRecord.insurance_days = record.insurance_days;
-                        }
                     }
                 }
 
-                _context.SaveChanges();
-
-                // فقط رکوردهای نامعتبر را در Session نگه دارید
                 HttpContext.Session.Set("TempRecords", recordsToKeep);
-
                 TempData["SuccessMessage"] = "تغییرات با موفقیت ذخیره شد.";
             }
             catch (Exception ex)
